@@ -1,0 +1,8 @@
+http://apokrif.fullweb.ru/ -O /Users/my/apokrif-mirror -v -z -%P -n -R5 -T60 -c4 -%e1 -N0
+File generated automatically on Tue, 31 Mar 2026 15:31:50, do NOT edit
+
+To update a mirror, just launch httrack without any parameters
+The existing cache will be used (and modified)
+To have other options, retype all parameters and launch HTTrack
+To continue an interrupted mirror, just launch httrack without any parameters
+
