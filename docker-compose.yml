@@ -1,9 +1,25 @@
 services:
-  web:
-    build: .
-    ports:
-      - "80:80"
-      - "443:443"
+  xray:
+    image: teddysun/xray:latest
+    container_name: xray-reality
+    network_mode: host
     volumes:
-      - /etc/letsencrypt/live/ixoye.space:/etc/nginx/ssl:ro
-    restart: unless-stopped
+      - ./xray:/etc/xray
+      - ./xray/logs:/var/log/xray
+    restart: always
+    privileged: true
+    command: ["xray", "run", "-c", "/etc/xray/config.json"]
+
+  web-fallback:
+    image: nginx:alpine
+    container_name: web-fallback
+    restart: always
+    ports:
+      - "127.0.0.1:8080:80"
+    volumes:
+      - ./www:/usr/share/nginx/html:ro
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3

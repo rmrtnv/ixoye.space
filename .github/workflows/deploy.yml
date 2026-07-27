@@ -28,20 +28,58 @@ jobs:
             -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }}" \
             ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/opt/app/
           
-      - name: Build and deploy
+      - name: Deploy with Xray Reality and Web Fallback
         run: |
-          DOCKERFILE_B64='RlJPTSBuZ2lueDphbHBpbmUKCkNPUFkgLiAvdXNyL3NoYXJlL25naW54L2h0bWwKQ09QWSBuZ2lueC5jb25mIC9ldGMvbmdpbngvY29uZi5kL2RlZmF1bHQuY29uZgoKUlVOIG1rZGlyIC1wIC9ldGMvbmdpbngvc3NsCgpFWFBPU0UgODAgNDQzCgpDTUQgWyJuZ2lueCIsICItZyIsICJkYWVtb24gb2ZmOyJdCg=='
-          COMPOSE_B64='c2VydmljZXM6CiAgd2ViOgogICAgYnVpbGQ6IC4KICAgIHBvcnRzOgogICAgICAtICI4MDo4MCIKICAgICAgLSAiODQ0Mzo0NDMiCiAgICB2b2x1bWVzOgogICAgICAtIC9vcHQvc3NsOi9ldGMvbmdpbngvc3NsOnJvCiAgICByZXN0YXJ0OiB1bmxlc3Mtc3RvcHBlZAo='
-          
           ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} 'bash -s' << 'ENDSSH'
-            mkdir -p /opt/ssl
-            if [ -d /etc/letsencrypt/archive/ixoye.space ]; then
-              cp /etc/letsencrypt/archive/ixoye.space/*.pem /opt/ssl/
-            fi
-            echo RlJPTSBuZ2lueDphbHBpbmUKCkNPUFkgLiAvdXNyL3NoYXJlL25naW54L2h0bWwKQ09QWSBuZ2lueC5jb25mIC9ldGMvbmdpbngvY29uZi5kL2RlZmF1bHQuY29uZgoKUlVOIG1rZGlyIC1wIC9ldGMvbmdpbngvc3NsCgpFWFBPU0UgODAgNDQzCgpDTUQgWyJuZ2lueCIsICItZyIsICJkYWVtb24gb2ZmOyJdCg== | base64 -d > /opt/app/Dockerfile
-            echo c2VydmljZXM6CiAgd2ViOgogICAgYnVpbGQ6IC4KICAgIHBvcnRzOgogICAgICAtICI4MDo4MCIKICAgICAgLSAiODQ0Mzo0NDMiCiAgICB2b2x1bWVzOgogICAgICAtIC9vcHQvc3NsOi9ldGMvbmdpbngvc3NsOnJvCiAgICByZXN0YXJ0OiB1bmxlc3Mtc3RvcHBlZAo= | base64 -d > /opt/app/docker-compose.yml
+            set -e
             cd /opt/app
-            docker compose down || true
+            
+            # Generate Xray Reality credentials if not exist
+            if [ ! -f .env ]; then
+              echo "Generating new Xray Reality credentials..."
+              
+              # Generate UUID
+              UUID=$(cat /proc/sys/kernel/random/uuid)
+              
+              # Generate REALITY keypair using xray
+              KEYPAIR=$(docker run --rm teddysun/xray xray api genkeypair 2>/dev/null || \
+                echo "PRIVATE_KEY:placeholder PUBLIC_KEY:placeholder")
+              
+              PRIVATE_KEY=$(echo $KEYPAIR | grep -oP '(?<=PRIVATE_KEY:)[^ ]+' | head -1)
+              PUBLIC_KEY=$(echo $KEYPAIR | grep -oP '(?<=PUBLIC_KEY:)[^ ]+' | head -1)
+              
+              # If xray api fails, generate using openssl
+              if [ "$PRIVATE_KEY" = "placeholder" ] || [ -z "$PRIVATE_KEY" ]; then
+                echo "Using openssl for key generation..."
+                PRIVATE_KEY=$(openssl ecparam -genkey -name prime256v1 -noout 2>/dev/null | openssl ec -outform base64 2>/dev/null | tr -d '\n')
+              fi
+              
+              # Generate Short ID
+              SHORT_ID=$(openssl rand -hex 4)
+              
+              echo "UUID=$UUID" > .env
+              echo "PRIVATE_KEY=$PRIVATE_KEY" >> .env
+              echo "SHORT_ID=$SHORT_ID" >> .env
+              echo "Credentials generated and saved to .env"
+            else
+              echo "Loading existing credentials from .env"
+              source .env
+            fi
+            
+            # Update Xray config with credentials
+            sed -i "s/{{UUID}}/$UUID/g" xray/config.json
+            sed -i "s/{{PRIVATE_KEY}}/$PRIVATE_KEY/g" xray/config.json
+            sed -i "s/{{SHORT_ID}}/$SHORT_ID/g" xray/config.json
+            
+            # Stop existing containers
+            docker compose down 2>/dev/null || true
+            
+            # Start services
             docker compose up -d --build
+            
+            # Prune old images
             docker image prune -f
+            
+            echo "Deployment complete!"
+            docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
           ENDSSH
