@@ -30,43 +30,19 @@ jobs:
           
       - name: Build and deploy
         run: |
-          ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'SSHCMD'
-            # Ensure SSL certificates exist
+          DOCKERFILE_B64="RlJPTSBuZ2lueDphbHBpbmUKCkNPUFkgLiAvdXNyL3NoYXJlL25naW54L2h0bWwKQ09QWSBuZ2lueC5jb25mIC9ldGMvbmdpbngvY29uZi5kL2RlZmF1bHQuY29uZgoKUlVOIG1rZGlyIC1wIC9ldGMvbmdpbngvc3NsCgpFWFBPU0UgODAgNDQzCgpDTUQgWyJuZ2lueCIsICItZyIsICJkYWVtb24gb2ZmOyJdCg=="
+          COMPOSE_B64="c2VydmljZXM6CiAgd2ViOgogICAgYnVpbGQ6IC4KICAgIHBvcnRzOgogICAgICAtICI4MDo4MCIKICAgICAgLSAiODQ0Mzo0NDMiCiAgICB2b2x1bWVzOgogICAgICAtIC9vcHQvc3NsOi9ldGMvbmdpbngvc3NsOnJvCiAgICByZXN0YXJ0OiB1bmxlc3Mtc3RvcHBlZAo="
+          
+          ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
+            set -e
             mkdir -p /opt/ssl
             if [ -d /etc/letsencrypt/archive/ixoye.space ]; then
               cp /etc/letsencrypt/archive/ixoye.space/*.pem /opt/ssl/
             fi
-            
-            # Create Dockerfile
-            cat > /opt/app/Dockerfile << 'DOCKEREOF'
-FROM nginx:alpine
-
-COPY . /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-RUN mkdir -p /etc/nginx/ssl
-
-EXPOSE 80 443
-
-CMD ["nginx", "-g", "daemon off;"]
-DOCKEREOF
-            
-            # Create docker-compose.yml
-            cat > /opt/app/docker-compose.yml << 'COMPOSEEOF'
-services:
-  web:
-    build: .
-    ports:
-      - "80:80"
-      - "8443:443"
-    volumes:
-      - /opt/ssl:/etc/nginx/ssl:ro
-    restart: unless-stopped
-COMPOSEEOF
-            
-            # Build and deploy
+            echo \$DOCKERFILE_B64 | base64 -d > /opt/app/Dockerfile
+            echo \$COMPOSE_B64 | base64 -d > /opt/app/docker-compose.yml
             cd /opt/app
             docker compose down || true
             docker compose up -d --build
             docker image prune -f
-          SSHCMD
+          "
