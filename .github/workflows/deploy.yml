@@ -15,26 +15,22 @@ jobs:
         
       - name: Remove git directory for clean copy
         run: rm -rf .git
-        
-      - name: Copy files via SSH
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SSH_PORT }}
-          source: "./"
-          target: "/opt/app"
-          strip_components: 0
+
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
           
-      - name: Build and deploy Docker container
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SSH_PORT }}
-          command: |
+      - name: Sync files to server
+        run: |
+          rsync -avz --exclude='.git' --exclude='.github' \
+            -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }}" \
+            ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/opt/app/
+          
+      - name: Build and deploy
+        run: |
+          ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'SSHCMD'
             # Ensure SSL certificates exist
             mkdir -p /opt/ssl
             if [ -d /etc/letsencrypt/archive/ixoye.space ]; then
@@ -73,3 +69,4 @@ COMPOSEEOF
             docker compose down || true
             docker compose up -d --build
             docker image prune -f
+          SSHCMD
