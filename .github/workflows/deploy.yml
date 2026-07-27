@@ -16,7 +16,7 @@ jobs:
       - name: Remove git directory for clean copy
         run: rm -rf .git
         
-      - name: Copy files via SSH
+      - name: Copy files via SSH (excluding docker files)
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -24,8 +24,12 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           source: "./"
-          target: "/opt/app"
+          target: "/opt/app_new"
           strip_components: 0
+          excludes: |
+            .github
+            Dockerfile
+            docker-compose.yml
           
       - name: Build and deploy Docker container
         uses: appleboy/ssh-action@v1.0.3
@@ -35,10 +39,44 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
+            # Create directories
+            mkdir -p /opt/app
+            
             # Copy SSL certificates to persistent location
             mkdir -p /opt/ssl
             cp /etc/letsencrypt/archive/ixoye.space/*.pem /opt/ssl/
             
+            # Create Dockerfile
+            cat > /opt/app/Dockerfile << 'DOCKEREOF'
+FROM nginx:alpine
+
+COPY . /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+RUN mkdir -p /etc/nginx/ssl
+
+EXPOSE 80 443
+
+CMD ["nginx", "-g", "daemon off;"]
+DOCKEREOF
+            
+            # Create docker-compose.yml
+            cat > /opt/app/docker-compose.yml << 'COMPOSEEOF'
+services:
+  web:
+    build: .
+    ports:
+      - "80:80"
+      - "8443:443"
+    volumes:
+      - /opt/ssl:/etc/nginx/ssl:ro
+    restart: unless-stopped
+COMPOSEEOF
+            
+            # Copy website files
+            cp -r /opt/app_new/* /opt/app/
+            
+            # Build and deploy
             cd /opt/app
             docker compose down || true
             docker compose up -d --build
