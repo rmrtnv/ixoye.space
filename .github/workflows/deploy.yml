@@ -24,9 +24,9 @@ jobs:
           
       - name: Sync files to server
         run: |
-          rsync -avz --exclude='.git' --exclude='.github' \
+          rsync -avz --exclude='.git' --exclude='.github' --exclude='xray' --exclude='docker-compose.yml' \
             -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }}" \
-            ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/opt/app/
+            ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/opt/app/www/
           
       - name: Deploy with Xray Reality and Web Fallback
         run: |
