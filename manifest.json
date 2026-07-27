@@ -1,0 +1,13 @@
+{
+  "name": "Русская Апокрифическая Студия",
+  "short_name": "Апокрифы",
+  "description": "Крупнейшее собрание раннехристианских и относящихся к ним текстов на русском языке",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#E7EBCB",
+  "theme_color": "#BA6841",
+  "orientation": "portrait-primary",
+  "categories": ["education", "books", "reference"],
+  "lang": "ru-RU",
+  "dir": "ltr"
+}

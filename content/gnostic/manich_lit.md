@@ -1,0 +1,9 @@
+---
+title: "Манихейские тексты - Гностицизм - Русская Апокрифическая Студия"
+description: "Манихейские тексты"
+keywords: [Манихеи тексты]
+source: /gnost/manich_lit.html
+converted: 2026-07-27T11:11:07.097683
+---
+
+_Манихейские тексты_ Если у вас есть неизвестные тексты на русском языке, можете присылать \- [О манихеях](http://ixoye.space/gnost/manich_about.shtml) \- [Изображение Мани](http://ixoye.space/gnost/manich_image.shtml) \- [Гимны и письмена, приписанные Мани](http://ixoye.space/gnost/manich_sent1.shtml) \- [Два манихейских текста из Турфанского оазиса](http://ixoye.space/gnost/manich_2turf_texts.shtml) \- [Из притчи об обманчивости чувств](http://ixoye.space/gnost/manich_pritcha2.shtml) \- [Книга исполинов](http://ixoye.space/gnost/manich_book_of_ispolin.shtml) (Манихнйская версия) \- [Манихейский гимн на парфянском языке ](http://ixoye.space/gnost/manich_gimn1.shtml) \- [Манихейские притчи](http://ixoye.space/gnost/manich_pritchs.shtml) \- [Манихейский псалом](http://ixoye.space/gnost/manich_psalom.shtml) \- [Несколько цитат Мани, сохраненных Бируни Абу Рейханом](http://ixoye.space/gnost/manich_citata_biruni.shtml) \- [Отдельные псалмы](http://ixoye.space/gnost/manich_otd_psalms.shtml) \- [Притча о хозяине и работнике](http://ixoye.space/gnost/manich_pritcha1.shtml) \- [Псалмы Фомы](http://ixoye.space/gnost/manich_fragm5.shtml) \- [Среднеперсидский манихейский гимн обращенный к Иисусу](http://ixoye.space/gnost/manich_gimn2.shtml) \- [Тэсинская стела c манихейскою надписью](http://ixoye.space/gnost/manich_tes_stela.shtml) \- [Фрагмент из Псалма Бемы](http://ixoye.space/gnost/manich_fragm4.shtml) \- [Фрагмент о вознесении Мани](http://ixoye.space/gnost/manich_fragm3.shtml) \- [Фрагмент о древе света](http://ixoye.space/gnost/manich_fragm1.shtml) \- [Фрагмент о земле света ](http://ixoye.space/gnost/manich_fragm2.shtml) **2001-2025** | [Русская апокрифическая студия](mailto:idixx@yandex.ru) | [О студии](../about.html)

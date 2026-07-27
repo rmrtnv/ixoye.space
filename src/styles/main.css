@@ -1,0 +1,257 @@
+/**
+ * ixoye.space - Russian Apocryphal Studio
+ * Main Styles
+ */
+
+/* CSS Variables */
+:root {
+  --color-primary: #BA6841;
+  --color-bg: #E7EBCB;
+  --color-text: #000000;
+  --color-link: #0000EE;
+  --color-visited: #0000EE;
+  --color-alink: #0000EE;
+  --color-border: #CCCCCC;
+  
+  --font-main: 'Times New Roman', Georgia, serif;
+  --font-ui: Arial, Helvetica, sans-serif;
+  
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  
+  --max-width: 750px;
+}
+
+/* Reset & Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-main);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-main);
+  color: var(--color-primary);
+  margin-top: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+}
+
+h1 { font-size: 2rem; }
+h2 { font-size: 1.75rem; }
+h3 { font-size: 1.5rem; }
+
+p {
+  margin-bottom: var(--spacing-md);
+  text-align: justify;
+  text-indent: 2rem;
+}
+
+a {
+  color: var(--color-link);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:visited {
+  color: var(--color-visited);
+}
+
+/* Layout */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--spacing-md);
+}
+
+header {
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+header h1 {
+  font-size: 2.5rem;
+  margin-bottom: var(--spacing-xs);
+}
+
+nav {
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: var(--spacing-sm);
+  border-radius: 4px;
+  margin-bottom: var(--spacing-md);
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--spacing-sm);
+}
+
+nav li {
+  display: inline;
+}
+
+nav a {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+}
+
+/* Content */
+main {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--spacing-md);
+}
+
+.content-block {
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: var(--spacing-lg);
+  border-radius: 4px;
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: var(--spacing-lg) var(--spacing-md);
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  border-top: 1px solid var(--color-border);
+  margin-top: var(--spacing-xl);
+}
+
+/* Utility Classes */
+.text-center { text-align: center; }
+.text-justify { text-align: justify; }
+
+.mt-sm { margin-top: var(--spacing-sm); }
+.mt-md { margin-top: var(--spacing-md); }
+.mt-lg { margin-top: var(--spacing-lg); }
+
+.mb-sm { margin-bottom: var(--spacing-sm); }
+.mb-md { margin-bottom: var(--spacing-md); }
+.mb-lg { margin-bottom: var(--spacing-lg); }
+
+/* Offline Indicator */
+.status-indicator {
+  position: fixed;
+  top: var(--spacing-sm);
+  right: var(--spacing-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: 4px;
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  z-index: 1000;
+}
+
+.status-online {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.status-offline {
+  background-color: #f44336;
+  color: white;
+}
+
+/* Update Notification */
+.update-notification {
+  position: fixed;
+  bottom: var(--spacing-lg);
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-primary);
+  color: white;
+  padding: var(--spacing-md);
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.update-notification p {
+  margin: 0;
+  text-indent: 0;
+  text-align: left;
+}
+
+.update-notification button {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: var(--font-ui);
+}
+
+.update-notification button:first-of-type {
+  background-color: white;
+  color: var(--color-primary);
+}
+
+.update-notification button:last-of-type {
+  background-color: rgba(255,255,255,0.3);
+  color: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+  
+  .container {
+    padding: var(--spacing-sm);
+  }
+  
+  nav ul {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  h1 {
+    font-size: 1.75rem;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .status-indicator,
+  .update-notification,
+  nav {
+    display: none;
+  }
+  
+  body {
+    background-color: white;
+  }
+  
+  .content-block {
+    background-color: white;
+    box-shadow: none;
+  }
+}
