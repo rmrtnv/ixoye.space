@@ -71,6 +71,9 @@ jobs:
             sed -i "s/{{PRIVATE_KEY}}/$PRIVATE_KEY/g" xray/config.json
             sed -i "s/{{SHORT_ID}}/$SHORT_ID/g" xray/config.json
             
+            # Copy updated config to container
+            docker cp xray/config.json xray-reality:/etc/xray/config.json 2>/dev/null || true
+            
             # Stop existing containers
             docker compose down 2>/dev/null || true
             
