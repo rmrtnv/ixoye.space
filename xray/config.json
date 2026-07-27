@@ -23,12 +23,12 @@
         "security": "reality",
         "realitySettings": {
           "show": false,
-          "dest": "www.microsoft.com:443",
+          "dest": "www.intel.com:443",
           "xver": 1,
           "serverNames": [
+            "www.intel.com",
             "www.microsoft.com",
-            "www.apple.com",
-            "www.google.com"
+            "www.apple.com"
           ],
           "privateKey": "{{PRIVATE_KEY}}",
           "shortIds": [
