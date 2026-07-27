@@ -30,19 +30,18 @@ jobs:
           
       - name: Build and deploy
         run: |
-          DOCKERFILE_B64="RlJPTSBuZ2lueDphbHBpbmUKCkNPUFkgLiAvdXNyL3NoYXJlL25naW54L2h0bWwKQ09QWSBuZ2lueC5jb25mIC9ldGMvbmdpbngvY29uZi5kL2RlZmF1bHQuY29uZgoKUlVOIG1rZGlyIC1wIC9ldGMvbmdpbngvc3NsCgpFWFBPU0UgODAgNDQzCgpDTUQgWyJuZ2lueCIsICItZyIsICJkYWVtb24gb2ZmOyJdCg=="
-          COMPOSE_B64="c2VydmljZXM6CiAgd2ViOgogICAgYnVpbGQ6IC4KICAgIHBvcnRzOgogICAgICAtICI4MDo4MCIKICAgICAgLSAiODQ0Mzo0NDMiCiAgICB2b2x1bWVzOgogICAgICAtIC9vcHQvc3NsOi9ldGMvbmdpbngvc3NsOnJvCiAgICByZXN0YXJ0OiB1bmxlc3Mtc3RvcHBlZAo="
+          DOCKERFILE_B64='RlJPTSBuZ2lueDphbHBpbmUKCkNPUFkgLiAvdXNyL3NoYXJlL25naW54L2h0bWwKQ09QWSBuZ2lueC5jb25mIC9ldGMvbmdpbngvY29uZi5kL2RlZmF1bHQuY29uZgoKUlVOIG1rZGlyIC1wIC9ldGMvbmdpbngvc3NsCgpFWFBPU0UgODAgNDQzCgpDTUQgWyJuZ2lueCIsICItZyIsICJkYWVtb24gb2ZmOyJdCg=='
+          COMPOSE_B64='c2VydmljZXM6CiAgd2ViOgogICAgYnVpbGQ6IC4KICAgIHBvcnRzOgogICAgICAtICI4MDo4MCIKICAgICAgLSAiODQ0Mzo0NDMiCiAgICB2b2x1bWVzOgogICAgICAtIC9vcHQvc3NsOi9ldGMvbmdpbngvc3NsOnJvCiAgICByZXN0YXJ0OiB1bmxlc3Mtc3RvcHBlZAo='
           
-          ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
-            set -e
+          ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} 'bash -s' << 'ENDSSH'
             mkdir -p /opt/ssl
             if [ -d /etc/letsencrypt/archive/ixoye.space ]; then
               cp /etc/letsencrypt/archive/ixoye.space/*.pem /opt/ssl/
             fi
-            echo \$DOCKERFILE_B64 | base64 -d > /opt/app/Dockerfile
-            echo \$COMPOSE_B64 | base64 -d > /opt/app/docker-compose.yml
+            echo RlJPTSBuZ2lueDphbHBpbmUKCkNPUFkgLiAvdXNyL3NoYXJlL25naW54L2h0bWwKQ09QWSBuZ2lueC5jb25mIC9ldGMvbmdpbngvY29uZi5kL2RlZmF1bHQuY29uZgoKUlVOIG1rZGlyIC1wIC9ldGMvbmdpbngvc3NsCgpFWFBPU0UgODAgNDQzCgpDTUQgWyJuZ2lueCIsICItZyIsICJkYWVtb24gb2ZmOyJdCg== | base64 -d > /opt/app/Dockerfile
+            echo c2VydmljZXM6CiAgd2ViOgogICAgYnVpbGQ6IC4KICAgIHBvcnRzOgogICAgICAtICI4MDo4MCIKICAgICAgLSAiODQ0Mzo0NDMiCiAgICB2b2x1bWVzOgogICAgICAtIC9vcHQvc3NsOi9ldGMvbmdpbngvc3NsOnJvCiAgICByZXN0YXJ0OiB1bmxlc3Mtc3RvcHBlZAo= | base64 -d > /opt/app/docker-compose.yml
             cd /opt/app
             docker compose down || true
             docker compose up -d --build
             docker image prune -f
-          "
+          ENDSSH
