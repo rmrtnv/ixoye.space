@@ -10,14 +10,17 @@ services:
     privileged: true
     command: ["xray", "run", "-c", "/etc/xray/config.json"]
 
-  web-fallback:
+  web:
     image: nginx:alpine
-    container_name: web-fallback
+    container_name: web-server
     restart: always
     ports:
-      - "127.0.0.1:8080:80"
+      - "8080:80"
+      - "8443:443"
     volumes:
       - ./www:/usr/share/nginx/html:ro
+      - ./nginx-ssl.conf:/etc/nginx/conf.d/default.conf:ro
+      - /opt/ssl/certs:/etc/nginx/ssl:ro
     healthcheck:
       test: ["CMD", "wget", "-q", "--spider", "http://localhost/"]
       interval: 30s

@@ -22,66 +22,55 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           
-      - name: Sync files to server
+      - name: Sync website files to server
         run: |
           rsync -avz --exclude='.git' --exclude='.github' --exclude='xray' --exclude='docker-compose.yml' \
             -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }}" \
             ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/opt/app/www/
           
-      - name: Deploy with Xray Reality and Web Fallback
+      - name: Deploy with Xray Reality and Web Server
         run: |
           ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} 'bash -s' << 'ENDSSH'
             set -e
             cd /opt/app
             
-            # Generate Xray Reality credentials if not exist
-            if [ ! -f .env ]; then
-              echo "Generating new Xray Reality credentials..."
-              
-              # Generate UUID
-              UUID=$(cat /proc/sys/kernel/random/uuid)
-              
-              # Generate REALITY keypair using xray
-              KEYPAIR=$(docker run --rm teddysun/xray xray api genkeypair 2>/dev/null || \
-                echo "PRIVATE_KEY:placeholder PUBLIC_KEY:placeholder")
-              
-              PRIVATE_KEY=$(echo $KEYPAIR | grep -oP '(?<=PRIVATE_KEY:)[^ ]+' | head -1)
-              PUBLIC_KEY=$(echo $KEYPAIR | grep -oP '(?<=PUBLIC_KEY:)[^ ]+' | head -1)
-              
-              # If xray api fails, generate using openssl
-              if [ "$PRIVATE_KEY" = "placeholder" ] || [ -z "$PRIVATE_KEY" ]; then
-                echo "Using openssl for key generation..."
-                PRIVATE_KEY=$(openssl ecparam -genkey -name prime256v1 -noout 2>/dev/null | openssl ec -outform base64 2>/dev/null | tr -d '\n')
-              fi
-              
-              # Generate Short ID
-              SHORT_ID=$(openssl rand -hex 4)
-              
-              echo "UUID=$UUID" > .env
-              echo "PRIVATE_KEY=$PRIVATE_KEY" >> .env
-              echo "SHORT_ID=$SHORT_ID" >> .env
-              echo "Credentials generated and saved to .env"
-            else
-              echo "Loading existing credentials from .env"
-              source .env
+            # Ensure SSL certificates exist
+            mkdir -p /opt/ssl/certs
+            if [ -d /etc/letsencrypt/archive/ixoye.space ]; then
+              cp /etc/letsencrypt/archive/ixoye.space/fullchain1.pem /opt/ssl/certs/fullchain.pem
+              cp /etc/letsencrypt/archive/ixoye.space/privkey1.pem /opt/ssl/certs/privkey.pem
+              cp /etc/letsencrypt/archive/ixoye.space/cert1.pem /opt/ssl/certs/cert.pem
+              cp /etc/letsencrypt/archive/ixoye.space/chain1.pem /opt/ssl/certs/chain.pem
+              chmod 644 /opt/ssl/certs/*.pem
+              chmod 600 /opt/ssl/certs/privkey.pem
             fi
             
-            # Update Xray config with credentials
-            sed -i "s/{{UUID}}/$UUID/g" xray/config.json
-            sed -i "s/{{PRIVATE_KEY}}/$PRIVATE_KEY/g" xray/config.json
-            sed -i "s/{{SHORT_ID}}/$SHORT_ID/g" xray/config.json
+            # Stop old containers
+            docker stop xray-reality web-server 2>/dev/null || true
+            docker rm xray-reality web-server 2>/dev/null || true
             
-            # Copy updated config to container
-            docker cp xray/config.json xray-reality:/etc/xray/config.json 2>/dev/null || true
+            # Create SSL proxy service for port 443
+            cat > /etc/systemd/system/ssl-proxy.service << 'PROXYEOF'
+[Unit]
+Description=SSL Proxy to Docker
+After=network.target docker.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/socat TCP-LISTEN:443,bind=0.0.0.0,reuseaddr,fork TCP:127.0.0.1:8443
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
+PROXYEOF
             
-            # Stop existing containers
-            docker compose down 2>/dev/null || true
+            systemctl daemon-reload
+            systemctl enable ssl-proxy
+            systemctl restart ssl-proxy || true
             
-            # Start services
+            # Start containers
             docker compose up -d --build
-            
-            # Prune old images
-            docker image prune -f
             
             echo "Deployment complete!"
             docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"

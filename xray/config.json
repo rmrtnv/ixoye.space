@@ -6,13 +6,13 @@
   },
   "inbounds": [
     {
-      "listen": "0.0.0.0",
-      "port": 443,
+      "listen": "127.0.0.1",
+      "port": 8444,
       "protocol": "vless",
       "settings": {
         "clients": [
           {
-            "id": "{{UUID}}",
+            "id": "3fb5f201-9e9d-4d9d-bff4-b182c8d9a5ab",
             "flow": ""
           }
         ],
@@ -30,9 +30,9 @@
             "www.microsoft.com",
             "www.apple.com"
           ],
-          "privateKey": "{{PRIVATE_KEY}}",
+          "privateKey": "oAdgKKomg92DLGHytHxzu0ddfNKllNntTN2pvRsuFUc",
           "shortIds": [
-            "{{SHORT_ID}}",
+            "bc6346b0",
             "e2e9",
             "1a",
             "35cade"
@@ -51,11 +51,6 @@
           "tls",
           "quic"
         ]
-      },
-      "fallback": {
-        "alpn": "",
-        "path": "",
-        "dest": "127.0.0.1:8080"
       }
     }
   ],
