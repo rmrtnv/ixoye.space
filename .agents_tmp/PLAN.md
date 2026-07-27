@@ -46,10 +46,23 @@ Migrate and modernize a static HTML website (Russian Apocryphal Studio - a schol
 - Convertible to any format (HTML, ePub, PDF, etc.)
 
 **Phase 4: Modern Web App Foundation** - Set up PWA infrastructure:
-- Convert to static site generator compatible format
+- Keep `/public/` directory as **pure static HTML** (works without compilation)
 - Add Service Worker for offline access
 - Structure for IndexedDB caching
-- Manifest for installability
+- Manifest for PWA installability
+- **Optional:** Markdown processing can be added later if needed
+
+**Hosting Options:**
+| Option | Pure HTML? | GitHub Pages? | Notes |
+|--------|------------|---------------|-------|
+| `/public/` (cleaned HTML) | ✅ Yes | ✅ Yes | Works immediately, no build step |
+| Markdown + SSG | ❌ Build required | ✅ Yes | More features, needs build |
+| PWA (Service Worker) | ✅ Yes | ✅ Yes | Works on GitHub Pages |
+
+**GitHub Pages Compatibility:** ✅ Fully supported
+- No server-side code required
+- Service Worker works on GitHub Pages (served over HTTPS)
+- PWA installable from GitHub Pages URL
 
 **Offline Storage Considerations:**
 | Storage Type | Capacity | Use Case |
@@ -131,14 +144,14 @@ Migrate and modernize a static HTML website (Russian Apocryphal Studio - a schol
   - Create frontmatter (YAML) with metadata
 - Store in `/content/` directory (git-tracked)
 - Keep cleaned HTML in `/public/` for reference (no old URLs)
-**Reference:** `/content/` (new directory), scripts for HTML→MD conversion
+**Reference:** `/content/` (new directory), scripts for HTMLв†’MD conversion
 
 ## Step 7: Create Web App Infrastructure
 **Goal:** Set up foundation for modern web app with offline support
 **Method:**
 - Create `package.json` with:
   - Dependencies: unified/remark (Markdown processing), optionally Astro/Hugo
-  - Scripts for build, dev, convert (HTML→MD)
+  - Scripts for build, dev, convert (HTMLв†’MD)
 - Create `.gitignore` (exclude /node_modules, /dist, .DS_Store)
 - Create `/src/` directory with:
   - `/src/index.html` - Main SPA shell
@@ -146,6 +159,7 @@ Migrate and modernize a static HTML website (Russian Apocryphal Studio - a schol
   - `/src/js/` - JavaScript modules
   - `/src/sw.js` - Service Worker for offline
 - Create manifest.json for PWA installability
+- **Cleaned HTML in `/public/` serves as pure HTML fallback** (deployable directly, no build needed)
 - Reference: `/src/`, `/public/`, `package.json`
 
 ## Step 8: Implement Service Worker for Offline
@@ -187,19 +201,21 @@ Migrate and modernize a static HTML website (Russian Apocryphal Studio - a schol
 # 5. TESTING AND VALIDATION
 
 **Success Criteria:**
-1. ✅ All HTML files are free of HTTrack comments
-2. ✅ All HTML files use UTF-8 encoding
-3. ✅ No LiveInternet/Rambler/Mail.ru tracking code remains
-4. ✅ Directory structure is clean (no archived domain folders)
-5. ✅ All references updated to ixoye.space
-6. ✅ Markdown content exists in `/content/` directory
-7. ✅ Content sections are complete (Nag Hammadi, apocrypha, Gnostic, etc.)
-8. ✅ Service Worker registers successfully
-9. ✅ Site works offline (disable network, refresh)
-10. ✅ PWA is installable (manifest.json valid)
-11. ✅ IndexedDB stores search index
-12. ✅ package.json scripts work correctly
-13. ✅ Site renders correctly in browser (visual check)
+1. вњ… All HTML files are free of HTTrack comments
+2. вњ… All HTML files use UTF-8 encoding
+3. вњ… No LiveInternet/Rambler/Mail.ru tracking code remains
+4. вњ… Directory structure is clean (no archived domain folders)
+5. вњ… All references updated to ixoye.space
+6. вњ… Markdown content exists in `/content/` directory
+7. вњ… Content sections are complete (Nag Hammadi, apocrypha, Gnostic, etc.)
+8. вњ… Service Worker registers successfully
+9. вњ… Site works offline (disable network, refresh)
+10. вњ… PWA is installable (manifest.json valid)
+11. вњ… IndexedDB stores search index
+12. вњ… package.json scripts work correctly
+13. вњ… Site renders correctly in browser (visual check)
+14. ✅ Pure HTML works without build (`/public/` directory)
+15. ✅ Site deployable to GitHub Pages directly (no server required)
 
 **Offline Storage Validation:**
 ```javascript
@@ -236,7 +252,7 @@ grep -r "apokrif.fullweb.ru" . --include="*.html" --include="*.md"
 ```
 
 **PWA Testing:**
-- Use Chrome DevTools → Application → Service Workers
+- Use Chrome DevTools в†’ Application в†’ Service Workers
 - Check "Offline" checkbox, reload page
 - Verify content loads without network
 - Test "Add to Home Screen" on mobile devices
