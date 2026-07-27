@@ -35,6 +35,10 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
+            # Copy SSL certificates to persistent location
+            mkdir -p /opt/ssl
+            cp /etc/letsencrypt/archive/ixoye.space/*.pem /opt/ssl/
+            
             cd /opt/app
             docker compose down || true
             docker compose up -d --build
