@@ -16,7 +16,7 @@ jobs:
       - name: Remove git directory for clean copy
         run: rm -rf .git
         
-      - name: Copy files via SSH (excluding docker files)
+      - name: Copy files via SSH
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -24,12 +24,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           source: "./"
-          target: "/opt/app_new"
+          target: "/opt/app"
           strip_components: 0
-          excludes: |
-            .github
-            Dockerfile
-            docker-compose.yml
           
       - name: Build and deploy Docker container
         uses: appleboy/ssh-action@v1.0.3
@@ -38,13 +34,12 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          script: |
-            # Create directories
-            mkdir -p /opt/app
-            
-            # Copy SSL certificates to persistent location
+          command: |
+            # Ensure SSL certificates exist
             mkdir -p /opt/ssl
-            cp /etc/letsencrypt/archive/ixoye.space/*.pem /opt/ssl/
+            if [ -d /etc/letsencrypt/archive/ixoye.space ]; then
+              cp /etc/letsencrypt/archive/ixoye.space/*.pem /opt/ssl/
+            fi
             
             # Create Dockerfile
             cat > /opt/app/Dockerfile << 'DOCKEREOF'
@@ -72,9 +67,6 @@ services:
       - /opt/ssl:/etc/nginx/ssl:ro
     restart: unless-stopped
 COMPOSEEOF
-            
-            # Copy website files
-            cp -r /opt/app_new/* /opt/app/
             
             # Build and deploy
             cd /opt/app
