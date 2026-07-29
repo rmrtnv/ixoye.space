@@ -52,17 +52,24 @@ async function registerServiceWorker() {
   }
 
   try {
-    const registration = await navigator.serviceWorker.register('/src/sw.js', { scope: '/' });
+    // Use relative path so it works on GitHub Pages project sites and subdirectory deployments
+    const registration = await navigator.serviceWorker.register('src/sw.js', { scope: '/' });
     swRegistration = registration;
     swRegistrationError = null;
     console.log('[SW] Registration successful:', registration.scope);
+<<<<<<< HEAD
+<<<<<<< HEAD
 
-    // Reload page when a new SW takes control so message channel works reliably
+    // Reload page when a new SW takes control so messages flow reliably
     registration.addEventListener('controllerchange', () => {
-      console.log('[SW] Controller changed, reloading');
+      console.log('[SW] Controller changed, reloading...');
       window.location.reload();
     });
 
+=======
+>>>>>>> parent of 507969d (fix(app): restore controllerchange listener (from cb95ef6 base))
+=======
+>>>>>>> parent of 507969d (fix(app): restore controllerchange listener (from cb95ef6 base))
     return registration;
   } catch (error) {
     console.error('[SW] Registration failed:', error);
