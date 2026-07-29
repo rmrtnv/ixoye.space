@@ -56,6 +56,13 @@ async function registerServiceWorker() {
     swRegistration = registration;
     swRegistrationError = null;
     console.log('[SW] Registration successful:', registration.scope);
+
+    // Reload page when a new SW takes control so message channel works reliably
+    registration.addEventListener('controllerchange', () => {
+      console.log('[SW] Controller changed, reloading');
+      window.location.reload();
+    });
+
     return registration;
   } catch (error) {
     console.error('[SW] Registration failed:', error);
