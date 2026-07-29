@@ -90,7 +90,18 @@ Service Worker использует версию из `package.json` для им
 
 ### Обновление списка офлайн-страниц
 
-Если вы добавили или удалили тексты, обновите `precache-manifest.json`:
+`precache-manifest.json` обновляется автоматически через Git pre-commit hook при каждом коммите, если вы добавили или удалили HTML-файлы.
+
+**Настройка hook (один раз после клонирования):**
+
+```bash
+cp .githooks/pre-commit .git/hooks/pre-commit
+chmod +x .git/hooks/pre-commit
+```
+
+После настройки hook работает автоматически. При коммите изменений в HTML-файлов манифест перегенерируется и добавляется в тот же коммит.
+
+Ручной способ (если hook не настроен):
 
 ```bash
 npm run generate-precache

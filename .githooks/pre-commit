@@ -1,0 +1,7 @@
+#!/bin/sh
+# Auto-regenerate precache manifest when HTML files change
+if git diff --cached --name-only | grep -qE '\.html$|package\.json$'; then
+  echo "Regenerating precache-manifest.json..."
+  npm run generate-precache
+  git add precache-manifest.json
+fi
