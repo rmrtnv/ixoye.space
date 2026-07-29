@@ -52,8 +52,7 @@ async function registerServiceWorker() {
   }
 
   try {
-    // Use relative path so it works on GitHub Pages project sites and subdirectory deployments
-    const registration = await navigator.serviceWorker.register('src/sw.js', { scope: '/' });
+    const registration = await navigator.serviceWorker.register('/src/sw.js', { scope: '/' });
     swRegistration = registration;
     swRegistrationError = null;
     console.log('[SW] Registration successful:', registration.scope);
