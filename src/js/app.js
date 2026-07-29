@@ -59,6 +59,7 @@ async function registerServiceWorker() {
     console.log('[SW] Registration successful:', registration.scope);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     // Reload page when a new SW takes control so messages flow reliably
     registration.addEventListener('controllerchange', () => {
@@ -66,6 +67,8 @@ async function registerServiceWorker() {
       window.location.reload();
     });
 
+=======
+>>>>>>> parent of 507969d (fix(app): restore controllerchange listener (from cb95ef6 base))
 =======
 >>>>>>> parent of 507969d (fix(app): restore controllerchange listener (from cb95ef6 base))
 =======
