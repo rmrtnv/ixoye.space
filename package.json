@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "npx serve . -l 3000",
     "build": "echo 'Static site - no build required'",
-    "preview": "npx serve . -l 4000"
+    "preview": "npx serve . -l 4000",
+    "generate-precache": "find . -name '*.html' -not -path './.git/*' | sed 's|^\\./||' | jq -Rn '[inputs]' > precache-manifest.json"
   },
   "keywords": [
     "apocrypha",

@@ -1,9 +1,7 @@
 // Service Worker for ixoye.space
 // Provides offline functionality for the Russian Apocryphal Studio
 
-const CACHE_NAME = 'ixoye-space-v1';
-const STATIC_CACHE = 'ixoye-static-v1';
-const CONTENT_CACHE = 'ixoye-content-v1';
+let CURRENT_VERSION = '1';
 
 // App shell files to cache immediately
 const APP_SHELL = [
@@ -14,25 +12,33 @@ const APP_SHELL = [
   '/src/js/app.js'
 ];
 
-// Content directories to cache
+// Content paths for network-first strategy
 const CONTENT_PATHS = [
-  '/content/',
-  '/apocryph1/',
-  '/apocryph2/',
-  '/nag_hammadi/',
-  '/gnost/',
+  '/',
+  '/index.html',
+  '/about.html',
+  '/2_sif.html',
+  '/apocrypha-new/',
+  '/apocrypha-old/',
+  '/nag-hammadi/',
+  '/gnostic/',
   '/kumran/',
-  '/hermes/',
+  '/hermetic/',
   '/study/',
-  '/pics/'
+  '/contacts/',
+  '/links/'
 ];
 
 // Install event - cache app shell
 self.addEventListener('install', (event) => {
   console.log('[SW] Installing...');
   event.waitUntil(
-    caches.open(STATIC_CACHE)
-      .then((cache) => {
+    getVersion()
+      .then(version => {
+        CURRENT_VERSION = version;
+        return caches.open(`ixoye-static-v${version}`);
+      })
+      .then(cache => {
         console.log('[SW] Caching app shell');
         return cache.addAll(APP_SHELL);
       })
@@ -44,12 +50,16 @@ self.addEventListener('install', (event) => {
 self.addEventListener('activate', (event) => {
   console.log('[SW] Activating...');
   event.waitUntil(
-    caches.keys()
-      .then((cacheNames) => {
+    getVersion()
+      .then(version => {
+        CURRENT_VERSION = version;
+        return caches.keys();
+      })
+      .then(cacheNames => {
         return Promise.all(
           cacheNames
-            .filter((name) => name !== STATIC_CACHE && name !== CONTENT_CACHE)
-            .map((name) => {
+            .filter(name => name !== `ixoye-static-v${CURRENT_VERSION}` && name !== `ixoye-content-v${CURRENT_VERSION}`)
+            .map(name => {
               console.log('[SW] Deleting old cache:', name);
               return caches.delete(name);
             })
@@ -64,31 +74,25 @@ self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
-  // Skip non-GET requests
   if (request.method !== 'GET') return;
-
-  // Skip cross-origin requests
   if (url.origin !== location.origin) return;
 
-  // App shell strategy: Cache first
   if (isStaticAsset(url.pathname)) {
     event.respondWith(cacheFirst(request));
     return;
   }
 
-  // Content strategy: Network first with cache fallback
   if (isContentPath(url.pathname)) {
     event.respondWith(networkFirst(request));
     return;
   }
 
-  // Default: Network first
   event.respondWith(networkFirst(request));
 });
 
 // Check if request is for static assets
 function isStaticAsset(pathname) {
-  const staticExtensions = ['.css', '.js', '.png', '.jpg', '.jpeg', '.gif', '.svg', '.ico', '.woff', '.woff2'];
+  const staticExtensions = ['.css', '.js', '.png', '.jpg', '.jpeg', '.gif', '.svg', '.ico', '.woff', '.woff2', '.ttf', '.eot', '.otf', '.json'];
   return staticExtensions.some(ext => pathname.endsWith(ext)) ||
          pathname.endsWith('/') ||
          pathname.endsWith('index.html');
@@ -102,14 +106,12 @@ function isContentPath(pathname) {
 // Cache-first strategy
 async function cacheFirst(request) {
   const cached = await caches.match(request);
-  if (cached) {
-    return cached;
-  }
+  if (cached) return cached;
 
   try {
     const response = await fetch(request);
     if (response.ok) {
-      const cache = await caches.open(STATIC_CACHE);
+      const cache = await caches.open(`ixoye-static-v${CURRENT_VERSION}`);
       cache.put(request, response.clone());
     }
     return response;
@@ -124,17 +126,15 @@ async function networkFirst(request) {
   try {
     const response = await fetch(request);
     if (response.ok) {
-      const cache = await caches.open(CONTENT_CACHE);
+      const cache = await caches.open(`ixoye-content-v${CURRENT_VERSION}`);
       cache.put(request, response.clone());
     }
     return response;
   } catch (error) {
     console.log('[SW] Network-first fetch failed, trying cache:', error);
     const cached = await caches.match(request);
-    if (cached) {
-      return cached;
-    }
-    return new Response('Offline - Content not available', { 
+    if (cached) return cached;
+    return new Response('Offline - Content not available', {
       status: 503,
       headers: { 'Content-Type': 'text/plain; charset=utf-8' }
     });
@@ -146,10 +146,37 @@ self.addEventListener('message', (event) => {
   if (event.data === 'skipWaiting') {
     self.skipWaiting();
   }
-  
+
   if (event.data === 'clearCache') {
-    caches.keys().then(names => {
-      names.forEach(name => caches.delete(name));
-    });
+    caches.keys().then(names => Promise.all(names.map(name => caches.delete(name))));
+  }
+
+  if (event.data === 'precacheAll') {
+    event.waitUntil(precacheAll());
   }
 });
+
+async function getVersion() {
+  try {
+    const response = await fetch('/package.json');
+    const data = await response.json();
+    return data.version || '1';
+  } catch (error) {
+    console.log('[SW] Failed to fetch version, using fallback');
+    return '1';
+  }
+}
+
+async function precacheAll() {
+  try {
+    const response = await fetch('/precache-manifest.json');
+    if (!response.ok) throw new Error('Manifest not found');
+    const urls = await response.json();
+    const cache = await caches.open(`ixoye-content-v${CURRENT_VERSION}`);
+    console.log(`[SW] Precaching ${urls.length} URLs`);
+    await cache.addAll(urls);
+    console.log('[SW] Precaching complete');
+  } catch (error) {
+    console.error('[SW] Precaching failed:', error);
+  }
+}
