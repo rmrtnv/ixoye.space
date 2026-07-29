@@ -304,16 +304,29 @@ function showOfflinePrompt() {
  * Start precaching all content
  */
 function startPrecache() {
-  if (!navigator.serviceWorker.controller) {
-    // Wait for controller (common on iOS first launch)
-    navigator.serviceWorker.addEventListener('controllerchange', () => {
-      navigator.serviceWorker.controller.postMessage('precacheAll');
-    }, { once: true });
-    return;
-  }
-
-  navigator.serviceWorker.controller.postMessage('precacheAll');
   showPrecacheProgress();
+
+  const sendPrecache = () => {
+    if (navigator.serviceWorker.controller) {
+      navigator.serviceWorker.controller.postMessage('precacheAll');
+      console.log('[App] Sent precacheAll to SW');
+    }
+  };
+
+  if (navigator.serviceWorker.controller) {
+    sendPrecache();
+  } else {
+    // iOS/Safari: wait for controller, then send
+    navigator.serviceWorker.addEventListener('controllerchange', sendPrecache, { once: true });
+    
+    // Fallback timeout: if controller doesn't appear within 5s, try anyway
+    setTimeout(() => {
+      if (!navigator.serviceWorker.controller) {
+        console.warn('[App] SW controller not ready after 5s, retrying...');
+        sendPrecache();
+      }
+    }, 5000);
+  }
 }
 
 /**
@@ -328,17 +341,21 @@ function showPrecacheProgress() {
 
   const progress = document.createElement('div');
   progress.id = 'precache-progress';
-  progress.style.cssText = 'display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#BA6841;color:#fff;padding:16px 24px;border-radius:8px;z-index:2000;text-align:center;font-family:Arial,Helvetica,sans-serif;box-shadow:0 2px 10px rgba(0,0,0,0.2);min-width:280px;';
+  progress.style.cssText = 'display:flex;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#BA6841;color:#fff;padding:16px 24px;border-radius:8px;z-index:2000;text-align:center;font-family:Arial,Helvetica,sans-serif;box-shadow:0 2px 10px rgba(0,0,0,0.2);min-width:280px;flex-direction:column;gap:8px;';
   progress.innerHTML = `
-    <p id="precache-status" style="margin:0 0 8px 0;">Кэширование текстов...</p>
-    <div style="background:rgba(255,255,255,0.3);border-radius:4px;height:8px;width:100%;margin-bottom:8px;">
+    <p id="precache-status" style="margin:0;">Кэширование текстов...</p>
+    <div style="background:rgba(255,255,255,0.3);border-radius:4px;height:8px;width:100%;">
       <div id="precache-bar" style="background:#fff;height:100%;width:0%;border-radius:4px;transition:width 0.3s;"></div>
     </div>
     <p id="precache-detail" style="margin:0;font-size:0.85rem;opacity:0.9;">0 / 0</p>
+    <button id="btn-close-progress" style="display:none;background:rgba(255,255,255,0.2);color:#fff;border:1px solid rgba(255,255,255,0.4);padding:6px 16px;border-radius:4px;cursor:pointer;font-family:Arial,Helvetica,sans-serif;font-size:0.9rem;margin-top:4px;">Закрыть</button>
   `;
 
   document.body.appendChild(progress);
-  progress.style.display = 'block';
+
+  document.getElementById('btn-close-progress').addEventListener('click', () => {
+    progress.remove();
+  });
 }
 
 /**
@@ -359,7 +376,7 @@ function updatePrecacheProgress(current, total) {
   }
 
   if (status && current === total) {
-    status.textContent = 'Готово!';
+    status.textContent = 'Готово! Все тексты сохранены.';
   }
 }
 
@@ -370,17 +387,11 @@ function onPrecacheComplete() {
   sessionStorage.setItem('precache_done', 'true');
   sessionStorage.removeItem('offline_prompt_dismissed');
 
-  const status = document.getElementById('precache-status');
   const detail = document.getElementById('precache-detail');
+  const closeBtn = document.getElementById('btn-close-progress');
 
-  if (status) status.textContent = 'Готово! Все тексты сохранены.';
   if (detail) detail.textContent = 'Теперь доступно офлайн';
-
-  // Hide progress after 3 seconds
-  setTimeout(() => {
-    const progress = document.getElementById('precache-progress');
-    if (progress) progress.remove();
-  }, 3000);
+  if (closeBtn) closeBtn.style.display = 'inline-block';
 }
 
 /**
@@ -389,9 +400,12 @@ function onPrecacheComplete() {
 function onPrecacheError(error) {
   console.error('[App] Precaching failed:', error);
   const status = document.getElementById('precache-status');
-  if (status) {
-    status.textContent = 'Ошибка кэширования';
-  }
+  const detail = document.getElementById('precache-detail');
+  const closeBtn = document.getElementById('btn-close-progress');
+
+  if (status) status.textContent = 'Ошибка кэширования';
+  if (detail) detail.textContent = error || 'Не удалось сохранить тексты';
+  if (closeBtn) closeBtn.style.display = 'inline-block';
 }
 
 /**
