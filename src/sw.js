@@ -7,6 +7,8 @@ let CURRENT_VERSION = '1';
 const APP_SHELL = [
   '/',
   '/index.html',
+  '/about.html',
+  '/2_sif.html',
   '/manifest.json',
   '/src/styles/main.css',
   '/src/js/app.js'
@@ -14,7 +16,6 @@ const APP_SHELL = [
 
 // Content paths for network-first strategy
 const CONTENT_PATHS = [
-  '/',
   '/index.html',
   '/about.html',
   '/2_sif.html',
@@ -36,7 +37,8 @@ self.addEventListener('install', (event) => {
     getVersion()
       .then(version => {
         CURRENT_VERSION = version;
-        return caches.open(`ixoye-static-v${version}`);
+        const staticCacheName = `ixoye-static-v${version}`;
+        return caches.open(staticCacheName);
       })
       .then(cache => {
         console.log('[SW] Caching app shell');
@@ -50,15 +52,13 @@ self.addEventListener('install', (event) => {
 self.addEventListener('activate', (event) => {
   console.log('[SW] Activating...');
   event.waitUntil(
-    getVersion()
-      .then(version => {
-        CURRENT_VERSION = version;
-        return caches.keys();
-      })
+    caches.keys()
       .then(cacheNames => {
+        const staticCacheName = `ixoye-static-v${CURRENT_VERSION}`;
+        const contentCacheName = `ixoye-content-v${CURRENT_VERSION}`;
         return Promise.all(
           cacheNames
-            .filter(name => name !== `ixoye-static-v${CURRENT_VERSION}` && name !== `ixoye-content-v${CURRENT_VERSION}`)
+            .filter(name => name !== staticCacheName && name !== contentCacheName)
             .map(name => {
               console.log('[SW] Deleting old cache:', name);
               return caches.delete(name);

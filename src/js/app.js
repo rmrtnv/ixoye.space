@@ -223,7 +223,6 @@ function saveScrollPosition() {
 async function maybePrecacheForOffline() {
   const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
   if (!isStandalone) return;
-  if (!navigator.serviceWorker.controller) return;
 
   const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
   const isWifi = !connection ||
@@ -231,9 +230,20 @@ async function maybePrecacheForOffline() {
     connection.effectiveType !== '2g' ||
     connection.effectiveType === '4g';
 
-  if (isWifi) {
-    console.log('[App] Standalone + WiFi detected, requesting full precache');
-    navigator.serviceWorker.controller.postMessage('precacheAll');
+  if (!isWifi) return;
+
+  const sendPrecache = () => {
+    if (navigator.serviceWorker.controller) {
+      navigator.serviceWorker.controller.postMessage('precacheAll');
+      console.log('[App] Sent precacheAll to SW');
+    }
+  };
+
+  sendPrecache();
+
+  // iOS/Safari: controller may not be set on first PWA launch
+  if (!navigator.serviceWorker.controller) {
+    navigator.serviceWorker.addEventListener('controllerchange', sendPrecache, { once: true });
   }
 }
 
