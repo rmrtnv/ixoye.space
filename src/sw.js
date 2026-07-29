@@ -168,42 +168,79 @@ async function getVersion() {
 }
 
 async function precacheAll() {
+  let total = 0;
+  
   try {
+    console.log('[SW] Starting precacheAll...');
+    
+    // Fetch manifest
     const response = await fetch('/precache-manifest.json');
-    if (!response.ok) throw new Error('Manifest not found');
+    console.log('[SW] Manifest fetch response:', response.status, response.statusText);
+    
+    if (!response.ok) throw new Error(`Manifest fetch failed: ${response.status} ${response.statusText}`);
+    
     const urls = await response.json();
+    console.log('[SW] Manifest parsed, URLs count:', urls.length);
+    
+    if (!Array.isArray(urls) || urls.length === 0) {
+      throw new Error('Manifest is empty or not an array');
+    }
+    
+    total = urls.length;
     const cache = await caches.open(`ixoye-content-v${CURRENT_VERSION}`);
-    const total = urls.length;
     console.log(`[SW] Precaching ${total} URLs`);
-
+    
+    // Notify start with total count
+    broadcast({ type: 'precacheStart', total: total });
+    
+    let cachedCount = 0;
+    let failedCount = 0;
+    
     for (let i = 0; i < total; i++) {
       try {
         await cache.add(urls[i]);
+        cachedCount++;
       } catch (error) {
+        failedCount++;
         console.error(`[SW] Failed to cache ${urls[i]}:`, error);
       }
-
-      // Report progress to all clients
-      const clients = await self.clients.matchAll();
-      clients.forEach(client => {
-        client.postMessage({
-          type: 'precacheProgress',
-          current: i + 1,
-          total: total
+      
+      // Report progress every 5 URLs or at the end
+      if (i % 5 === 0 || i === total - 1) {
+        broadcast({ 
+          type: 'precacheProgress', 
+          current: i + 1, 
+          total: total,
+          cached: cachedCount,
+          failed: failedCount
         });
-      });
+      }
     }
-
-    console.log('[SW] Precaching complete');
-    const completeClients = await self.clients.matchAll();
-    completeClients.forEach(client => {
-      client.postMessage({ type: 'precacheComplete' });
+    
+    console.log(`[SW] Precaching complete: ${cachedCount} cached, ${failedCount} failed`);
+    broadcast({ 
+      type: 'precacheComplete', 
+      cached: cachedCount, 
+      failed: failedCount 
     });
+    
   } catch (error) {
     console.error('[SW] Precaching failed:', error);
-    const errorClients = await self.clients.matchAll();
-    errorClients.forEach(client => {
-      client.postMessage({ type: 'precacheError', error: error.message });
-    });
+    broadcast({ type: 'precacheError', error: error.message });
   }
+}
+
+function broadcast(message) {
+  self.clients.matchAll({ type: 'window', includeUncontrolled: true })
+    .then(clients => {
+      console.log('[SW] Broadcasting to', clients.length, 'clients');
+      clients.forEach(client => {
+        try {
+          client.postMessage(message);
+        } catch (e) {
+          console.error('[SW] Failed to postMessage:', e);
+        }
+      });
+    })
+    .catch(err => console.error('[SW] matchAll failed:', err));
 }

@@ -205,10 +205,14 @@ function handleSWMessage(event) {
   const data = event.data;
   if (!data) return;
 
-  if (data.type === 'precacheProgress') {
-    updatePrecacheProgress(data.current, data.total);
+  console.log('[App] Received SW message:', data.type, data);
+
+  if (data.type === 'precacheStart') {
+    onPrecacheStart(data.total);
+  } else if (data.type === 'precacheProgress') {
+    updatePrecacheProgress(data.current, data.total, data.cached, data.failed);
   } else if (data.type === 'precacheComplete') {
-    onPrecacheComplete();
+    onPrecacheComplete(data.cached, data.failed);
   } else if (data.type === 'precacheError') {
     onPrecacheError(data.error);
   }
@@ -304,38 +308,50 @@ function showOfflinePrompt() {
  * Start precaching all content
  */
 function startPrecache() {
-  showPrecacheProgress();
-
-  const sendPrecache = () => {
-    if (navigator.serviceWorker.controller) {
-      navigator.serviceWorker.controller.postMessage('precacheAll');
-      console.log('[App] Sent precacheAll to SW');
-    }
-  };
-
-  if (navigator.serviceWorker.controller) {
-    sendPrecache();
-  } else {
-    // iOS/Safari: wait for controller, then send
-    navigator.serviceWorker.addEventListener('controllerchange', sendPrecache, { once: true });
+  if (!navigator.serviceWorker.controller) {
+    // Wait for controller (common on iOS first launch)
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (navigator.serviceWorker.controller) {
+        navigator.serviceWorker.controller.postMessage('precacheAll');
+      }
+    }, { once: true });
     
-    // Fallback timeout: if controller doesn't appear within 5s, try anyway
+    // Fallback timeout
     setTimeout(() => {
       if (!navigator.serviceWorker.controller) {
         console.warn('[App] SW controller not ready after 5s, retrying...');
-        sendPrecache();
+        if (navigator.serviceWorker.controller) {
+          navigator.serviceWorker.controller.postMessage('precacheAll');
+        }
       }
     }, 5000);
+  } else {
+    navigator.serviceWorker.controller.postMessage('precacheAll');
   }
+  
+  // Always show progress UI immediately
+  showPrecacheProgress();
+}
+
+/**
+ * Handle precache start - show total count
+ */
+function onPrecacheStart(total) {
+  console.log('[App] Precaching started, total URLs:', total);
+  showPrecacheProgress(total);
 }
 
 /**
  * Show precache progress UI
  */
-function showPrecacheProgress() {
+function showPrecacheProgress(total) {
   const existing = document.getElementById('precache-progress');
   if (existing) {
-    existing.style.display = 'block';
+    existing.style.display = 'flex';
+    if (total) {
+      const detail = document.getElementById('precache-detail');
+      if (detail) detail.textContent = `0 / ${total}`;
+    }
     return;
   }
 
@@ -347,21 +363,26 @@ function showPrecacheProgress() {
     <div style="background:rgba(255,255,255,0.3);border-radius:4px;height:8px;width:100%;">
       <div id="precache-bar" style="background:#fff;height:100%;width:0%;border-radius:4px;transition:width 0.3s;"></div>
     </div>
-    <p id="precache-detail" style="margin:0;font-size:0.85rem;opacity:0.9;">0 / 0</p>
-    <button id="btn-close-progress" style="display:none;background:rgba(255,255,255,0.2);color:#fff;border:1px solid rgba(255,255,255,0.4);padding:6px 16px;border-radius:4px;cursor:pointer;font-family:Arial,Helvetica,sans-serif;font-size:0.9rem;margin-top:4px;">Закрыть</button>
+    <p id="precache-detail" style="margin:0;font-size:0.85rem;opacity:0.9;">0 / ${total || 0}</p>
+    <button id="btn-close-progress" style="display:none;background:rgba(255,255,255,0.2);color:#fff;border:none;padding:6px 16px;border-radius:4px;cursor:pointer;font-family:Arial,Helvetica,sans-serif;font-size:0.85rem;margin-top:8px;">Закрыть</button>
   `;
 
   document.body.appendChild(progress);
+  progress.style.display = 'flex';
 
-  document.getElementById('btn-close-progress').addEventListener('click', () => {
-    progress.remove();
-  });
+  const closeBtn = document.getElementById('btn-close-progress');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+      const progress = document.getElementById('precache-progress');
+      if (progress) progress.remove();
+    });
+  }
 }
 
 /**
  * Update precache progress bar
  */
-function updatePrecacheProgress(current, total) {
+function updatePrecacheProgress(current, total, cached, failed) {
   const bar = document.getElementById('precache-bar');
   const detail = document.getElementById('precache-detail');
   const status = document.getElementById('precache-status');
@@ -372,25 +393,28 @@ function updatePrecacheProgress(current, total) {
   }
 
   if (detail) {
-    detail.textContent = `${current} / ${total}`;
+    detail.textContent = `${current} / ${total}${cached !== undefined ? ` (кэшировано: ${cached}, ошибки: ${failed || 0})` : ''}`;
   }
 
   if (status && current === total) {
-    status.textContent = 'Готово! Все тексты сохранены.';
+    status.textContent = 'Готово!';
   }
 }
 
 /**
  * Handle precache completion
  */
-function onPrecacheComplete() {
+function onPrecacheComplete(cached, failed) {
+  console.log('[App] Precaching complete:', { cached, failed });
   sessionStorage.setItem('precache_done', 'true');
   sessionStorage.removeItem('offline_prompt_dismissed');
 
+  const status = document.getElementById('precache-status');
   const detail = document.getElementById('precache-detail');
   const closeBtn = document.getElementById('btn-close-progress');
 
-  if (detail) detail.textContent = 'Теперь доступно офлайн';
+  if (status) status.textContent = 'Готово! Все тексты сохранены.';
+  if (detail) detail.textContent = `Кэшировано: ${cached}${failed ? `, ошибки: ${failed}` : ''}`;
   if (closeBtn) closeBtn.style.display = 'inline-block';
 }
 
@@ -400,11 +424,9 @@ function onPrecacheComplete() {
 function onPrecacheError(error) {
   console.error('[App] Precaching failed:', error);
   const status = document.getElementById('precache-status');
-  const detail = document.getElementById('precache-detail');
   const closeBtn = document.getElementById('btn-close-progress');
-
-  if (status) status.textContent = 'Ошибка кэширования';
-  if (detail) detail.textContent = error || 'Не удалось сохранить тексты';
+  
+  if (status) status.textContent = 'Ошибка кэширования: ' + error;
   if (closeBtn) closeBtn.style.display = 'inline-block';
 }
 
