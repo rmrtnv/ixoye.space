@@ -33,8 +33,8 @@ async function initApp() {
   // Check online status
   updateOnlineStatus();
 
-  // Auto-precache when running as installed PWA on WiFi
-  await maybePrecacheForOffline();
+  // Show offline download prompt for PWA users
+  await maybeShowOfflinePrompt();
 
   console.log('[App] Initialization complete');
 }
@@ -191,6 +191,27 @@ function setupEventListeners() {
   window.addEventListener('online', updateOnlineStatus);
   window.addEventListener('offline', updateOnlineStatus);
   window.addEventListener('beforeunload', saveScrollPosition);
+
+  // Listen for Service Worker messages (precache progress)
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.addEventListener('message', handleSWMessage);
+  }
+}
+
+/**
+ * Handle messages from Service Worker
+ */
+function handleSWMessage(event) {
+  const data = event.data;
+  if (!data) return;
+
+  if (data.type === 'precacheProgress') {
+    updatePrecacheProgress(data.current, data.total);
+  } else if (data.type === 'precacheComplete') {
+    onPrecacheComplete();
+  } else if (data.type === 'precacheError') {
+    onPrecacheError(data.error);
+  }
 }
 
 /**
@@ -218,32 +239,158 @@ function saveScrollPosition() {
 }
 
 /**
- * Auto-precache all content when running as installed PWA on WiFi
+ * Show offline download prompt when running as installed PWA
  */
-async function maybePrecacheForOffline() {
-  const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+async function maybeShowOfflinePrompt() {
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches ||
+                       (typeof navigator !== 'undefined' && navigator.standalone === true);
+  
   if (!isStandalone) return;
+  if (!navigator.onLine) return;
 
-  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-  const isWifi = !connection ||
-    connection.type !== 'cellular' ||
-    connection.effectiveType !== '2g' ||
-    connection.effectiveType === '4g';
+  // Check if user already dismissed or completed download
+  const promptDismissed = sessionStorage.getItem('offline_prompt_dismissed');
+  const precacheDone = sessionStorage.getItem('precache_done');
+  
+  if (precacheDone === 'true') return;
+  if (promptDismissed === 'true') {
+    // Re-show after 24 hours
+    const dismissedAt = parseInt(sessionStorage.getItem('offline_prompt_dismissed_at') || '0');
+    if (Date.now() - dismissedAt < 24 * 60 * 60 * 1000) return;
+  }
 
-  if (!isWifi) return;
+  showOfflinePrompt();
+}
 
-  const sendPrecache = () => {
-    if (navigator.serviceWorker.controller) {
-      navigator.serviceWorker.controller.postMessage('precacheAll');
-      console.log('[App] Sent precacheAll to SW');
-    }
-  };
+/**
+ * Show the offline download prompt
+ */
+function showOfflinePrompt() {
+  const existing = document.getElementById('offline-prompt');
+  if (existing) {
+    existing.style.display = 'flex';
+    return;
+  }
 
-  sendPrecache();
+  const modal = document.createElement('div');
+  modal.id = 'offline-prompt';
+  modal.style.cssText = 'display:flex;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:2000;justify-content:center;align-items:center;';
+  modal.innerHTML = `
+    <div style="background:#fff;padding:24px;border-radius:8px;max-width:420px;width:90%;text-align:center;font-family:Times New Roman,Georgia,serif;">
+      <h3 style="color:#BA6841;margin-top:0;">Скачать для офлайн-чтения?</h3>
+      <p style="text-align:center;">Хотите сохранить все тексты на устройство для чтения без интернета? Это займёт несколько секунд при подключении к WiFi.</p>
+      <div style="margin-top:16px;">
+        <button id="btn-download" style="background:#BA6841;color:#fff;border:none;padding:10px 24px;border-radius:4px;cursor:pointer;font-family:Arial,Helvetica,sans-serif;font-size:1rem;">Скачать</button>
+        <button id="btn-dismiss" style="background:#ccc;color:#333;border:none;padding:10px 24px;border-radius:4px;cursor:pointer;font-family:Arial,Helvetica,sans-serif;font-size:1rem;margin-left:8px;">Позже</button>
+      </div>
+    </div>
+  `;
 
-  // iOS/Safari: controller may not be set on first PWA launch
+  document.body.appendChild(modal);
+
+  document.getElementById('btn-download').addEventListener('click', () => {
+    modal.remove();
+    startPrecache();
+  });
+
+  document.getElementById('btn-dismiss').addEventListener('click', () => {
+    modal.remove();
+    sessionStorage.setItem('offline_prompt_dismissed', 'true');
+    sessionStorage.setItem('offline_prompt_dismissed_at', Date.now().toString());
+  });
+}
+
+/**
+ * Start precaching all content
+ */
+function startPrecache() {
   if (!navigator.serviceWorker.controller) {
-    navigator.serviceWorker.addEventListener('controllerchange', sendPrecache, { once: true });
+    // Wait for controller (common on iOS first launch)
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      navigator.serviceWorker.controller.postMessage('precacheAll');
+    }, { once: true });
+    return;
+  }
+
+  navigator.serviceWorker.controller.postMessage('precacheAll');
+  showPrecacheProgress();
+}
+
+/**
+ * Show precache progress UI
+ */
+function showPrecacheProgress() {
+  const existing = document.getElementById('precache-progress');
+  if (existing) {
+    existing.style.display = 'block';
+    return;
+  }
+
+  const progress = document.createElement('div');
+  progress.id = 'precache-progress';
+  progress.style.cssText = 'display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#BA6841;color:#fff;padding:16px 24px;border-radius:8px;z-index:2000;text-align:center;font-family:Arial,Helvetica,sans-serif;box-shadow:0 2px 10px rgba(0,0,0,0.2);min-width:280px;';
+  progress.innerHTML = `
+    <p id="precache-status" style="margin:0 0 8px 0;">Кэширование текстов...</p>
+    <div style="background:rgba(255,255,255,0.3);border-radius:4px;height:8px;width:100%;margin-bottom:8px;">
+      <div id="precache-bar" style="background:#fff;height:100%;width:0%;border-radius:4px;transition:width 0.3s;"></div>
+    </div>
+    <p id="precache-detail" style="margin:0;font-size:0.85rem;opacity:0.9;">0 / 0</p>
+  `;
+
+  document.body.appendChild(progress);
+  progress.style.display = 'block';
+}
+
+/**
+ * Update precache progress bar
+ */
+function updatePrecacheProgress(current, total) {
+  const bar = document.getElementById('precache-bar');
+  const detail = document.getElementById('precache-detail');
+  const status = document.getElementById('precache-status');
+
+  if (bar) {
+    const percent = Math.round((current / total) * 100);
+    bar.style.width = `${percent}%`;
+  }
+
+  if (detail) {
+    detail.textContent = `${current} / ${total}`;
+  }
+
+  if (status && current === total) {
+    status.textContent = 'Готово!';
+  }
+}
+
+/**
+ * Handle precache completion
+ */
+function onPrecacheComplete() {
+  sessionStorage.setItem('precache_done', 'true');
+  sessionStorage.removeItem('offline_prompt_dismissed');
+
+  const status = document.getElementById('precache-status');
+  const detail = document.getElementById('precache-detail');
+
+  if (status) status.textContent = 'Готово! Все тексты сохранены.';
+  if (detail) detail.textContent = 'Теперь доступно офлайн';
+
+  // Hide progress after 3 seconds
+  setTimeout(() => {
+    const progress = document.getElementById('precache-progress');
+    if (progress) progress.remove();
+  }, 3000);
+}
+
+/**
+ * Handle precache error
+ */
+function onPrecacheError(error) {
+  console.error('[App] Precaching failed:', error);
+  const status = document.getElementById('precache-status');
+  if (status) {
+    status.textContent = 'Ошибка кэширования';
   }
 }
 
@@ -276,5 +423,7 @@ window.App = {
   getBookmarks,
   savePreference,
   getPreference,
-  getStorageEstimate
+  getStorageEstimate,
+  startPrecache,
+  showOfflinePrompt
 };

@@ -173,10 +173,37 @@ async function precacheAll() {
     if (!response.ok) throw new Error('Manifest not found');
     const urls = await response.json();
     const cache = await caches.open(`ixoye-content-v${CURRENT_VERSION}`);
-    console.log(`[SW] Precaching ${urls.length} URLs`);
-    await cache.addAll(urls);
+    const total = urls.length;
+    console.log(`[SW] Precaching ${total} URLs`);
+
+    for (let i = 0; i < total; i++) {
+      try {
+        await cache.add(urls[i]);
+      } catch (error) {
+        console.error(`[SW] Failed to cache ${urls[i]}:`, error);
+      }
+
+      // Report progress to all clients
+      const clients = await self.clients.matchAll();
+      clients.forEach(client => {
+        client.postMessage({
+          type: 'precacheProgress',
+          current: i + 1,
+          total: total
+        });
+      });
+    }
+
     console.log('[SW] Precaching complete');
+    const completeClients = await self.clients.matchAll();
+    completeClients.forEach(client => {
+      client.postMessage({ type: 'precacheComplete' });
+    });
   } catch (error) {
     console.error('[SW] Precaching failed:', error);
+    const errorClients = await self.clients.matchAll();
+    errorClients.forEach(client => {
+      client.postMessage({ type: 'precacheError', error: error.message });
+    });
   }
 }
