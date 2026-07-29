@@ -69,7 +69,7 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch event - cache-first for static assets, network-first for content
+// Fetch event - cache-first for all requests (static + content)
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
@@ -77,20 +77,10 @@ self.addEventListener('fetch', (event) => {
   if (request.method !== 'GET') return;
   if (url.origin !== location.origin) return;
 
-  if (isStaticAsset(url.pathname)) {
-    event.respondWith(cacheFirst(request));
-    return;
-  }
-
-  if (isContentPath(url.pathname)) {
-    event.respondWith(networkFirst(request));
-    return;
-  }
-
-  event.respondWith(networkFirst(request));
+  event.respondWith(cacheFirst(request));
 });
 
-// Check if request is for static assets
+// Check if request is for a static asset (file extension or directory index)
 function isStaticAsset(pathname) {
   const staticExtensions = ['.css', '.js', '.png', '.jpg', '.jpeg', '.gif', '.svg', '.ico', '.woff', '.woff2', '.ttf', '.eot', '.otf', '.json'];
   return staticExtensions.some(ext => pathname.endsWith(ext)) ||
@@ -98,12 +88,15 @@ function isStaticAsset(pathname) {
          pathname.endsWith('index.html');
 }
 
-// Check if request is for content
-function isContentPath(pathname) {
+// Check if request is for content (works with full URL or pathname)
+function isContentPath(urlOrPath) {
+  const pathname = typeof urlOrPath === 'string' && urlOrPath.startsWith('http')
+    ? new URL(urlOrPath).pathname
+    : urlOrPath;
   return CONTENT_PATHS.some(path => pathname.startsWith(path));
 }
 
-// Cache-first strategy
+// Cache-first strategy — serves cached response instantly, updates cache in background
 async function cacheFirst(request) {
   const cached = await caches.match(request);
   if (cached) return cached;
@@ -111,33 +104,16 @@ async function cacheFirst(request) {
   try {
     const response = await fetch(request);
     if (response.ok) {
-      const cache = await caches.open(`ixoye-static-v${CURRENT_VERSION}`);
+      const cacheName = isContentPath(request.url)
+        ? `ixoye-content-v${CURRENT_VERSION}`
+        : `ixoye-static-v${CURRENT_VERSION}`;
+      const cache = await caches.open(cacheName);
       cache.put(request, response.clone());
     }
     return response;
   } catch (error) {
     console.log('[SW] Cache-first fetch failed:', error);
     return new Response('Offline', { status: 503 });
-  }
-}
-
-// Network-first strategy with cache fallback
-async function networkFirst(request) {
-  try {
-    const response = await fetch(request);
-    if (response.ok) {
-      const cache = await caches.open(`ixoye-content-v${CURRENT_VERSION}`);
-      cache.put(request, response.clone());
-    }
-    return response;
-  } catch (error) {
-    console.log('[SW] Network-first fetch failed, trying cache:', error);
-    const cached = await caches.match(request);
-    if (cached) return cached;
-    return new Response('Offline - Content not available', {
-      status: 503,
-      headers: { 'Content-Type': 'text/plain; charset=utf-8' }
-    });
   }
 }
 
