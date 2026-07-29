@@ -45,7 +45,7 @@ async function initApp() {
 async function registerServiceWorker() {
   if ('serviceWorker' in navigator) {
     try {
-      const registration = await navigator.serviceWorker.register('/src/sw.js');
+      const registration = await navigator.serviceWorker.register('/src/sw.js', { scope: '/' });
       console.log('[SW] Registration successful:', registration.scope);
     } catch (error) {
       console.error('[SW] Registration failed:', error);
@@ -307,30 +307,24 @@ function showOfflinePrompt() {
 /**
  * Start precaching all content
  */
-function startPrecache() {
-  if (!navigator.serviceWorker.controller) {
-    // Wait for controller (common on iOS first launch)
-    navigator.serviceWorker.addEventListener('controllerchange', () => {
-      if (navigator.serviceWorker.controller) {
-        navigator.serviceWorker.controller.postMessage('precacheAll');
-      }
-    }, { once: true });
-    
-    // Fallback timeout
-    setTimeout(() => {
-      if (!navigator.serviceWorker.controller) {
-        console.warn('[App] SW controller not ready after 5s, retrying...');
-        if (navigator.serviceWorker.controller) {
-          navigator.serviceWorker.controller.postMessage('precacheAll');
-        }
-      }
-    }, 5000);
-  } else {
-    navigator.serviceWorker.controller.postMessage('precacheAll');
-  }
-  
-  // Always show progress UI immediately
+async function startPrecache() {
   showPrecacheProgress();
+
+  try {
+    const registration = await navigator.serviceWorker.ready;
+    const worker = registration.active || registration.waiting || registration.installing;
+    
+    if (worker) {
+      worker.postMessage('precacheAll');
+      console.log('[App] Sent precacheAll to SW');
+    } else {
+      console.warn('[App] No SW worker available');
+      onPrecacheError('Service Worker not available');
+    }
+  } catch (error) {
+    console.error('[App] startPrecache failed:', error);
+    onPrecacheError(error.message);
+  }
 }
 
 /**
