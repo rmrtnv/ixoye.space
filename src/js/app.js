@@ -321,23 +321,50 @@ async function startPrecache() {
   showPrecacheProgress();
 
   try {
-    // Prefer stored registration from initApp(); fall back to getRegistration()
-    let registration = swRegistration || await navigator.serviceWorker.getRegistration?.();
-    
+    let registration = null;
+
+    // 1. Try stored registration from initApp()
+    if (swRegistration) {
+      registration = swRegistration;
+    }
+
+    // 2. Try getRegistration() for current scope
+    if (!registration && navigator.serviceWorker.getRegistration) {
+      registration = await navigator.serviceWorker.getRegistration();
+    }
+
+    // 3. Try getRegistrations() for any scope match
+    if (!registration && navigator.serviceWorker.getRegistrations) {
+      const registrations = await navigator.serviceWorker.getRegistrations();
+      registration = registrations[0] || null;
+    }
+
+    // 4. Wait for ready with a timeout (most reliable on iOS Safari)
+    if (!registration) {
+      try {
+        registration = await Promise.race([
+          navigator.serviceWorker.ready,
+          new Promise((_, reject) => setTimeout(() => reject(new Error('ready timeout')), 5000))
+        ]);
+      } catch (_) {
+        // ready timed out or failed — fall through to error
+      }
+    }
+
     if (!registration) {
       const detail = swRegistrationError ? ` (${swRegistrationError})` : '';
       onPrecacheError('Service Worker не зарегистрирован.' + detail + ' Убедитесь, что сайт открыт по HTTPS или localhost, и файл src/sw.js доступен.');
       return;
     }
-    
+
     // Wait up to ~3s for an active/installing worker if none is present yet
     const startTime = Date.now();
     while (!registration.active && !registration.waiting && !registration.installing && Date.now() - startTime < 3000) {
       await new Promise(r => setTimeout(r, 200));
     }
-    
+
     const worker = registration.active || registration.waiting || registration.installing;
-    
+
     if (worker) {
       worker.postMessage('precacheAll');
       console.log('[App] Sent precacheAll to SW');
