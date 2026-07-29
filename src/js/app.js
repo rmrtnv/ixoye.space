@@ -48,6 +48,16 @@ async function registerServiceWorker() {
   if (!('serviceWorker' in navigator)) {
     console.warn('[SW] Service Worker not supported');
     swRegistration = null;
+    swRegistrationError = 'Service Worker not supported by this browser';
+    return;
+  }
+
+  // Service Workers require HTTPS or localhost
+  const isSecure = location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+  if (!isSecure) {
+    console.warn('[SW] Service Worker requires HTTPS or localhost');
+    swRegistration = null;
+    swRegistrationError = 'Service Worker requires HTTPS or localhost (current: ' + location.protocol + ')';
     return;
   }
 
@@ -57,9 +67,6 @@ async function registerServiceWorker() {
     swRegistration = registration;
     swRegistrationError = null;
     console.log('[SW] Registration successful:', registration.scope);
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 
     // Reload page when a new SW takes control so messages flow reliably
     registration.addEventListener('controllerchange', () => {
@@ -67,12 +74,6 @@ async function registerServiceWorker() {
       window.location.reload();
     });
 
-=======
->>>>>>> parent of 507969d (fix(app): restore controllerchange listener (from cb95ef6 base))
-=======
->>>>>>> parent of 507969d (fix(app): restore controllerchange listener (from cb95ef6 base))
-=======
->>>>>>> parent of 507969d (fix(app): restore controllerchange listener (from cb95ef6 base))
     return registration;
   } catch (error) {
     console.error('[SW] Registration failed:', error);
@@ -221,6 +222,12 @@ function setupEventListeners() {
   // Listen for Service Worker messages (precache progress)
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.addEventListener('message', handleSWMessage);
+
+    // Reload when a new SW takes control — ensures message channel works
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      console.log('[App] SW controller changed, reloading');
+      window.location.reload();
+    });
   }
 }
 
