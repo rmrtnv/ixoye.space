@@ -152,7 +152,7 @@ self.addEventListener('message', (event) => {
   }
 
   if (event.data === 'precacheAll') {
-    event.waitUntil(precacheAll());
+    event.waitUntil(precacheAll(event.source));
   }
 });
 
@@ -167,7 +167,7 @@ async function getVersion() {
   }
 }
 
-async function precacheAll() {
+async function precacheAll(sourceClient) {
   let total = 0;
   
   try {
@@ -191,7 +191,7 @@ async function precacheAll() {
     console.log(`[SW] Precaching ${total} URLs`);
     
     // Notify start with total count
-    broadcast({ type: 'precacheStart', total: total });
+    broadcast({ type: 'precacheStart', total: total }, sourceClient);
     
     let cachedCount = 0;
     let failedCount = 0;
@@ -213,7 +213,7 @@ async function precacheAll() {
           total: total,
           cached: cachedCount,
           failed: failedCount
-        });
+        }, sourceClient);
       }
     }
     
@@ -222,15 +222,25 @@ async function precacheAll() {
       type: 'precacheComplete', 
       cached: cachedCount, 
       failed: failedCount 
-    });
+    }, sourceClient);
     
   } catch (error) {
     console.error('[SW] Precaching failed:', error);
-    broadcast({ type: 'precacheError', error: error.message });
+    broadcast({ type: 'precacheError', error: error.message }, sourceClient);
   }
 }
 
-function broadcast(message) {
+function broadcast(message, sourceClient) {
+  // Send to source client directly (fixes iOS Safari standalone PWA matchAll issue)
+  if (sourceClient && typeof sourceClient.postMessage === 'function') {
+    try {
+      sourceClient.postMessage(message);
+    } catch (e) {
+      console.error('[SW] Failed to postMessage to source:', e);
+    }
+  }
+  
+  // Also broadcast to all other clients via matchAll
   self.clients.matchAll({ type: 'window', includeUncontrolled: true })
     .then(clients => {
       console.log('[SW] Broadcasting to', clients.length, 'clients');

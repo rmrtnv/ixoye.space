@@ -311,7 +311,13 @@ async function startPrecache() {
   showPrecacheProgress();
 
   try {
-    const registration = await navigator.serviceWorker.ready;
+    const registration = await navigator.serviceWorker.getRegistration();
+    
+    if (!registration) {
+      onPrecacheError('Service Worker not registered');
+      return;
+    }
+    
     const worker = registration.active || registration.waiting || registration.installing;
     
     if (worker) {
