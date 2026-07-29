@@ -15,6 +15,7 @@ const APP_CONFIG = {
 // Global state
 let db = null;
 let swRegistration = null;
+let swRegistrationError = null;
 
 /**
  * Initialize the application
@@ -52,13 +53,15 @@ async function registerServiceWorker() {
 
   try {
     // Use relative path so it works on GitHub Pages project sites and subdirectory deployments
-    const registration = await navigator.serviceWorker.register('src/sw.js', { scope: './' });
+    const registration = await navigator.serviceWorker.register('src/sw.js', { scope: '/' });
     swRegistration = registration;
+    swRegistrationError = null;
     console.log('[SW] Registration successful:', registration.scope);
     return registration;
   } catch (error) {
     console.error('[SW] Registration failed:', error);
     swRegistration = null;
+    swRegistrationError = error.message;
   }
 }
 
@@ -322,7 +325,8 @@ async function startPrecache() {
     let registration = swRegistration || await navigator.serviceWorker.getRegistration?.();
     
     if (!registration) {
-      onPrecacheError('Service Worker не зарегистрирован. Убедитесь, что сайт открыт по HTTPS и файл src/sw.js доступен.');
+      const detail = swRegistrationError ? ` (${swRegistrationError})` : '';
+      onPrecacheError('Service Worker не зарегистрирован.' + detail + ' Убедитесь, что сайт открыт по HTTPS или localhost, и файл src/sw.js доступен.');
       return;
     }
     
