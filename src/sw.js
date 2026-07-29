@@ -13,7 +13,7 @@ const APP_SHELL = [
   '/src/styles/main.css',
   '/src/js/app.js'
 ];
-
+ 
 // Content paths for network-first strategy
 const CONTENT_PATHS = [
   '/index.html',
