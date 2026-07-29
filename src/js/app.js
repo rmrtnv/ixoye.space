@@ -14,6 +14,7 @@ const APP_CONFIG = {
 
 // Global state
 let db = null;
+let swRegistration = null;
 
 /**
  * Initialize the application
@@ -43,15 +44,21 @@ async function initApp() {
  * Register Service Worker
  */
 async function registerServiceWorker() {
-  if ('serviceWorker' in navigator) {
-    try {
-      const registration = await navigator.serviceWorker.register('/src/sw.js', { scope: '/' });
-      console.log('[SW] Registration successful:', registration.scope);
-    } catch (error) {
-      console.error('[SW] Registration failed:', error);
-    }
-  } else {
+  if (!('serviceWorker' in navigator)) {
     console.warn('[SW] Service Worker not supported');
+    swRegistration = null;
+    return;
+  }
+
+  try {
+    // Use relative path so it works on GitHub Pages project sites and subdirectory deployments
+    const registration = await navigator.serviceWorker.register('src/sw.js', { scope: './' });
+    swRegistration = registration;
+    console.log('[SW] Registration successful:', registration.scope);
+    return registration;
+  } catch (error) {
+    console.error('[SW] Registration failed:', error);
+    swRegistration = null;
   }
 }
 
@@ -311,11 +318,18 @@ async function startPrecache() {
   showPrecacheProgress();
 
   try {
-    const registration = await navigator.serviceWorker.getRegistration();
+    // Prefer stored registration from initApp(); fall back to getRegistration()
+    let registration = swRegistration || await navigator.serviceWorker.getRegistration?.();
     
     if (!registration) {
-      onPrecacheError('Service Worker not registered');
+      onPrecacheError('Service Worker не зарегистрирован. Убедитесь, что сайт открыт по HTTPS и файл src/sw.js доступен.');
       return;
+    }
+    
+    // Wait up to ~3s for an active/installing worker if none is present yet
+    const startTime = Date.now();
+    while (!registration.active && !registration.waiting && !registration.installing && Date.now() - startTime < 3000) {
+      await new Promise(r => setTimeout(r, 200));
     }
     
     const worker = registration.active || registration.waiting || registration.installing;
@@ -325,11 +339,11 @@ async function startPrecache() {
       console.log('[App] Sent precacheAll to SW');
     } else {
       console.warn('[App] No SW worker available');
-      onPrecacheError('Service Worker not available');
+      onPrecacheError('Service Worker не доступен. Попробуйте обновить страницу.');
     }
   } catch (error) {
     console.error('[App] startPrecache failed:', error);
-    onPrecacheError(error.message);
+    onPrecacheError(error.message || 'Неизвестная ошибка');
   }
 }
 
