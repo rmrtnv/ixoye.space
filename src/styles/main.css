@@ -155,69 +155,6 @@ footer {
 .mb-md { margin-bottom: var(--spacing-md); }
 .mb-lg { margin-bottom: var(--spacing-lg); }
 
-/* Offline Indicator */
-.status-indicator {
-  position: fixed;
-  top: var(--spacing-sm);
-  right: var(--spacing-sm);
-  padding: var(--spacing-xs) var(--spacing-sm);
-  border-radius: 4px;
-  font-family: var(--font-ui);
-  font-size: 0.8rem;
-  z-index: 1000;
-}
-
-.status-online {
-  background-color: #4CAF50;
-  color: white;
-}
-
-.status-offline {
-  background-color: #f44336;
-  color: white;
-}
-
-/* Update Notification */
-.update-notification {
-  position: fixed;
-  bottom: var(--spacing-lg);
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: var(--color-primary);
-  color: white;
-  padding: var(--spacing-md);
-  border-radius: 4px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-md);
-}
-
-.update-notification p {
-  margin: 0;
-  text-indent: 0;
-  text-align: left;
-}
-
-.update-notification button {
-  padding: var(--spacing-xs) var(--spacing-sm);
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: var(--font-ui);
-}
-
-.update-notification button:first-of-type {
-  background-color: white;
-  color: var(--color-primary);
-}
-
-.update-notification button:last-of-type {
-  background-color: rgba(255,255,255,0.3);
-  color: white;
-}
-
 /* Responsive */
 @media (max-width: 768px) {
   html {
@@ -240,8 +177,6 @@ footer {
 
 /* Print Styles */
 @media print {
-  .status-indicator,
-  .update-notification,
   nav {
     display: none;
   }
