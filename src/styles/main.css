@@ -9,7 +9,7 @@
   --color-bg: #E7EBCB;
   --color-text: #000000;
   --color-link: #0000EE;
-  --color-visited: #0000EE;
+  --color-visited: #6B3D2D;
   --color-alink: #0000EE;
   --color-border: #CCCCCC;
 
@@ -76,6 +76,11 @@ a:hover {
 
 a:visited {
   color: var(--color-visited);
+}
+
+nav a:visited {
+  color: var(--color-visited);
+  font-weight: 600;
 }
 
 /* Layout */
