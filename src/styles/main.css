@@ -173,6 +173,120 @@ table {
   max-width: 100%;
 }
 
+/* Semantic shell (structurized pages)
+   div.site-shell > header.site-header + main > article.content-block
+*/
+.site-shell {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.site-header {
+  padding: var(--spacing-lg) var(--spacing-md) var(--spacing-xs);
+}
+
+.site-title {
+  font-family: var(--font-ui);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin: 0 0 var(--spacing-sm);
+}
+
+.site-title a {
+  color: var(--color-primary);
+}
+
+.site-nav a[aria-current="page"] {
+  color: var(--color-primary);
+  text-decoration: none;
+  border-bottom: 2px solid var(--color-primary);
+  padding-bottom: 2px;
+}
+
+/* first heading in the white content block sits flush with its top edge */
+.content-block h1 {
+  margin-top: 0;
+}
+
+/* legacy doc-link entries (FONT SIZE=+1 with a link): one per line */
+.doc-link {
+  display: block;
+  margin: var(--spacing-sm) 0;
+}
+
+/* legacy small-font runs (FONT SIZE=-1/-2/-3, absolute sizes 1/2) */
+.small {
+  font-size: 0.85rem;
+}
+
+/* legacy large-font runs (FONT SIZE=4/5/6 and COLOR'd titles) */
+.text-lg {
+  font-size: 1.25rem;
+}
+
+.text-right { text-align: right; }
+
+/* notice boxes (legacy #FFFFCC tables) */
+.notice {
+  background-color: #FFFFCC;
+  border: 1px solid #D9D9A5;
+  padding: var(--spacing-md);
+  margin: var(--spacing-lg) 0;
+}
+
+.notice p {
+  margin-bottom: var(--spacing-sm);
+}
+
+.notice p:last-child {
+  margin-bottom: 0;
+}
+
+.notice a {
+  font-weight: 600;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: var(--spacing-lg) 0;
+}
+
+/* homepage: the legacy section-link row is a nav but must not get the nav box */
+nav.index-links {
+  background: none;
+  border: none;
+  padding: 0;
+  border-radius: 0;
+}
+
+/* homepage news table */
+table.news {
+  width: 100%;
+  border-collapse: collapse;
+  border-top: 1px solid var(--color-border);
+}
+
+table.news td {
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--spacing-md) var(--spacing-sm);
+  vertical-align: top;
+  font-size: 0.95rem;
+}
+
+table.news td > p {
+  text-indent: 0;
+}
+
+table.news td.news-date {
+  width: 28%;
+  text-align: center;
+  white-space: nowrap;
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   html {
