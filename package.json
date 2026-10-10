@@ -4,9 +4,9 @@
   "description": "Русская Апокрифическая Студия - ixoye.space",
   "type": "module",
   "scripts": {
-    "dev": "npx serve . -l 3000",
+    "dev": "node scripts/dev-server.mjs",
     "build": "echo 'Static site - no build required'",
-    "preview": "npx serve . -l 4000",
+    "preview": "node scripts/dev-server.mjs --port 4000",
     "enrich": "node scripts/enrich-pages.mjs --write",
     "check-links": "node scripts/check-links.mjs",
     "sitemap": "node scripts/generate-sitemap.mjs --write",
@@ -23,7 +23,5 @@
   ],
   "author": "Русская Апокрифическая Студия",
   "license": "CC BY-NC-SA 4.0",
-  "devDependencies": {
-    "serve": "^14.2.0"
-  }
+  "devDependencies": {}
 }
