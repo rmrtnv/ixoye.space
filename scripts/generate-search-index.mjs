@@ -44,6 +44,7 @@ function cleanText(text) {
     t = t.split(phrase).join(' ');
   }
   t = t.replace(/\s+/g, ' ').trim();
+  t = t.replace(/(?:\s*\|\s*){2,}/g, ' ').replace(/^[\s|·—-]+/, '');
   return t.slice(0, MAX_CHARS);
 }
 
