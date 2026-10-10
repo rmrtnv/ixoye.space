@@ -8,8 +8,9 @@
  * mobile bar (back · menu · current-text picker · search · forward) and the
  * desktop section list stays consistent.
  *
- * The middle picker lists the texts of the page's own section; the current page
- * is preselected. Root-level pages fall back to the section links.
+ * The middle picker mirrors the section's table of contents: same-directory
+ * links on the section's index page, in document order; the current page is
+ * preselected. Root-level pages fall back to the section links.
  *
  * Pages that only carry a `<main class="container content-block">` (the
  * restoration stubs) are refitted into the shell so they get the nav too.
@@ -68,20 +69,65 @@ function dirKey(rel) {
 
 const files = collectPages().map((p) => rel(p)).sort();
 
-// per-directory text lists for the middle picker (skip noindex stubs)
-const docsByDir = new Map();
+// The middle text picker mirrors the section's "table of contents": the order
+// of the links on the section's index page, not alphabetical order.
+// noindex restoration stubs are skipped.
+const docsByDir = new Map(); // key -> [{ rel, href, label }]
 const titles = new Map();
-for (const rel of files) {
-  const html = fs.readFileSync(path.join(ROOT, rel), "utf8");
-  const href = "/" + rel.replace(/\\/g, "/");
+const pagesByDir = new Map();
+for (const relPath of files) {
+  const html = fs.readFileSync(path.join(ROOT, relPath), "utf8");
+  const href = "/" + relPath.replace(/\\/g, "/");
   const label = pageTitle(html) || href;
-  titles.set(rel, label);
+  titles.set(relPath, label);
   if (NOINDEX_RE.test(html)) continue;
-  const key = dirKey(rel);
-  if (!docsByDir.has(key)) docsByDir.set(key, []);
-  docsByDir.get(key).push({ href, label });
+  const key = dirKey(relPath);
+  if (!pagesByDir.has(key)) pagesByDir.set(key, []);
+  pagesByDir.get(key).push({ rel: relPath, href, label });
 }
-for (const list of docsByDir.values()) list.sort((a, b) => a.label.localeCompare(b.label, "ru"));
+
+// Walk each index page and collect same-directory links in document order;
+// pages not linked there are appended in filename order. A section's own
+// index page is kept as the first option (the "up" / contents entry).
+for (const [key, pages] of pagesByDir) {
+  const ordered = [];
+  const seen = new Set();
+  const base = `http://nav.local/${key === "" ? "" : key + "/"}index.html`;
+  const indexPath = path.join(ROOT, key === "" ? "index.html" : key, "index.html");
+  if (fs.existsSync(indexPath)) {
+    const indexHtml = fs.readFileSync(indexPath, "utf8");
+    const main = indexHtml.match(/<main\b[^>]*>([\s\S]*?)<\/main>/i);
+    const body = main ? main[1] : indexHtml;
+    const hrefRe = /href="([^"]+)"/gi;
+    let m;
+    while ((m = hrefRe.exec(body))) {
+      let u;
+      try {
+        u = new URL(m[1], base);
+      } catch {
+        continue;
+      }
+      if (!/^https?:$/.test(u.protocol)) continue;
+      let target;
+      try {
+        target = decodeURIComponent(u.pathname).replace(/^\/+/, "");
+      } catch {
+        continue;
+      }
+      if (dirKey(target) !== key || seen.has(target)) continue;
+      seen.add(target);
+      const page = pages.find((p) => p.rel === target);
+      if (page) ordered.push(page);
+    }
+  }
+
+  const all = [
+    ...ordered,
+    ...pages.filter((p) => !seen.has(p.rel)).sort((a, b) => a.rel.localeCompare(b.rel)),
+  ];
+  const idx = all.find((p) => path.basename(p.rel).toLowerCase() === "index.html");
+  docsByDir.set(key, idx ? [idx, ...all.filter((p) => p !== idx)] : all);
+}
 
 let updated = 0;
 const missing = [];
