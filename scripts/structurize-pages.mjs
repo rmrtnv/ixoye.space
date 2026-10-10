@@ -45,6 +45,81 @@ const SECTIONS = [
   { dir: "links", label: "Ссылки" },
   { dir: "contacts", label: "Контакты" },
 ];
+// Inline SVG icons for the compact mobile navigation bar.
+const NAV_ICONS = {
+  back: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>',
+  forward: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>',
+  menu: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>',
+  search: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>',
+};
+
+const escapeHtml = (s) =>
+  String(s)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+
+// header shared by every page: desktop section list + compact mobile toolbar
+// (back/menu/text-picker/search/forward). `docs` is the list of texts in the
+// current section for the middle picker; falls back to the section links.
+function renderHeader({ activeDir = "", currentHref = "", currentTitle = "", docs = [] } = {}) {
+  const link = (href, label, active) =>
+    `<a href="${href}"${active ? ' aria-current="page"' : ""}>${label}</a>`;
+  const sections = SECTIONS.map((s) => ({
+    href: `/${s.dir}/index.html`,
+    label: s.label,
+    dir: s.dir,
+  }));
+  sections.push({ href: "/poisk.html", label: "Поиск", dir: "poisk" });
+
+  const sectionItems = sections
+    .map((s) => `        <li>${link(s.href, s.label, s.dir === activeDir || s.href === currentHref)}</li>`)
+    .join("\n");
+
+  let picker = docs.slice();
+  if (!picker.some((d) => d.href === currentHref)) {
+    picker.unshift({ href: currentHref, label: currentTitle });
+  }
+  if (picker.length < 2) picker = [{ href: currentHref, label: currentTitle }, ...sections];
+  const options = picker
+    .map((d) => `          <option value="${d.href}"${d.href === currentHref ? " selected" : ""}>${escapeHtml(d.label)}</option>`)
+    .join("\n");
+
+  return `<header class="site-header">
+  <p class="site-title"><a href="/">Русская апокрифическая студия</a></p>
+  <nav class="site-nav" aria-label="Разделы сайта">
+    <ul class="site-nav-list">
+${sectionItems}
+    </ul>
+
+    <div class="nav-bar" role="group" aria-label="Навигация">
+      <button type="button" class="nav-ico nav-back" onclick="history.back()" aria-label="Назад" title="Назад">${NAV_ICONS.back}</button>
+
+      <details class="nav-drop nav-menu">
+        <summary class="nav-ico" aria-label="Разделы сайта" title="Разделы">${NAV_ICONS.menu}</summary>
+        <ul class="nav-drop-list">
+${sectionItems}
+        </ul>
+      </details>
+
+      <select class="nav-text" aria-label="Текущий текст" title="Выбор текста">
+${options}
+      </select>
+
+      <details class="nav-drop nav-search">
+        <summary class="nav-ico" aria-label="Поиск" title="Поиск">${NAV_ICONS.search}</summary>
+        <form class="nav-search-form" action="/poisk.html" method="get" role="search">
+          <input type="search" name="q" placeholder="Поиск по сайту…" aria-label="Поиск по сайту" enterkeyhint="search" autocomplete="off">
+        </form>
+      </details>
+
+      <button type="button" class="nav-ico nav-forward" onclick="history.forward()" aria-label="Вперёд" title="Вперёд">${NAV_ICONS.forward}</button>
+    </div>
+  </nav>
+</header>`;
+}
+
 const SECTION_TITLE_LABELS = new Set([
   "Библиотека Наг-Хаммади на русском языке",
   "Новозаветные апокрифы",
@@ -342,20 +417,10 @@ function transform(content, h1) {
 // shell building
 // ---------------------------------------------------------------------------
 
-function buildShell({ relPath, h1, content, mailto, head }) {
+function buildShell({ relPath, h1, content, mailto, head, docs = [] }) {
   const dir = path.dirname(relPath);
-  const base = path.basename(relPath, path.extname(relPath));
-  const isIndex = base === "index";
-
-  const navItems = SECTIONS.map((s) => {
-    const active = dir === s.dir || (isIndex && dir === s.dir);
-    return `<li><a href="/${s.dir}/index.html"${active ? ' aria-current="page"' : ""}>${s.label}</a></li>`;
-  }).join("\n      ");
-  const navItemsFull =
-    navItems + `\n      <li><a href="/poisk.html">Поиск</a></li>`;
-
-  const active = SECTIONS.find((s) => s.dir === dir);
-  void active;
+  const currentHref = "/" + relPath.replace(/\\/g, "/");
+  const activeDir = SECTIONS.some((s) => s.dir === dir) ? dir : "";
 
   const doctype = "<!DOCTYPE html>\n<html lang=\"ru\">\n";
   const headOut = /^\s*<!DOCTYPE/i.test(head) ? head : doctype + head;
@@ -365,14 +430,7 @@ function buildShell({ relPath, h1, content, mailto, head }) {
 
 <div class="site-shell">
 
-<header class="site-header">
-  <p class="site-title"><a href="/">Русская апокрифическая студия</a></p>
-  <nav class="site-nav" aria-label="Разделы сайта">
-    <ul>
-      ${navItemsFull}
-    </ul>
-  </nav>
-</header>
+${renderHeader({ activeDir, currentHref, currentTitle: h1, docs })}
 
 <main>
   <article class="content-block">
@@ -529,4 +587,4 @@ if (mismatches.length) {
 }
 } // IS_MAIN
 
-export { extractContent, normText, deriveH1, transform, isLegacy, discover, buildShell };
+export { extractContent, normText, deriveH1, transform, isLegacy, discover, buildShell, renderHeader, SECTIONS };

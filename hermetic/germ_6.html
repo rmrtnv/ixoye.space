@@ -19,6 +19,7 @@
 <meta property="og:description" content="Фрагменты разные">
 <meta property="og:url" content="https://ixoye.space/hermetic/germ_6.html">
 <meta name="twitter:card" content="summary">
+<script src="/src/scripts/nav.js" defer></script>
 </head>
 
 
@@ -29,18 +30,78 @@
 <header class="site-header">
   <p class="site-title"><a href="/">Русская апокрифическая студия</a></p>
   <nav class="site-nav" aria-label="Разделы сайта">
-    <ul>
-      <li><a href="/nag-hammadi/index.html">Библиотека Наг-Хаммади</a></li>
-      <li><a href="/apocrypha-new/index.html">Новозаветные апокрифы</a></li>
-      <li><a href="/apocrypha-old/index.html">Ветхозаветные апокрифы</a></li>
-      <li><a href="/hermetic/index.html" aria-current="page">Герметизм</a></li>
-      <li><a href="/gnostic/index.html">Гностицизм</a></li>
-      <li><a href="/kumran/index.html">Свитки Иудейской пустыни</a></li>
-      <li><a href="/study/index.html">Исследования</a></li>
-      <li><a href="/links/index.html">Ссылки</a></li>
-      <li><a href="/contacts/index.html">Контакты</a></li>
-      <li><a href="/poisk.html">Поиск</a></li>
+    <ul class="site-nav-list">
+        <li><a href="/nag-hammadi/index.html">Библиотека Наг-Хаммади</a></li>
+        <li><a href="/apocrypha-new/index.html">Новозаветные апокрифы</a></li>
+        <li><a href="/apocrypha-old/index.html">Ветхозаветные апокрифы</a></li>
+        <li><a href="/hermetic/index.html" aria-current="page">Герметизм</a></li>
+        <li><a href="/gnostic/index.html">Гностицизм</a></li>
+        <li><a href="/kumran/index.html">Свитки Иудейской пустыни</a></li>
+        <li><a href="/study/index.html">Исследования</a></li>
+        <li><a href="/links/index.html">Ссылки</a></li>
+        <li><a href="/contacts/index.html">Контакты</a></li>
+        <li><a href="/poisk.html">Поиск</a></li>
     </ul>
+
+    <div class="nav-bar" role="group" aria-label="Навигация">
+      <button type="button" class="nav-ico nav-back" onclick="history.back()" aria-label="Назад" title="Назад"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+
+      <details class="nav-drop nav-menu">
+        <summary class="nav-ico" aria-label="Разделы сайта" title="Разделы"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary>
+        <ul class="nav-drop-list">
+        <li><a href="/nag-hammadi/index.html">Библиотека Наг-Хаммади</a></li>
+        <li><a href="/apocrypha-new/index.html">Новозаветные апокрифы</a></li>
+        <li><a href="/apocrypha-old/index.html">Ветхозаветные апокрифы</a></li>
+        <li><a href="/hermetic/index.html" aria-current="page">Герметизм</a></li>
+        <li><a href="/gnostic/index.html">Гностицизм</a></li>
+        <li><a href="/kumran/index.html">Свитки Иудейской пустыни</a></li>
+        <li><a href="/study/index.html">Исследования</a></li>
+        <li><a href="/links/index.html">Ссылки</a></li>
+        <li><a href="/contacts/index.html">Контакты</a></li>
+        <li><a href="/poisk.html">Поиск</a></li>
+        </ul>
+      </details>
+
+      <select class="nav-text" aria-label="Текущий текст" title="Выбор текста">
+          <option value="/hermetic/asklepy.html">Асклепий</option>
+          <option value="/hermetic/germ_2.html">Гермес к Аммону</option>
+          <option value="/hermetic/germ_1.html">Гермес к Тату</option>
+          <option value="/hermetic/index.html">Герметизм</option>
+          <option value="/hermetic/tablica.html">Завещание (или слова тайн) Гермеса Трисмегиста [Изумрудная таблица]</option>
+          <option value="/hermetic/germ_5.html">Из книги &quot;Дева, или зеница мира&quot;</option>
+          <option value="/hermetic/germ_3.html">Из речей Гермеса</option>
+          <option value="/hermetic/icida_to_gor.html">Исида Прорицательница своему сыну Гору</option>
+          <option value="/hermetic/hermes1.html">ПЭМАНДР - пастырь человеческий</option>
+          <option value="/hermetic/germ_4.html">Фрагмент из &quot;Афродиты&quot;</option>
+          <option value="/hermetic/germ_6.html" selected>Фрагменты разные</option>
+          <option value="/hermetic/germ10.html">Х. Ключ</option>
+          <option value="/hermetic/germ1.html">I. Пэмандр</option>
+          <option value="/hermetic/germ2.html">II. Вселенская речь</option>
+          <option value="/hermetic/germ3.html">III. Священная речь Гермеса Триждывеличайшего</option>
+          <option value="/hermetic/germ4.html">IV. Кубок, или Единство</option>
+          <option value="/hermetic/germ9.html">IX. О мышлении и об ощущении</option>
+          <option value="/hermetic/germ5.html">V. О том, что Бог невидим и в то же время в наивысшей степени явен</option>
+          <option value="/hermetic/germ6.html">VI. О том, что Благо существует только в Боге одном, и нигде более</option>
+          <option value="/hermetic/germ7.html">VII. О том, что наибольшее зло для людей есть незнание Бога</option>
+          <option value="/hermetic/germ8.html">VIII. О том, что ни одно из существ не погибает и заблуждение есть то, что люди называют перемены разрушением и смертью</option>
+          <option value="/hermetic/germ11.html">XI. Ум к Гермесу</option>
+          <option value="/hermetic/germ12.html">XII. О Всеобщем Уме</option>
+          <option value="/hermetic/germ13.html">XIII. Тайная проповедь на горе о возрождении и правиле молчания</option>
+          <option value="/hermetic/germ14.html">XIV. Здоровье души</option>
+          <option value="/hermetic/germ16.html">XVI. Определения</option>
+          <option value="/hermetic/germ17.html">XVII. Без названия</option>
+          <option value="/hermetic/germ18.html">XVIII. О Волнениях тела, сковывающих душу</option>
+      </select>
+
+      <details class="nav-drop nav-search">
+        <summary class="nav-ico" aria-label="Поиск" title="Поиск"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></summary>
+        <form class="nav-search-form" action="/poisk.html" method="get" role="search">
+          <input type="search" name="q" placeholder="Поиск по сайту…" aria-label="Поиск по сайту" enterkeyhint="search" autocomplete="off">
+        </form>
+      </details>
+
+      <button type="button" class="nav-ico nav-forward" onclick="history.forward()" aria-label="Вперёд" title="Вперёд"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+    </div>
   </nav>
 </header>
 

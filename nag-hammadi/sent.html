@@ -19,6 +19,7 @@
 <meta property="og:description" content="Изречения Секста">
 <meta property="og:url" content="https://ixoye.space/nag-hammadi/sent.html">
 <meta name="twitter:card" content="summary">
+<script src="/src/scripts/nav.js" defer></script>
 </head>
 
 
@@ -29,18 +30,103 @@
 <header class="site-header">
   <p class="site-title"><a href="/">Русская апокрифическая студия</a></p>
   <nav class="site-nav" aria-label="Разделы сайта">
-    <ul>
-      <li><a href="/nag-hammadi/index.html" aria-current="page">Библиотека Наг-Хаммади</a></li>
-      <li><a href="/apocrypha-new/index.html">Новозаветные апокрифы</a></li>
-      <li><a href="/apocrypha-old/index.html">Ветхозаветные апокрифы</a></li>
-      <li><a href="/hermetic/index.html">Герметизм</a></li>
-      <li><a href="/gnostic/index.html">Гностицизм</a></li>
-      <li><a href="/kumran/index.html">Свитки Иудейской пустыни</a></li>
-      <li><a href="/study/index.html">Исследования</a></li>
-      <li><a href="/links/index.html">Ссылки</a></li>
-      <li><a href="/contacts/index.html">Контакты</a></li>
-      <li><a href="/poisk.html">Поиск</a></li>
+    <ul class="site-nav-list">
+        <li><a href="/nag-hammadi/index.html" aria-current="page">Библиотека Наг-Хаммади</a></li>
+        <li><a href="/apocrypha-new/index.html">Новозаветные апокрифы</a></li>
+        <li><a href="/apocrypha-old/index.html">Ветхозаветные апокрифы</a></li>
+        <li><a href="/hermetic/index.html">Герметизм</a></li>
+        <li><a href="/gnostic/index.html">Гностицизм</a></li>
+        <li><a href="/kumran/index.html">Свитки Иудейской пустыни</a></li>
+        <li><a href="/study/index.html">Исследования</a></li>
+        <li><a href="/links/index.html">Ссылки</a></li>
+        <li><a href="/contacts/index.html">Контакты</a></li>
+        <li><a href="/poisk.html">Поиск</a></li>
     </ul>
+
+    <div class="nav-bar" role="group" aria-label="Навигация">
+      <button type="button" class="nav-ico nav-back" onclick="history.back()" aria-label="Назад" title="Назад"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+
+      <details class="nav-drop nav-menu">
+        <summary class="nav-ico" aria-label="Разделы сайта" title="Разделы"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary>
+        <ul class="nav-drop-list">
+        <li><a href="/nag-hammadi/index.html" aria-current="page">Библиотека Наг-Хаммади</a></li>
+        <li><a href="/apocrypha-new/index.html">Новозаветные апокрифы</a></li>
+        <li><a href="/apocrypha-old/index.html">Ветхозаветные апокрифы</a></li>
+        <li><a href="/hermetic/index.html">Герметизм</a></li>
+        <li><a href="/gnostic/index.html">Гностицизм</a></li>
+        <li><a href="/kumran/index.html">Свитки Иудейской пустыни</a></li>
+        <li><a href="/study/index.html">Исследования</a></li>
+        <li><a href="/links/index.html">Ссылки</a></li>
+        <li><a href="/contacts/index.html">Контакты</a></li>
+        <li><a href="/poisk.html">Поиск</a></li>
+        </ul>
+      </details>
+
+      <select class="nav-text" aria-label="Текущий текст" title="Выбор текста">
+          <option value="/nag-hammadi/ap-iak2-moma.html">(Второй) Апокалипсис Иакова</option>
+          <option value="/nag-hammadi/ap-iak2.html">(Второй) Апокалипсис Иакова</option>
+          <option value="/nag-hammadi/ap-iak1-moma.html">(Первый) Апокалипсис Иакова</option>
+          <option value="/nag-hammadi/ap-iak1.html">(Первый) Апокалипсис Иакова</option>
+          <option value="/nag-hammadi/allogen.html">Аллоген</option>
+          <option value="/nag-hammadi/ap-adam.html">Апокалипсис Адама</option>
+          <option value="/nag-hammadi/apoc_paul.html">Апокалипсис Павла</option>
+          <option value="/nag-hammadi/apokpetr.html">Апокалипсис Петра</option>
+          <option value="/nag-hammadi/apokrif_iak.html">Апокриф Иакова</option>
+          <option value="/nag-hammadi/ap-john.html">Апокриф Иоанна</option>
+          <option value="/nag-hammadi/ap-john_kratk.html">Апокриф Иоанна (краткая версия)</option>
+          <option value="/nag-hammadi/nh_asklepiy.html">Асклепий, 21-29</option>
+          <option value="/nag-hammadi/index.html">Библиотека Наг-Хаммади на русском языке</option>
+          <option value="/nag-hammadi/valentine.html">Валентинианское объяснение</option>
+          <option value="/nag-hammadi/2_sif-moma.html">Второй трактат великого Сифа</option>
+          <option value="/nag-hammadi/2_sif.html">Второй трактат великого Сифа</option>
+          <option value="/nag-hammadi/hips.html">Гипсифрона</option>
+          <option value="/nag-hammadi/grom.html">Гром. Совершенный Ум</option>
+          <option value="/nag-hammadi/acts.html">Деяния Петра и двенадцати апостолов</option>
+          <option value="/nag-hammadi/dialog.html">Диалог Спасителя</option>
+          <option value="/nag-hammadi/ev_istiny.html">Евангелие Истины</option>
+          <option value="/nag-hammadi/ev-eg.html">Евангелие от египтян</option>
+          <option value="/nag-hammadi/ev-phil.html">Евангелие от Филиппа</option>
+          <option value="/nag-hammadi/ev-foma.html">Евангелие от Фомы</option>
+          <option value="/nag-hammadi/evgnost.html">Евгност Блаженный</option>
+          <option value="/nag-hammadi/zostrian.html">Зостриан</option>
+          <option value="/nag-hammadi/sent.html" selected>Изречения Секста</option>
+          <option value="/nag-hammadi/archonts.html">Ипостась Архонтов</option>
+          <option value="/nag-hammadi/znanie.html">Истолкование Знания</option>
+          <option value="/nag-hammadi/book_foma.html">Книга Фомы Атлета</option>
+          <option value="/nag-hammadi/marsan.html">Марсан</option>
+          <option value="/nag-hammadi/melhiz.html">Мелхиседек</option>
+          <option value="/nag-hammadi/mol-paul.html">Молитва апостола Павла</option>
+          <option value="/nag-hammadi/mol-germ-moma.html">Молитва благодарения</option>
+          <option value="/nag-hammadi/mol-germ.html">Молитва благодарения</option>
+          <option value="/nag-hammadi/noria.html">Мысль Нории</option>
+          <option value="/nag-hammadi/noria2.html">Норея</option>
+          <option value="/nag-hammadi/about_nh.html">О Библиотеке Наг-Хаммади на русском языке</option>
+          <option value="/nag-hammadi/world.html">О происхождении мира</option>
+          <option value="/nag-hammadi/parafras.html">Парафраз Сима</option>
+          <option value="/nag-hammadi/nh_platon.html">ПЛАТОН. Фр. из &quot;ГОСУДАРСТВА&quot;</option>
+          <option value="/nag-hammadi/podlinnoe.html">Подлинное учение</option>
+          <option value="/nag-hammadi/pon_sila.html">Понятие нашей великой силы</option>
+          <option value="/nag-hammadi/regin.html">Послание к Регину</option>
+          <option value="/nag-hammadi/tophil.html">Послание Петра Филиппу</option>
+          <option value="/nag-hammadi/siluan.html">Поучения Силуана</option>
+          <option value="/nag-hammadi/sophia_iisus.html">Премудрость Иисуса Христа</option>
+          <option value="/nag-hammadi/8-9.html">Рассуждение о восьмерке и девятке</option>
+          <option value="/nag-hammadi/svidet.html">Свидетельство Истины</option>
+          <option value="/nag-hammadi/about_soul.html">Толкование о душе</option>
+          <option value="/nag-hammadi/3-part-text.html">Трехчастный Трактат</option>
+          <option value="/nag-hammadi/stel_sif.html">Три стелы Сифа</option>
+          <option value="/nag-hammadi/proten.html">Троевидная Протенойя</option>
+      </select>
+
+      <details class="nav-drop nav-search">
+        <summary class="nav-ico" aria-label="Поиск" title="Поиск"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></summary>
+        <form class="nav-search-form" action="/poisk.html" method="get" role="search">
+          <input type="search" name="q" placeholder="Поиск по сайту…" aria-label="Поиск по сайту" enterkeyhint="search" autocomplete="off">
+        </form>
+      </details>
+
+      <button type="button" class="nav-ico nav-forward" onclick="history.forward()" aria-label="Вперёд" title="Вперёд"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+    </div>
   </nav>
 </header>
 

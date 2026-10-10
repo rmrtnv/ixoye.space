@@ -16,12 +16,109 @@
 <meta property="og:description" content="Раннехристианские и апокрифические тексты на русском языке — Русская Апокрифическая Студия.">
 <meta property="og:url" content="https://ixoye.space/gnostic/manich_fragm2.shtml">
 <meta name="twitter:card" content="summary">
+<script src="/src/scripts/nav.js" defer></script>
 </head>
-<body>
-<main class="container content-block">
-<p><a href="/">← На главную</a> · <a href="/gnostic/index.html">Гностицизм</a></p>
-<h1>Фрагмент о земле света</h1>
+
+
+<BODY>
+
+<div class="site-shell">
+
+<header class="site-header">
+  <p class="site-title"><a href="/">Русская апокрифическая студия</a></p>
+  <nav class="site-nav" aria-label="Разделы сайта">
+    <ul class="site-nav-list">
+        <li><a href="/nag-hammadi/index.html">Библиотека Наг-Хаммади</a></li>
+        <li><a href="/apocrypha-new/index.html">Новозаветные апокрифы</a></li>
+        <li><a href="/apocrypha-old/index.html">Ветхозаветные апокрифы</a></li>
+        <li><a href="/hermetic/index.html">Герметизм</a></li>
+        <li><a href="/gnostic/index.html" aria-current="page">Гностицизм</a></li>
+        <li><a href="/kumran/index.html">Свитки Иудейской пустыни</a></li>
+        <li><a href="/study/index.html">Исследования</a></li>
+        <li><a href="/links/index.html">Ссылки</a></li>
+        <li><a href="/contacts/index.html">Контакты</a></li>
+        <li><a href="/poisk.html">Поиск</a></li>
+    </ul>
+
+    <div class="nav-bar" role="group" aria-label="Навигация">
+      <button type="button" class="nav-ico nav-back" onclick="history.back()" aria-label="Назад" title="Назад"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+
+      <details class="nav-drop nav-menu">
+        <summary class="nav-ico" aria-label="Разделы сайта" title="Разделы"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary>
+        <ul class="nav-drop-list">
+        <li><a href="/nag-hammadi/index.html">Библиотека Наг-Хаммади</a></li>
+        <li><a href="/apocrypha-new/index.html">Новозаветные апокрифы</a></li>
+        <li><a href="/apocrypha-old/index.html">Ветхозаветные апокрифы</a></li>
+        <li><a href="/hermetic/index.html">Герметизм</a></li>
+        <li><a href="/gnostic/index.html" aria-current="page">Гностицизм</a></li>
+        <li><a href="/kumran/index.html">Свитки Иудейской пустыни</a></li>
+        <li><a href="/study/index.html">Исследования</a></li>
+        <li><a href="/links/index.html">Ссылки</a></li>
+        <li><a href="/contacts/index.html">Контакты</a></li>
+        <li><a href="/poisk.html">Поиск</a></li>
+        </ul>
+      </details>
+
+      <select class="nav-text" aria-label="Текущий текст" title="Выбор текста">
+          <option value="/gnostic/manich_fragm2.shtml" selected>Фрагмент о земле света</option>
+          <option value="/gnostic/beseda_iisus.html">Беседа Иисуса с учениками</option>
+          <option value="/gnostic/gnost_molitva2.html">Вторая гностическая молитва без названия</option>
+          <option value="/gnostic/kniga-ieu2.html">Вторая Книга Иеу</option>
+          <option value="/gnostic/pistis_book2.html">Вторая Книга ПИСТИС СОФИИ</option>
+          <option value="/gnostic/index.html">Гностицизм</option>
+          <option value="/gnostic/gnost_lit.html">Гностическая литература</option>
+          <option value="/gnostic/b_petr1.html">Деяние Петра</option>
+          <option value="/gnostic/ev-iuda.shtml">Евангелие Иуды (Искариота)</option>
+          <option value="/gnostic/ev_maria_gnost.html">Евангелие от Марии</option>
+          <option value="/gnostic/mand_lit.html">Мандейские тексты</option>
+          <option value="/gnostic/manich_lit.html">Манихейские тексты</option>
+          <option value="/gnostic/mol_iosif.html">Молитва Иосифа</option>
+          <option value="/gnostic/about_pistis.html">Немного о Пистис Софии</option>
+          <option value="/gnostic/about-ev-iuda.shtml">О Евангелии Иуды (Искариота)</option>
+          <option value="/gnostic/oda_solomon.html">Оды Соломона</option>
+          <option value="/gnostic/oda_solomon_c.html">Оды Соломона (полный вариант)</option>
+          <option value="/gnostic/kniga-ieu1.html">Первая Книга Иеу</option>
+          <option value="/gnostic/pistis_book1.html">Первая Книга ПИСТИС СОФИИ</option>
+          <option value="/gnostic/pistis5.html">Пистис Софии - выдержки из глав 131-133</option>
+          <option value="/gnostic/pistis3.html">Пистис Софии - глава 100</option>
+          <option value="/gnostic/pistis1.html">Пистис Софии - главы 1-38</option>
+          <option value="/gnostic/pistis4.html">Пистис Софии - главы 111-113</option>
+          <option value="/gnostic/pistis2.html">Пистис Софии - главы 60-63</option>
+          <option value="/gnostic/komments-ieu1.html">Примечания к Первой Книге Иеу</option>
+          <option value="/gnostic/comment_pistis.html">Примечания к Пистис Софии</option>
+          <option value="/gnostic/komments-ieu2.html">Примечания ко Второй Книге Иеу</option>
+          <option value="/gnostic/cb_text1.html">Текст без названия</option>
+          <option value="/gnostic/pistis_book3.html">Третья Книга ПИСТИС СОФИИ</option>
+          <option value="/gnostic/put_d.html">Фрагмент о путешествии души</option>
+          <option value="/gnostic/pistis_book4.html">Четвертая Книга ПИСТИС СОФИИ</option>
+      </select>
+
+      <details class="nav-drop nav-search">
+        <summary class="nav-ico" aria-label="Поиск" title="Поиск"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></summary>
+        <form class="nav-search-form" action="/poisk.html" method="get" role="search">
+          <input type="search" name="q" placeholder="Поиск по сайту…" aria-label="Поиск по сайту" enterkeyhint="search" autocomplete="off">
+        </form>
+      </details>
+
+      <button type="button" class="nav-ico nav-forward" onclick="history.forward()" aria-label="Вперёд" title="Вперёд"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <article class="content-block">
+    <h1>Фрагмент о земле света</h1>
+
 <p>Текст «Фрагмент о земле света» входил в раздел, но его файл был утерян при архивации и пока недоступен. Мы работаем над восстановлением. Приносим извинения за неудобства.</p>
+  </article>
 </main>
-</body>
-</html>
+
+<footer>
+  <p>© 2001-2026 · <a href="mailto:idixx@yandex.ru">Русская апокрифическая студия</a> · <a href="/about.html">О студии</a></p>
+</footer>
+
+</div>
+
+</BODY>
+
+</HTML>

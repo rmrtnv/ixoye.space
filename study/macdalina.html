@@ -19,6 +19,7 @@
 <meta property="og:description" content="Мария Магдалина - автор Четвёртого Евангелия?">
 <meta property="og:url" content="https://ixoye.space/study/macdalina.html">
 <meta name="twitter:card" content="summary">
+<script src="/src/scripts/nav.js" defer></script>
 </head>
 
 
@@ -29,18 +30,92 @@
 <header class="site-header">
   <p class="site-title"><a href="/">Русская апокрифическая студия</a></p>
   <nav class="site-nav" aria-label="Разделы сайта">
-    <ul>
-      <li><a href="/nag-hammadi/index.html">Библиотека Наг-Хаммади</a></li>
-      <li><a href="/apocrypha-new/index.html">Новозаветные апокрифы</a></li>
-      <li><a href="/apocrypha-old/index.html">Ветхозаветные апокрифы</a></li>
-      <li><a href="/hermetic/index.html">Герметизм</a></li>
-      <li><a href="/gnostic/index.html">Гностицизм</a></li>
-      <li><a href="/kumran/index.html">Свитки Иудейской пустыни</a></li>
-      <li><a href="/study/index.html" aria-current="page">Исследования</a></li>
-      <li><a href="/links/index.html">Ссылки</a></li>
-      <li><a href="/contacts/index.html">Контакты</a></li>
-      <li><a href="/poisk.html">Поиск</a></li>
+    <ul class="site-nav-list">
+        <li><a href="/nag-hammadi/index.html">Библиотека Наг-Хаммади</a></li>
+        <li><a href="/apocrypha-new/index.html">Новозаветные апокрифы</a></li>
+        <li><a href="/apocrypha-old/index.html">Ветхозаветные апокрифы</a></li>
+        <li><a href="/hermetic/index.html">Герметизм</a></li>
+        <li><a href="/gnostic/index.html">Гностицизм</a></li>
+        <li><a href="/kumran/index.html">Свитки Иудейской пустыни</a></li>
+        <li><a href="/study/index.html" aria-current="page">Исследования</a></li>
+        <li><a href="/links/index.html">Ссылки</a></li>
+        <li><a href="/contacts/index.html">Контакты</a></li>
+        <li><a href="/poisk.html">Поиск</a></li>
     </ul>
+
+    <div class="nav-bar" role="group" aria-label="Навигация">
+      <button type="button" class="nav-ico nav-back" onclick="history.back()" aria-label="Назад" title="Назад"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+
+      <details class="nav-drop nav-menu">
+        <summary class="nav-ico" aria-label="Разделы сайта" title="Разделы"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary>
+        <ul class="nav-drop-list">
+        <li><a href="/nag-hammadi/index.html">Библиотека Наг-Хаммади</a></li>
+        <li><a href="/apocrypha-new/index.html">Новозаветные апокрифы</a></li>
+        <li><a href="/apocrypha-old/index.html">Ветхозаветные апокрифы</a></li>
+        <li><a href="/hermetic/index.html">Герметизм</a></li>
+        <li><a href="/gnostic/index.html">Гностицизм</a></li>
+        <li><a href="/kumran/index.html">Свитки Иудейской пустыни</a></li>
+        <li><a href="/study/index.html" aria-current="page">Исследования</a></li>
+        <li><a href="/links/index.html">Ссылки</a></li>
+        <li><a href="/contacts/index.html">Контакты</a></li>
+        <li><a href="/poisk.html">Поиск</a></li>
+        </ul>
+      </details>
+
+      <select class="nav-text" aria-label="Текущий текст" title="Выбор текста">
+          <option value="/study/robinson-gnost_plot.html">&quot;Три стелы Сифа&quot; и гностики Плотина. Джеймс М. Робинсон.</option>
+          <option value="/study/moma5.html">Алексей Мома. Гностицизм и новозаветные тексты</option>
+          <option value="/study/adam-shel.html">Апокалипсис Адама: Очевидность его гностико-христианского происхождения. Г.М. Шеллурд.</option>
+          <option value="/study/dual1.html">Апология дуализма</option>
+          <option value="/study/valentin.html">В поисках &quot;исторического Валентина&quot;</option>
+          <option value="/study/bernsnev.html">Ветхозаветные апокрифы: Книга Еноха; Книга Юбилеев, или Малое Бытие; Заветы двенадцати патриархов; Псалмы Соломона</option>
+          <option value="/study/loginov4.html">Вечный свет Воскресения. Раннехристианские свидетельства о плащанице</option>
+          <option value="/study/isabel1.html">Воскресение плоти согласно валентинианам и Иринею Лионскому</option>
+          <option value="/study/litavrin1.html">Г. Г. Литаврин. Как жили византийцы (Отрывок о дуалистических ересях)</option>
+          <option value="/study/huan_2.html">ГЛАВА ВТОРАЯ. АРХАИЧНЫЕ ВЕРОВАНИЯ - А. Логинов. Ошибка дона Хуана / Тайны вечной жизни: от Египетской книги мёртвых до учения Кастанеды</option>
+          <option value="/study/huan_1.html">ГЛАВА ПЕРВАЯ. ЖИЗНЬ И СМЕРТЬ НОВЫХ ВИДЯЩИХ - А. Логинов. Ошибка дона Хуана / Тайны вечной жизни: от Египетской книги мёртвых до учения Кастанеды</option>
+          <option value="/study/afon1.html">ГНОСИС В ЗЕРКАЛЕ ЕГО КРИТИКОВ: Античный гностицизм в контексте платонической философии поздней античности</option>
+          <option value="/study/diakov.html">Гностицизм как религия и философия</option>
+          <option value="/study/kispel1.html">Демиург в апокрифе Иоанна. Жилль Киспель</option>
+          <option value="/study/acts_simon.html">Деяния Симона Волхва</option>
+          <option value="/study/moma4.html">Е.Коузе. Буддизм и Гнозис</option>
+          <option value="/study/evluka-markion.html">Евангелие Маркиона и Евангелие Луки в сравнении. Чарльз Б. Уайт</option>
+          <option value="/study/moma1.html">Заметки о гностических книгах Иеу</option>
+          <option value="/study/macdemont1.html">Идея Плеромы в Гностицизме. Виолет МакДермот</option>
+          <option value="/study/moma3.html">Из гностических текстов II века. Заметки о &quot;Тексте без названия&quot; из Кодекса Брюса</option>
+          <option value="/study/index.html">Исследования</option>
+          <option value="/study/about_sec_ev_mark.html">Историчность Тайного евангелия от Марка</option>
+          <option value="/study/budanov.html">К вопросу о влиянии еретических воззрений на христианство Древней Руси</option>
+          <option value="/study/shtokh.html">Карлхайнц Штокхаузен и гностицизм</option>
+          <option value="/study/kontur-markion.html">Контуры евангелия Маркиона. Чарльз Б. Уайт</option>
+          <option value="/study/kumran-iisus.html">Кумран и Иисус, или прорыв к Абсолюту - В.Е. Крылов</option>
+          <option value="/study/macdalina.html" selected>Мария Магдалина - автор Четвёртого Евангелия?</option>
+          <option value="/study/markion4evang.html">Маркионитское происхождение четвертого евангелия. Жозеф Турмель.</option>
+          <option value="/study/moma2.html">Немного о Пистис Софии</option>
+          <option value="/study/loginov1.html">О ДАТИРОВКЕ ЕВАНГЕЛИЯ ОТ ФОМЫ. ГНОСТИЦИЗМ И ПРОПОВЕДЬ ИИСУСА</option>
+          <option value="/study/shilling-iuda.html">О Евангелии Иуды. Клаус Шиллинг.</option>
+          <option value="/study/contraiegova.html">Обращение к христианам. Carroll R. Bierbower</option>
+          <option value="/study/huan_ogl.html">Оглавление - А. Логинов. Ошибка дона Хуана / Тайны вечной жизни: от Египетской книги мёртвых до учения Кастанеды</option>
+          <option value="/study/kliment.html">Перевоплощения - путь души к Богу. Учение о спасении Климента Александрийского</option>
+          <option value="/study/veger1.html">Письмо Аристея как историческое свидетельство</option>
+          <option value="/study/logan.html">Послание Евгноста и валентинианство (Элистер Х.Б. Логан.)</option>
+          <option value="/study/huan_poyasnenie.html">Пояснение - А. Логинов. Ошибка дона Хуана / Тайны вечной жизни: от Египетской книги мёртвых до учения Кастанеды</option>
+          <option value="/study/loginov3.html">Свет Крещения: Раннехристианские свидетельства</option>
+          <option value="/study/harlamov.html">Три века гностицизма</option>
+          <option value="/study/heraclion1.html">Фрагменты Гераклиона гностика из трактата Оригена &quot;Толкование на Евангелие от Иоанна&quot;</option>
+          <option value="/study/cerkovrimbog.html">Церковь Римская и Церковь Божья</option>
+          <option value="/study/ziber.html">Эон &quot;Барбело&quot; в &quot;Зостриане&quot; и связанных с ним трактатах</option>
+      </select>
+
+      <details class="nav-drop nav-search">
+        <summary class="nav-ico" aria-label="Поиск" title="Поиск"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></summary>
+        <form class="nav-search-form" action="/poisk.html" method="get" role="search">
+          <input type="search" name="q" placeholder="Поиск по сайту…" aria-label="Поиск по сайту" enterkeyhint="search" autocomplete="off">
+        </form>
+      </details>
+
+      <button type="button" class="nav-ico nav-forward" onclick="history.forward()" aria-label="Вперёд" title="Вперёд"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+    </div>
   </nav>
 </header>
 

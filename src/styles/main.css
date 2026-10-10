@@ -431,6 +431,197 @@ hr {
   color: #444;
 }
 
+/* ==========================================================================
+   Mobile top navigation
+   Desktop shows the inline section list (.site-nav-list); phones swap in a
+   compact bar: back · menu · current-text picker · search · forward.
+   ========================================================================== */
+
+.nav-bar {
+  display: none;
+}
+
+.nav-ico svg {
+  width: 22px;
+  height: 22px;
+  display: block;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.nav-drop-list {
+  list-style: none;
+}
+
+.nav-search-form {
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  /* the big site title is replaced by the compact bar */
+  .site-title {
+    display: none;
+  }
+
+  .site-nav-list {
+    display: none;
+  }
+
+  .site-header {
+    padding: 0;
+    margin-bottom: var(--spacing-md);
+    position: sticky;
+    top: 0;
+    z-index: 40;
+  }
+
+  .site-nav {
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+    background-color: rgba(255, 255, 255, 0.94);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--color-border);
+    position: relative;
+    z-index: 40;
+  }
+
+  .nav-bar {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 3px 4px;
+    min-height: 48px;
+  }
+
+  .nav-ico {
+    flex: 0 0 auto;
+    width: 42px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: none;
+    border: 0;
+    border-radius: 8px;
+    color: var(--color-text);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .nav-ico:hover,
+  .nav-ico:active,
+  .nav-drop[open] > .nav-ico {
+    background-color: rgba(0, 0, 0, 0.07);
+  }
+
+  /* middle: current text picker */
+  .nav-text {
+    flex: 1 1 auto;
+    min-width: 0;
+    height: 42px;
+    margin: 0 2px;
+    padding: 0 28px 0 10px;
+    font-family: var(--font-ui);
+    font-size: 0.95rem;
+    color: var(--color-text);
+    background-color: rgba(0, 0, 0, 0.04);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    -webkit-appearance: none;
+    appearance: none;
+    text-overflow: ellipsis;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 7px center;
+    background-size: 14px;
+  }
+
+  /* dropdown panels */
+  .nav-drop {
+    position: relative;
+    flex: 0 0 auto;
+  }
+
+  .nav-drop > summary {
+    list-style: none;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .nav-drop > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .nav-drop-list,
+  .nav-search-form {
+    position: absolute;
+    top: calc(100% + 6px);
+    z-index: 50;
+    margin: 0;
+    background-color: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.22);
+  }
+
+  .nav-drop-list {
+    display: block;
+    min-width: 260px;
+    max-width: 92vw;
+    max-height: 68vh;
+    overflow-y: auto;
+    padding: 6px 0;
+  }
+
+  .nav-menu > .nav-drop-list {
+    left: 0;
+  }
+
+  .nav-search > .nav-search-form {
+    right: 0;
+    padding: 10px;
+  }
+
+  .nav-drop-list a {
+    display: block;
+    min-height: 0;
+    padding: 11px 16px;
+    font-family: var(--font-ui);
+    font-size: 0.95rem;
+    line-height: 1.3;
+    color: var(--color-link);
+  }
+
+  .nav-drop-list a:hover,
+  .nav-drop-list a:active {
+    background-color: rgba(0, 0, 0, 0.05);
+    text-decoration: none;
+  }
+
+  .nav-drop-list a[aria-current="page"] {
+    color: var(--color-primary);
+    font-weight: 700;
+    border: 0;
+    padding-bottom: 11px;
+  }
+
+  .nav-search-form input[type="search"] {
+    display: block;
+    width: min(78vw, 320px);
+    padding: 10px 12px;
+    font-family: var(--font-ui);
+    font-size: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+  }
+}
+
 /* Print Styles */
 @media print {
   nav {

@@ -9,9 +9,10 @@
     "preview": "node scripts/dev-server.mjs --port 4000",
     "enrich": "node scripts/enrich-pages.mjs --write",
     "check-links": "node scripts/check-links.mjs",
+    "nav": "node scripts/apply-nav.mjs --write",
     "sitemap": "node scripts/generate-sitemap.mjs --write",
     "search-index": "node scripts/generate-search-index.mjs --write",
-    "maintenance": "npm run check-links && npm run sitemap && npm run search-index"
+    "maintenance": "npm run check-links && npm run nav && npm run sitemap && npm run search-index"
   },
   "keywords": [
     "apocrypha",

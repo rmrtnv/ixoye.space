@@ -63,7 +63,10 @@ for (const file of collectPages()) {
 
   const title = cleanTitle(extractTitle(html));
   const description = extractDescription(html);
-  const text = cleanText(extractText(html));
+  // Index only the <main> content, so the shared header/nav (section list +
+  // current-section text picker) and footer never pollute search results.
+  const main = html.match(/<main\b[^>]*>([\s\S]*?)<\/main>/i);
+  const text = cleanText(extractText(main ? main[1] : html));
   if (!title && !text) continue;
 
   index.push({ u: pageUrl(file), t: title, d: description, x: text, f: rel(file) });
