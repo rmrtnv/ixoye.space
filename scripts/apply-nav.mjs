@@ -33,6 +33,44 @@ const NOINDEX_RE = /<meta\s+name="robots"\s+content="noindex"/i;
 const NAV_SCRIPT = "/src/scripts/nav.js";
 const DEFAULT_MAILTO = "idixx@yandex.ru";
 
+/**
+ * Reduce legacy <BR> spacing. Legacy markup used bare <br> runs and bare <br>
+ * between block elements as vertical padding; the semantic shell now provides
+ * that spacing via margins, so those <br> nodes double the gaps. Single <br>
+ * nodes inside a paragraph (verse/section breaks, table rows) are meaningful
+ * line breaks and are kept.
+ */
+const BLOCK_TAG =
+  "p|div|h[1-6]|blockquote|aside|li|td|tr|th|center|figure|figcaption|table|ul|ol|hr|article|main|section";
+const BR_BEFORE_BLOCK = new RegExp(`<br\\s*/?>(?=\\s*<\\/?(?:${BLOCK_TAG})\\b)`, "gi");
+const BR_AFTER_BLOCK = new RegExp(`(?<=<\\/?(?:${BLOCK_TAG})\\b[^>]*>)\\s*<br\\s*/?>`, "gi");
+// doc-links render as their own block lines, so a <br> before one is padding.
+const BR_BEFORE_DOCLINK = /<br\s*\/?>(?=\s*<span\s+class\s*=\s*["']doc-link["'][^>]*>)/gi;
+
+function cleanBrs(html) {
+  let out = html
+    // any run of 2+ <br> is padding, not a structure — fold into one break
+    .replace(/(<br\s*\/?>\s*){2,}/gi, "<br>")
+    // drop a <br> that sits on a block boundary (before / after a block tag)
+    .replace(BR_BEFORE_BLOCK, "")
+    .replace(BR_AFTER_BLOCK, "")
+    .replace(BR_BEFORE_DOCLINK, "");
+  return out;
+}
+
+/** Render the "next text" block, or "" for pages without a successor. */
+function nextTextBlock(docs, currentHref) {
+  const i = docs.findIndex((d) => d.href === currentHref);
+  if (i < 0 || i >= docs.length - 1) return "";
+  const next = docs[i + 1];
+  const label = next.label
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+  return `<nav class="next-text" aria-label="Читать далее">\n  <a href="${next.href}">Далее: ${label} →</a>\n</nav>`;
+}
+
 function stripTags(s) {
   return s
     .replace(/<[^>]*>/g, " ")
@@ -138,7 +176,7 @@ for (const rel of files) {
   const key = dirKey(rel);
   const docs = docsByDir.get(key) || [];
   const currentHref = "/" + rel.replace(/\\/g, "/");
-  const activeDir = path.basename(rel) === "poisk.html" ? "poisk" : SECTIONS.some((s) => s.dir === key) ? key : "";
+  const activeDir = path.basename(rel) === "poisk.html" ? "poisk" : SECTIONS.some((s) => s.dir === key) ? key : "__home__";
 
   let out = null;
   if (HEADER_RE.test(html)) {
@@ -160,6 +198,23 @@ for (const rel of files) {
     missing.push(rel);
     continue;
   }
+
+  // "next text" link at the bottom of each real text page (section pages that
+  // have a successor in the table of contents; not indexes/root/meta pages).
+  // It is generated outside <main> so the search index (scoped to <main>)
+  // never picks up a neighbouring page's title from this page.
+  out = out.replace(/<nav class="next-text"[^>]*>[\s\S]*?<\/nav>\s*/g, "");
+  if (
+    SECTIONS.some((s) => s.dir === key) &&
+    path.basename(rel) !== "index.html" &&
+    rel !== "poisk.html" &&
+    rel !== "about.html"
+  ) {
+    const nxt = nextTextBlock(docs, currentHref);
+    if (nxt) out = out.replace(/<\/main>/i, `</main>\n${nxt}`);
+  }
+
+  out = cleanBrs(out);
 
   const withScript = injectScript(out);
   if (withScript === null) noScript.push(rel);

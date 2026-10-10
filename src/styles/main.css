@@ -253,12 +253,17 @@ hr {
   margin: var(--spacing-lg) 0;
 }
 
-/* homepage: the legacy section-link row is a nav but must not get the nav box */
-nav.index-links {
-  background: none;
-  border: none;
-  padding: 0;
-  border-radius: 0;
+/* "next text" link at the bottom of a text page, outside the searchable <main> */
+.next-text {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-md) var(--spacing-lg);
+  text-align: right;
+}
+
+.next-text a {
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
 }
 
 /* homepage news table */

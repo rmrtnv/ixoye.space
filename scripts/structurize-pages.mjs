@@ -66,11 +66,8 @@ const escapeHtml = (s) =>
 function renderHeader({ activeDir = "", currentHref = "", currentTitle = "", docs = [] } = {}) {
   const link = (href, label, active) =>
     `<a href="${href}"${active ? ' aria-current="page"' : ""}>${label}</a>`;
-  const sections = SECTIONS.map((s) => ({
-    href: `/${s.dir}/index.html`,
-    label: s.label,
-    dir: s.dir,
-  }));
+  const sections = [{ href: "/", label: "Главная", dir: "__home__" }];
+  sections.push(...SECTIONS.map((s) => ({ href: `/${s.dir}/index.html`, label: s.label, dir: s.dir })));
   sections.push({ href: "/poisk.html", label: "Поиск", dir: "poisk" });
 
   const sectionItems = sections
@@ -94,7 +91,7 @@ ${sectionItems}
     </ul>
 
     <div class="nav-bar" role="group" aria-label="Навигация">
-      <button type="button" class="nav-ico nav-back" onclick="history.back()" aria-label="Назад" title="Назад">${NAV_ICONS.back}</button>
+      <button type="button" class="nav-ico nav-back" aria-label="Назад" title="Назад">${NAV_ICONS.back}</button>
 
       <details class="nav-drop nav-menu">
         <summary class="nav-ico" aria-label="Разделы сайта" title="Разделы">${NAV_ICONS.menu}</summary>
@@ -114,7 +111,7 @@ ${options}
         </form>
       </details>
 
-      <button type="button" class="nav-ico nav-forward" onclick="history.forward()" aria-label="Вперёд" title="Вперёд">${NAV_ICONS.forward}</button>
+      <button type="button" class="nav-ico nav-forward" aria-label="Вперёд" title="Вперёд">${NAV_ICONS.forward}</button>
     </div>
   </nav>
 </header>`;
@@ -420,7 +417,7 @@ function transform(content, h1) {
 function buildShell({ relPath, h1, content, mailto, head, docs = [] }) {
   const dir = path.dirname(relPath);
   const currentHref = "/" + relPath.replace(/\\/g, "/");
-  const activeDir = SECTIONS.some((s) => s.dir === dir) ? dir : "";
+  const activeDir = SECTIONS.some((s) => s.dir === dir) ? dir : "__home__";
 
   const doctype = "<!DOCTYPE html>\n<html lang=\"ru\">\n";
   const headOut = /^\s*<!DOCTYPE/i.test(head) ? head : doctype + head;
