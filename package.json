@@ -6,7 +6,12 @@
   "scripts": {
     "dev": "npx serve . -l 3000",
     "build": "echo 'Static site - no build required'",
-    "preview": "npx serve . -l 4000"
+    "preview": "npx serve . -l 4000",
+    "enrich": "node scripts/enrich-pages.mjs --write",
+    "check-links": "node scripts/check-links.mjs",
+    "sitemap": "node scripts/generate-sitemap.mjs --write",
+    "search-index": "node scripts/generate-search-index.mjs --write",
+    "maintenance": "npm run check-links && npm run sitemap && npm run search-index"
   },
   "keywords": [
     "apocrypha",

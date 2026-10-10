@@ -1,0 +1,26 @@
+name: External link audit
+
+on:
+  schedule:
+    - cron: '0 6 * * 1' # Mondays 06:00 UTC
+  workflow_dispatch:
+
+jobs:
+  lychee:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Audits outbound links (narod.ru, boom.ru era archives, etc.).
+      # Reports link rot without blocking normal work.
+      - name: Check external links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --no-progress
+            --exclude-mail
+            --exclude-path content
+            --exclude-path scripts
+            --accept 200,206,429
+            './**/*.html'
+          fail: false

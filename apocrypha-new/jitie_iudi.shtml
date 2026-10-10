@@ -1,17 +1,25 @@
-<HTML>
+<!DOCTYPE html>
+<html lang="ru">
 
 <HEAD>
 <meta charset="UTF-8">
-<meta charset="UTF-8">
-<meta charset="UTF-8">
-<meta charset="UTF-8">
-<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <TITLE>Житие Иуды - Новозаветные апокрифы - Русская Апокрифическая Студия</TITLE>
 <meta name="Description" content="Житие Иуды">
 <meta name="Keywords" content="Житие Иуды">
-<LINK REL=STYLESHEET HREF="../ras.css" TYPE="text/css">
+<LINK REL=STYLESHEET HREF="/src/styles/main.css" TYPE="text/css">
 
-</HEAD>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/favicon.svg">
+<link rel="canonical" href="https://ixoye.space/apocrypha-new/jitie_iudi.shtml">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Русская Апокрифическая Студия">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="Житие Иуды - Новозаветные апокрифы - Русская Апокрифическая Студия">
+<meta property="og:description" content="Житие Иуды">
+<meta property="og:url" content="https://ixoye.space/apocrypha-new/jitie_iudi.shtml">
+<meta name="twitter:card" content="summary">
+</head>
 
 <BODY TEXT="#000000" BGCOLOR="#E7EBCB" LINK="#0000EE" VLINK="#0000EE" ALINK="#0000EE">
 
@@ -27,16 +35,15 @@
 </DIV>
 <HR SIZE=15 WIDTH="100%">
 
-<CENTER><A HREF="../nag_hammadi/index.html" title="Библиотека Наг-Хаммади на русском языке">Библиотека Наг-Хаммади</A>
+<CENTER><A HREF="../nag-hammadi/index.html" title="Библиотека Наг-Хаммади на русском языке">Библиотека Наг-Хаммади</A>
 | <A HREF="index.html" title="Новозаветные апокрифы"><B>Новозаветные апокрифы</B></A> 
-| <A HREF="../apocryph2/index.html" title="Ветхозаветные апокрифы">Ветхозаветные апокрифы</A> 
-| <A HREF="../hermes/index.html" title="Герметические трактаты">Герметизм</A>
+| <A HREF="../apocrypha-old/index.html" title="Ветхозаветные апокрифы">Ветхозаветные апокрифы</A> 
+| <A HREF="../hermetic/index.html" title="Герметические трактаты">Герметизм</A>
 <br>
-<A HREF="../gnost/index.html" title="Гностические тексты">Гностицизм</A>
+<A HREF="../gnostic/index.html" title="Гностические тексты">Гностицизм</A>
 | <A HREF="../kumran/index.html" title="Свитки Иудейской пустыни">Свитки Иудейской пустыни</A>
 | <A HREF="../study/index.html" title="Исследования текстов и комментарии">Исследования</A> 
-| <A HREF="../links/index.html" title="Ссылки">Ссылки</A>
-| <A HREF="#" title="Гостевая книга">Гостевая книга</A>
+| <A HREF="../links/index.html" title="Ссылки">Ссылки</A> | <a href="/poisk.html" title="Поиск по сайту">Поиск</a>
 
 <HR SIZE=1 WIDTH="100%">
 
@@ -118,7 +125,7 @@
 
 <CENTER>
 <BR>
-<b>2001-2025</b> | <A HREF="mailto:idixx@yandex.ru">Русская
+<b>2001-2026</b> | <A HREF="mailto:idixx@yandex.ru">Русская
 апокрифическая студия</A> | <a href="../about.html">О студии</a></font> 
 <BR><BR>
 <BR>

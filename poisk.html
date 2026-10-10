@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Поиск по сайту — Русская Апокрифическая Студия</title>
+<meta name="description" content="Полнотекстовый поиск по собранию раннехристианских и апокрифических текстов на русском языке.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/favicon.svg">
+<link rel="canonical" href="https://ixoye.space/poisk.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Русская Апокрифическая Студия">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="Поиск по сайту — Русская Апокрифическая Студия">
+<meta property="og:description" content="Полнотекстовый поиск по собранию раннехристианских и апокрифических текстов на русском языке.">
+<meta property="og:url" content="https://ixoye.space/poisk.html">
+<meta name="twitter:card" content="summary">
+<link rel="stylesheet" href="/src/styles/main.css">
+</head>
+<body>
+<main class="container">
+<header>
+<h1>Русская апокрифическая студия</h1>
+<nav>
+<ul>
+<li><a href="/nag-hammadi/index.html">Наг-Хаммади</a></li>
+<li><a href="/apocrypha-new/index.html">Новозаветные апокрифы</a></li>
+<li><a href="/apocrypha-old/index.html">Ветхозаветные апокрифы</a></li>
+<li><a href="/hermetic/index.html">Герметизм</a></li>
+<li><a href="/gnostic/index.html">Гностицизм</a></li>
+<li><a href="/kumran/index.html">Свитки Иудейской пустыни</a></li>
+<li><a href="/study/index.html">Исследования</a></li>
+<li><a href="/">Главная</a></li>
+</ul>
+</nav>
+</header>
+
+<div class="content-block">
+<h2>Поиск по сайту</h2>
+<form class="search-form" role="search" onsubmit="return false">
+<input id="q" type="search" placeholder="Например: Евангелие от Фомы, София, Мелхиседек…" autocomplete="off" autofocus>
+</form>
+<p id="status" class="search-results"><em>Загрузка поискового индекса…</em></p>
+<ol id="results" class="search-results" start="1"></ol>
+</div>
+</main>
+
+<script>
+(function () {
+  var input = document.getElementById('q');
+  var results = document.getElementById('results');
+  var status = document.getElementById('status');
+  var index = [];
+
+  function escapeHtml(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function highlight(text, terms) {
+    var out = escapeHtml(text);
+    terms.forEach(function (t) {
+      if (t.length < 2) return;
+      out = out.replace(new RegExp('(' + t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi'), '<mark>$1</mark>');
+    });
+    return out;
+  }
+
+  function excerpt(text, terms) {
+    var lower = text.toLowerCase();
+    var pos = -1;
+    for (var i = 0; i < terms.length; i++) {
+      var p = lower.indexOf(terms[i]);
+      if (p !== -1 && (pos === -1 || p < pos)) pos = p;
+    }
+    if (pos === -1) pos = 0;
+    var start = Math.max(0, pos - 120);
+    var end = Math.min(text.length, pos + 220);
+    return (start > 0 ? '… ' : '') + text.slice(start, end) + (end < text.length ? ' …' : '');
+  }
+
+  function search(query) {
+    var terms = query.toLowerCase().split(/\s+/).filter(function (t) { return t.length > 1; });
+    if (!terms.length) { results.innerHTML = ''; status.innerHTML = '<em>Найдено текстов: ' + index.length + '</em>'; return; }
+
+    var hits = [];
+    for (var i = 0; i < index.length; i++) {
+      var item = index[i];
+      var title = (item.t || '').toLowerCase();
+      var body = (item.x || '').toLowerCase();
+      var ok = true, score = 0;
+      for (var j = 0; j < terms.length; j++) {
+        var inTitle = title.indexOf(terms[j]) !== -1;
+        var inBody = body.indexOf(terms[j]) !== -1;
+        if (!inTitle && !inBody) { ok = false; break; }
+        if (inTitle) score += 10;
+        if (inBody) score += 1;
+      }
+      if (ok) hits.push({ item: item, score: score });
+    }
+
+    hits.sort(function (a, b) { return b.score - a.score; });
+    var top = hits.slice(0, 50);
+
+    status.innerHTML = hits.length
+      ? 'Найдено: <strong>' + hits.length + '</strong>' + (hits.length > top.length ? ' (показаны первые ' + top.length + ')' : '')
+      : '<em>Ничего не найдено.</em>';
+
+    results.innerHTML = top.map(function (h) {
+      var it = h.item;
+      return '<li><a class="result-title" href="' + it.u + '">' + highlight(it.t || it.u, terms) + '</a>' +
+        '<div class="result-excerpt">' + highlight(excerpt(it.x || it.d || '', terms), terms) + '</div></li>';
+    }).join('');
+  }
+
+  var timer;
+  input.addEventListener('input', function () {
+    clearTimeout(timer);
+    timer = setTimeout(function () { search(input.value); }, 150);
+  });
+
+  fetch('/search-index.json')
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      index = data;
+      status.innerHTML = '<em>Найдено текстов: ' + index.length + '. Введите запрос.</em>';
+      var q = new URLSearchParams(location.search).get('q');
+      if (q) { input.value = q; search(q); }
+    })
+    .catch(function () {
+      status.innerHTML = '<em>Не удалось загрузить поисковый индекс. Откройте страницу через веб-сервер (не file://).</em>';
+    });
+})();
+</script>
+</body>
+</html>

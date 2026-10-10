@@ -1,7 +1,29 @@
 #!/bin/sh
-# Auto-regenerate precache manifest when HTML files change
-if git diff --cached --name-only | grep -qE '\.html$|package\.json$'; then
-  echo "Regenerating precache-manifest.json..."
-  npm run generate-precache
-  git add precache-manifest.json
+# ixoye.space pre-commit checks.
+# Enable once with: git config core.hooksPath .githooks
+#
+# Blocks a commit when staged HTML introduces broken internal links
+# or when the generated sitemap / search index are out of date.
+
+staged=$(git diff --cached --name-only --diff-filter=ACM)
+
+if echo "$staged" | grep -qE '\.(html|shtml)$'; then
+  if command -v node >/dev/null 2>&1; then
+    echo "→ Checking internal links…"
+    if ! node scripts/check-links.mjs; then
+      echo "✗ Broken internal links found. Fix them or commit with --no-verify."
+      exit 1
+    fi
+  fi
 fi
+
+if echo "$staged" | grep -qE '\.(html|shtml)$'; then
+  if command -v node >/dev/null 2>&1; then
+    echo "→ Refreshing sitemap and search index…"
+    node scripts/generate-sitemap.mjs --write >/dev/null 2>&1 || true
+    node scripts/generate-search-index.mjs --write >/dev/null 2>&1 || true
+    git add sitemap.xml search-index.json 2>/dev/null || true
+  fi
+fi
+
+exit 0

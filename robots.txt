@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /content/
+Disallow: /scripts/
+Disallow: /search-index.json
+
+Sitemap: https://ixoye.space/sitemap.xml

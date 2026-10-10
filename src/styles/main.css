@@ -251,6 +251,72 @@ table {
   }
 }
 
+/* Legacy page compatibility
+   Most of the archive still uses presentational 2001-era markup
+   (CENTER, FONT, fixed-width tables). These rules keep those pages
+   readable and responsive now that they share the modern stylesheet. */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+table {
+  max-width: 100%;
+  border-collapse: collapse;
+}
+
+blockquote {
+  margin: 0;
+  padding: 0 var(--spacing-md);
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--color-border);
+}
+
+@media (max-width: 800px) {
+  table[width] {
+    width: 100% !important;
+  }
+}
+
+/* Site search */
+.search-form {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin: var(--spacing-md) 0;
+}
+
+.search-form input[type='search'] {
+  flex: 1;
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: 1rem;
+  font-family: var(--font-ui);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+}
+
+.search-results {
+  list-style: none;
+  padding: 0;
+}
+
+.search-results li {
+  padding: var(--spacing-sm) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.search-results .result-title {
+  font-size: 1.05rem;
+}
+
+.search-results .result-excerpt {
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  color: #444;
+}
+
 /* Print Styles */
 @media print {
   nav {

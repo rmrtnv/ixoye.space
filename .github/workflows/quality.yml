@@ -1,0 +1,26 @@
+name: Quality
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Check internal links
+        run: node scripts/check-links.mjs
+
+      - name: Verify generated files are up to date
+        run: |
+          node scripts/generate-sitemap.mjs --write
+          node scripts/generate-search-index.mjs --write
+          git diff --exit-code -- sitemap.xml search-index.json \
+            || { echo "::error::sitemap.xml / search-index.json are stale — run 'npm run maintenance' and commit."; exit 1; }
