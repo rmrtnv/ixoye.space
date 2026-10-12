@@ -19,7 +19,14 @@
 <meta property="og:description" content="Раннехристианские и апокрифические тексты на русском языке — Русская Апокрифическая Студия.">
 <meta property="og:url" content="https://ixoye.space/">
 <meta name="twitter:card" content="summary">
+<script src="/src/scripts/offline-core.js" defer></script>
 <script src="/src/scripts/nav.js" defer></script>
+<script>(function(){try{var v=parseFloat(localStorage.getItem("ixoye-text-size"));if(isFinite(v)&&v>=0.8&&v<=1.6)document.documentElement.style.setProperty("--text-scale",String(v));}catch(e){}})();</script>
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#E7EBCB">
 </head>
 
 <BODY>
@@ -60,12 +67,21 @@
         <li><a href="/links/index.html">Ссылки</a></li>
         <li><a href="/contacts/index.html">Контакты</a></li>
         <li><a href="/poisk.html">Поиск</a></li>
+        <li><a href="/offline.html">Офлайн-чтение</a></li>
+        <li class="nav-text-size">
+          <span class="nav-text-size-label">Размер текста</span>
+          <span class="nav-text-size-controls">
+            <button type="button" class="nav-text-size-btn nav-text-size-dec" data-text-size="-1" aria-label="Уменьшить размер текста" title="Уменьшить текст"><span class="nav-text-size-a nav-text-size-a-sm" aria-hidden="true">A</span><span class="nav-text-size-sign" aria-hidden="true">&minus;</span></button>
+            <button type="button" class="nav-text-size-btn nav-text-size-inc" data-text-size="1" aria-label="Увеличить размер текста" title="Увеличить текст"><span class="nav-text-size-a nav-text-size-a-lg" aria-hidden="true">A</span><span class="nav-text-size-sign" aria-hidden="true">+</span></button>
+          </span>
+        </li>
         </ul>
       </details>
 
       <select class="nav-text" aria-label="Текущий текст" title="Выбор текста">
           <option value="/index.html" selected>Русская Апокрифическая Студия</option>
           <option value="/about.html">О студии</option>
+          <option value="/animation.html">Pleroma — An Opening in Seven Breaths</option>
           <option value="/poisk.html">Поиск по сайту</option>
       </select>
 

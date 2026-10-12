@@ -60,6 +60,33 @@ const escapeHtml = (s) =>
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
 
+// LocalStorage key + inline bootstrap for the reader's text size. The bootstrap
+// runs in <head> (parser-blocking) so a saved size is applied before the first
+// paint — nav.js is deferred, so without this the page would flash at the
+// default size and then jump. It validates the same range nav.js uses.
+const SIZE_KEY = "ixoye-text-size";
+const SIZE_MIN = 0.8;
+const SIZE_MAX = 1.6;
+const SIZE_BOOTSTRAP = `<script>(function(){try{var v=parseFloat(localStorage.getItem("${SIZE_KEY}"));if(isFinite(v)&&v>=${SIZE_MIN}&&v<=${SIZE_MAX})document.documentElement.style.setProperty("--text-scale",String(v));}catch(e){}})();</script>`;
+
+// Text-size control — the last item of the mobile hamburger dropdown.
+// The label makes the purpose explicit ("Размер текста") and the two buttons
+// form a single-decrease / single-increase pair: minus on the left, plus on the
+// right. Real <button> elements with aria-labels, so they are keyboard- and
+// screen-reader reachable. nav.js keeps the menu open when either is pressed.
+const TEXT_SIZE_ITEM = `        <li class="nav-text-size">
+          <span class="nav-text-size-label">Размер текста</span>
+          <span class="nav-text-size-controls">
+            <button type="button" class="nav-text-size-btn nav-text-size-dec" data-text-size="-1" aria-label="Уменьшить размер текста" title="Уменьшить текст"><span class="nav-text-size-a nav-text-size-a-sm" aria-hidden="true">A</span><span class="nav-text-size-sign" aria-hidden="true">&minus;</span></button>
+            <button type="button" class="nav-text-size-btn nav-text-size-inc" data-text-size="1" aria-label="Увеличить размер текста" title="Увеличить текст"><span class="nav-text-size-a nav-text-size-a-lg" aria-hidden="true">A</span><span class="nav-text-size-sign" aria-hidden="true">+</span></button>
+          </span>
+        </li>`;
+
+// Offline-reading entry: a plain menu link (mobile dropdown only). The
+// management page is /offline.html; individual texts get their own save button
+// injected by nav.js.
+const OFFLINE_MENU_ITEM = `        <li><a href="/offline.html">Офлайн-чтение</a></li>`;
+
 // header shared by every page: desktop section list + compact mobile toolbar
 // (back/menu/text-picker/search/forward). `docs` is the list of texts in the
 // current section for the middle picker; falls back to the section links.
@@ -97,6 +124,8 @@ ${sectionItems}
         <summary class="nav-ico" aria-label="Разделы сайта" title="Разделы">${NAV_ICONS.menu}</summary>
         <ul class="nav-drop-list">
 ${sectionItems}
+${OFFLINE_MENU_ITEM}
+${TEXT_SIZE_ITEM}
         </ul>
       </details>
 
@@ -584,4 +613,4 @@ if (mismatches.length) {
 }
 } // IS_MAIN
 
-export { extractContent, normText, deriveH1, transform, isLegacy, discover, buildShell, renderHeader, SECTIONS };
+export { extractContent, normText, deriveH1, transform, isLegacy, discover, buildShell, renderHeader, SECTIONS, SIZE_BOOTSTRAP };

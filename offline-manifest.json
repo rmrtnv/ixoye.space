@@ -1,0 +1,2816 @@
+{
+  "count": 381,
+  "totalBytes": 34453333,
+  "shell": {
+    "label": "Оболочка сайта",
+    "items": [
+      {
+        "u": "/",
+        "b": 19108
+      },
+      {
+        "u": "/offline.html",
+        "b": 9866
+      },
+      {
+        "u": "/manifest.webmanifest",
+        "b": 557
+      },
+      {
+        "u": "/favicon.svg",
+        "b": 347
+      },
+      {
+        "u": "/src/styles/main.css",
+        "b": 17255
+      },
+      {
+        "u": "/src/scripts/nav.js",
+        "b": 22871
+      },
+      {
+        "u": "/src/scripts/offline-core.js",
+        "b": 9237
+      },
+      {
+        "u": "/src/scripts/offline.js",
+        "b": 15765
+      },
+      {
+        "u": "/offline-manifest.json",
+        "b": 87132
+      }
+    ],
+    "bytes": 182138
+  },
+  "search": {
+    "id": "search",
+    "label": "Поиск по сайту",
+    "count": 2,
+    "bytes": 5927528,
+    "items": [
+      {
+        "u": "/poisk.html",
+        "b": 10591
+      },
+      {
+        "u": "/search-index.json",
+        "b": 5916937
+      }
+    ],
+    "images": []
+  },
+  "sections": [
+    {
+      "id": "nag-hammadi",
+      "label": "Библиотека Наг-Хаммади",
+      "count": 53,
+      "bytes": 2851248,
+      "items": [
+        {
+          "u": "/nag-hammadi/",
+          "t": "Библиотека Наг-Хаммади на русском языке",
+          "b": 18547
+        },
+        {
+          "u": "/nag-hammadi/2_sif-moma.html",
+          "t": "Второй трактат великого Сифа",
+          "b": 49799
+        },
+        {
+          "u": "/nag-hammadi/2_sif.html",
+          "t": "Второй трактат великого Сифа",
+          "b": 45573
+        },
+        {
+          "u": "/nag-hammadi/3-part-text.html",
+          "t": "Трехчастный Трактат",
+          "b": 182725
+        },
+        {
+          "u": "/nag-hammadi/8-9.html",
+          "t": "Рассуждение о восьмерке и девятке",
+          "b": 28595
+        },
+        {
+          "u": "/nag-hammadi/about_nh.html",
+          "t": "О Библиотеке Наг-Хаммади на русском языке",
+          "b": 14786
+        },
+        {
+          "u": "/nag-hammadi/about_soul.html",
+          "t": "Толкование о душе",
+          "b": 35361
+        },
+        {
+          "u": "/nag-hammadi/acts.html",
+          "t": "Деяния Петра и двенадцати апостолов",
+          "b": 30710
+        },
+        {
+          "u": "/nag-hammadi/allogen.html",
+          "t": "Аллоген",
+          "b": 57350
+        },
+        {
+          "u": "/nag-hammadi/ap-adam.html",
+          "t": "Апокалипсис Адама",
+          "b": 60877
+        },
+        {
+          "u": "/nag-hammadi/ap-iak1-moma.html",
+          "t": "(Первый) Апокалипсис Иакова",
+          "b": 47285
+        },
+        {
+          "u": "/nag-hammadi/ap-iak1.html",
+          "t": "(Первый) Апокалипсис Иакова",
+          "b": 32558
+        },
+        {
+          "u": "/nag-hammadi/ap-iak2-moma.html",
+          "t": "(Второй) Апокалипсис Иакова",
+          "b": 41065
+        },
+        {
+          "u": "/nag-hammadi/ap-iak2.html",
+          "t": "(Второй) Апокалипсис Иакова",
+          "b": 30530
+        },
+        {
+          "u": "/nag-hammadi/ap-john_kratk.html",
+          "t": "Апокриф Иоанна (краткая версия)",
+          "b": 70608
+        },
+        {
+          "u": "/nag-hammadi/ap-john.html",
+          "t": "Апокриф Иоанна",
+          "b": 80539
+        },
+        {
+          "u": "/nag-hammadi/apoc_paul.html",
+          "t": "Апокалипсис Павла",
+          "b": 20400
+        },
+        {
+          "u": "/nag-hammadi/apokpetr.html",
+          "t": "Апокалипсис Петра",
+          "b": 33140
+        },
+        {
+          "u": "/nag-hammadi/apokrif_iak.html",
+          "t": "Апокриф Иакова",
+          "b": 48836
+        },
+        {
+          "u": "/nag-hammadi/archonts.html",
+          "t": "Ипостась Архонтов",
+          "b": 38845
+        },
+        {
+          "u": "/nag-hammadi/book_foma.html",
+          "t": "Книга Фомы Атлета",
+          "b": 34431
+        },
+        {
+          "u": "/nag-hammadi/dialog.html",
+          "t": "Диалог Спасителя",
+          "b": 40819
+        },
+        {
+          "u": "/nag-hammadi/ev_istiny.html",
+          "t": "Евангелие Истины",
+          "b": 59345
+        },
+        {
+          "u": "/nag-hammadi/ev-eg.html",
+          "t": "Евангелие от египтян",
+          "b": 47810
+        },
+        {
+          "u": "/nag-hammadi/ev-foma.html",
+          "t": "Евангелие от Фомы",
+          "b": 54086
+        },
+        {
+          "u": "/nag-hammadi/ev-phil.html",
+          "t": "Евангелие от Филиппа",
+          "b": 109850
+        },
+        {
+          "u": "/nag-hammadi/evgnost.html",
+          "t": "Евгност Блаженный",
+          "b": 35051
+        },
+        {
+          "u": "/nag-hammadi/grom.html",
+          "t": "Гром. Совершенный Ум",
+          "b": 31321
+        },
+        {
+          "u": "/nag-hammadi/hips.html",
+          "t": "Гипсифрона",
+          "b": 14025
+        },
+        {
+          "u": "/nag-hammadi/marsan.html",
+          "t": "Марсан",
+          "b": 49858
+        },
+        {
+          "u": "/nag-hammadi/melhiz.html",
+          "t": "Мелхиседек",
+          "b": 31090
+        },
+        {
+          "u": "/nag-hammadi/mol-germ-moma.html",
+          "t": "Молитва благодарения",
+          "b": 15001
+        },
+        {
+          "u": "/nag-hammadi/mol-germ.html",
+          "t": "Молитва благодарения",
+          "b": 15079
+        },
+        {
+          "u": "/nag-hammadi/mol-paul.html",
+          "t": "Молитва апостола Павла",
+          "b": 14299
+        },
+        {
+          "u": "/nag-hammadi/nh_asklepiy.html",
+          "t": "Асклепий, 21-29",
+          "b": 48666
+        },
+        {
+          "u": "/nag-hammadi/nh_platon.html",
+          "t": "ПЛАТОН. Фр. из \"ГОСУДАРСТВА\"",
+          "b": 17180
+        },
+        {
+          "u": "/nag-hammadi/noria.html",
+          "t": "Мысль Нории",
+          "b": 14127
+        },
+        {
+          "u": "/nag-hammadi/noria2.html",
+          "t": "Норея",
+          "b": 14158
+        },
+        {
+          "u": "/nag-hammadi/parafras.html",
+          "t": "Парафраз Сима",
+          "b": 87071
+        },
+        {
+          "u": "/nag-hammadi/podlinnoe.html",
+          "t": "Подлинное учение",
+          "b": 31752
+        },
+        {
+          "u": "/nag-hammadi/pon_sila.html",
+          "t": "Понятие нашей великой силы",
+          "b": 31458
+        },
+        {
+          "u": "/nag-hammadi/proten.html",
+          "t": "Троевидная Протенойя",
+          "b": 44688
+        },
+        {
+          "u": "/nag-hammadi/regin.html",
+          "t": "Послание к Регину",
+          "b": 23920
+        },
+        {
+          "u": "/nag-hammadi/sent.html",
+          "t": "Изречения Секста",
+          "b": 66751
+        },
+        {
+          "u": "/nag-hammadi/siluan.html",
+          "t": "Поучения Силуана",
+          "b": 66604
+        },
+        {
+          "u": "/nag-hammadi/sophia_iisus.html",
+          "t": "Премудрость Иисуса Христа",
+          "b": 47823
+        },
+        {
+          "u": "/nag-hammadi/stel_sif.html",
+          "t": "Три стелы Сифа",
+          "b": 27090
+        },
+        {
+          "u": "/nag-hammadi/svidet.html",
+          "t": "Свидетельство Истины",
+          "b": 39639
+        },
+        {
+          "u": "/nag-hammadi/tophil.html",
+          "t": "Послание Петра Филиппу",
+          "b": 24159
+        },
+        {
+          "u": "/nag-hammadi/valentine.html",
+          "t": "Валентинианское объяснение",
+          "b": 35674
+        },
+        {
+          "u": "/nag-hammadi/world.html",
+          "t": "О происхождении мира",
+          "b": 91750
+        },
+        {
+          "u": "/nag-hammadi/znanie.html",
+          "t": "Истолкование Знания",
+          "b": 41079
+        },
+        {
+          "u": "/nag-hammadi/zostrian.html",
+          "t": "Зостриан",
+          "b": 118646
+        }
+      ],
+      "images": [
+        {
+          "u": "/nag-hammadi/Evangelie_Egiptyan_2019_rus_lit_per.pdf",
+          "b": 458819
+        }
+      ]
+    },
+    {
+      "id": "apocrypha-new",
+      "label": "Новозаветные апокрифы",
+      "count": 134,
+      "bytes": 9607043,
+      "items": [
+        {
+          "u": "/apocrypha-new/",
+          "t": "Новозаветные апокрифы",
+          "b": 42519
+        },
+        {
+          "u": "/apocrypha-new/12_patnic.html",
+          "t": "Сказание о двенадцати пятницах",
+          "b": 34453
+        },
+        {
+          "u": "/apocrypha-new/act_bartolomey.html",
+          "t": "Страсти апостола Ворфоломея",
+          "b": 69063
+        },
+        {
+          "u": "/apocrypha-new/act_joann_prohor.html",
+          "t": "Деяния святого апостола и евангелиста Иоанна Богослова, написанные Прохором, учеником его",
+          "b": 261704
+        },
+        {
+          "u": "/apocrypha-new/act_john.html",
+          "t": "Деяния Иоанна",
+          "b": 30983
+        },
+        {
+          "u": "/apocrypha-new/act_matafia.html",
+          "t": "Деяния и мученичество апостола Матафии",
+          "b": 71305
+        },
+        {
+          "u": "/apocrypha-new/act_pavel.html",
+          "t": "Деяния Павла",
+          "b": 159271
+        },
+        {
+          "u": "/apocrypha-new/act_philip.html",
+          "t": "Деяния Филиппа",
+          "b": 139401
+        },
+        {
+          "u": "/apocrypha-new/acts_andrey-and-matafia.html",
+          "t": "Деяния Андрея и Матафии",
+          "b": 48046
+        },
+        {
+          "u": "/apocrypha-new/acts_andrey1.html",
+          "t": "Мученичество святого и преславного первоапостола Андрея",
+          "b": 145336
+        },
+        {
+          "u": "/apocrypha-new/acts_cornilii_sot.html",
+          "t": "Деяния Корнилия сотника",
+          "b": 77463
+        },
+        {
+          "u": "/apocrypha-new/acts_faddey1.html",
+          "t": "Отрывок из \"Церковной истории\" Евсевия Кесарийского о деяниях Фаддея",
+          "b": 46932
+        },
+        {
+          "u": "/apocrypha-new/acts_faddey2.html",
+          "t": "Деяния святого апостола Фаддея, одного из двенадцати",
+          "b": 36727
+        },
+        {
+          "u": "/apocrypha-new/acts_foma.html",
+          "t": "Деяния Иуды Фомы апостола",
+          "b": 369679
+        },
+        {
+          "u": "/apocrypha-new/acts_petr-andrey.html",
+          "t": "Деяния апостолов Петра и Андрея",
+          "b": 34934
+        },
+        {
+          "u": "/apocrypha-new/acts_timofei.html",
+          "t": "Деяния Тимофея",
+          "b": 35998
+        },
+        {
+          "u": "/apocrypha-new/acts_tit.html",
+          "t": "Деяния Тита",
+          "b": 40778
+        },
+        {
+          "u": "/apocrypha-new/acts_varnava.html",
+          "t": "Деяния Варнавы",
+          "b": 48291
+        },
+        {
+          "u": "/apocrypha-new/afroditian.html",
+          "t": "Сказание Афродитиана о чуде, бывшем в персидской земле",
+          "b": 42219
+        },
+        {
+          "u": "/apocrypha-new/agapi1.html",
+          "t": "Житие и подвиги преподобного отца нашего Агапия Чудотворца",
+          "b": 43435
+        },
+        {
+          "u": "/apocrypha-new/agrapha.html",
+          "t": "Аграфы",
+          "b": 34718
+        },
+        {
+          "u": "/apocrypha-new/andr_yurodiv.html",
+          "t": "Житие Андрея Юродивого",
+          "b": 556108
+        },
+        {
+          "u": "/apocrypha-new/ap_pavel.html",
+          "t": "Откровение Павла",
+          "b": 86776
+        },
+        {
+          "u": "/apocrypha-new/ap-ioann.html",
+          "t": "Откровение Иоанна Богослова [апокрифическое]",
+          "b": 52428
+        },
+        {
+          "u": "/apocrypha-new/ap-petr.html",
+          "t": "Апокалипсис от Петра",
+          "b": 33679
+        },
+        {
+          "u": "/apocrypha-new/ap-petr2.html",
+          "t": "Апокалипсис Петра (эфиопская версия)",
+          "b": 59672
+        },
+        {
+          "u": "/apocrypha-new/apost-postanovl.html",
+          "t": "Апостольские постановления",
+          "b": 709679
+        },
+        {
+          "u": "/apocrypha-new/arm_varfol.html",
+          "t": "Армянское сказание об апостоле Ворфоломее",
+          "b": 59630
+        },
+        {
+          "u": "/apocrypha-new/berlin_strasb_ap.html",
+          "t": "Берлинско-Страсбургкий апокриф",
+          "b": 47402
+        },
+        {
+          "u": "/apocrypha-new/bogomil.html",
+          "t": "Тайная книга Богомилов",
+          "b": 47409
+        },
+        {
+          "u": "/apocrypha-new/deyaniya_fomi_i_ego_chudotvornaya_koja.html",
+          "t": "Деяния Фомы и его чудотворная кожа",
+          "b": 70072
+        },
+        {
+          "u": "/apocrypha-new/deyaniya_petra_v_ashdode.html",
+          "t": "Деяния Петра в Ашдоде",
+          "b": 41275
+        },
+        {
+          "u": "/apocrypha-new/didache.html",
+          "t": "Дидахе (Учение двенадцати апостолов)",
+          "b": 48687
+        },
+        {
+          "u": "/apocrypha-new/dionisii-to-dorofei.html",
+          "t": "Послание Дионисия Ареопагита к Дорофею",
+          "b": 26059
+        },
+        {
+          "u": "/apocrypha-new/dionisii-to-ferapevt.html",
+          "t": "Послания Дионисия Ареопагита к Гаю Ферапевту",
+          "b": 32038
+        },
+        {
+          "u": "/apocrypha-new/dionisii-to-ioann.html",
+          "t": "Послание Дионисия Ареопагита к Иоанну Богослову",
+          "b": 28133
+        },
+        {
+          "u": "/apocrypha-new/dionisii-to-polikarp.html",
+          "t": "Послание Дионисия Ареопагита к Поликарпу",
+          "b": 34223
+        },
+        {
+          "u": "/apocrypha-new/dionisii-to-sosipatr.html",
+          "t": "Послание Дионисия Ареопагита к Сосипатру",
+          "b": 25855
+        },
+        {
+          "u": "/apocrypha-new/dionisii-to-timofei.html",
+          "t": "Послание Дионисия Ареопагита к Тимофею",
+          "b": 41203
+        },
+        {
+          "u": "/apocrypha-new/dionisii-to-tit.html",
+          "t": "Послание Дионисия Ареопагита к Титу",
+          "b": 47825
+        },
+        {
+          "u": "/apocrypha-new/edes_chronika.html",
+          "t": "Эдесская хроника",
+          "b": 57583
+        },
+        {
+          "u": "/apocrypha-new/ev_matf2.html",
+          "t": "Евангелие от Матфея искреннего",
+          "b": 120272
+        },
+        {
+          "u": "/apocrypha-new/ev_secret_mark.html",
+          "t": "Послание Климента Александрийского Феодору",
+          "b": 33941
+        },
+        {
+          "u": "/apocrypha-new/ev-arab.html",
+          "t": "Арабское евангелие детства Спасителя",
+          "b": 112685
+        },
+        {
+          "u": "/apocrypha-new/ev-egipt.html",
+          "t": "Евангелие от Египтян (уцелевшие цитаты)",
+          "b": 25537
+        },
+        {
+          "u": "/apocrypha-new/ev-eva.html",
+          "t": "Евангелие Евы",
+          "b": 24907
+        },
+        {
+          "u": "/apocrypha-new/ev-evion.html",
+          "t": "Евангелие от евионитов",
+          "b": 28564
+        },
+        {
+          "u": "/apocrypha-new/ev-evr.html",
+          "t": "Евангелие от евреев",
+          "b": 32301
+        },
+        {
+          "u": "/apocrypha-new/ev-fom.html",
+          "t": "Евангелие детства от Фомы",
+          "b": 46715
+        },
+        {
+          "u": "/apocrypha-new/ev-iakov.html",
+          "t": "Протоевангелие от Иакова",
+          "b": 62968
+        },
+        {
+          "u": "/apocrypha-new/ev-mar.html",
+          "t": "Евангелие от Марии",
+          "b": 33955
+        },
+        {
+          "u": "/apocrypha-new/ev-nikodim.html",
+          "t": "Евангелие от Никодима",
+          "b": 115776
+        },
+        {
+          "u": "/apocrypha-new/ev-petr.html",
+          "t": "Евангелие от Петра",
+          "b": 36669
+        },
+        {
+          "u": "/apocrypha-new/ev-phil.html",
+          "t": "Евангелие от Филиппа",
+          "b": 25385
+        },
+        {
+          "u": "/apocrypha-new/ev-psmatf.html",
+          "t": "Евангелие от псевдо-Матфея",
+          "b": 129448
+        },
+        {
+          "u": "/apocrypha-new/fedor_tiron.html",
+          "t": "Житие святого Федора Тирона",
+          "b": 41826
+        },
+        {
+          "u": "/apocrypha-new/fekla.html",
+          "t": "Деяния Павла и Феклы",
+          "b": 63575
+        },
+        {
+          "u": "/apocrypha-new/foma-6.html",
+          "t": "Деяние шестое",
+          "b": 41855
+        },
+        {
+          "u": "/apocrypha-new/fragm-arhel.html",
+          "t": "Фрагмент \"Деяния Архелая\"",
+          "b": 34142
+        },
+        {
+          "u": "/apocrypha-new/galeno_hipp.html",
+          "t": "Галеново на Гиппократа",
+          "b": 56724
+        },
+        {
+          "u": "/apocrypha-new/germa.html",
+          "t": "Пастырь Гермы",
+          "b": 270217
+        },
+        {
+          "u": "/apocrypha-new/gimn.html",
+          "t": "Песнь о Жемчужине",
+          "b": 36391
+        },
+        {
+          "u": "/apocrypha-new/gimn2.html",
+          "t": "Песнь о Невесте",
+          "b": 27382
+        },
+        {
+          "u": "/apocrypha-new/gomilia_michail.html",
+          "t": "Гомилия об архангеле Михаиле",
+          "b": 50110
+        },
+        {
+          "u": "/apocrypha-new/gostepriim_dismas.html",
+          "t": "Гостеприимство Дисмаса",
+          "b": 33047
+        },
+        {
+          "u": "/apocrypha-new/grigor_magistr_otvet.html",
+          "t": "Григория Магистра ответ на послание сирийского католикоса",
+          "b": 91741
+        },
+        {
+          "u": "/apocrypha-new/hozden.html",
+          "t": "Откровение пресвятой Богородицы (Хождение Богородицы по мукам)",
+          "b": 67045
+        },
+        {
+          "u": "/apocrypha-new/iisus_avgar.html",
+          "t": "Папирусы и эпиграфии о переписке Христа с царем Авгаром",
+          "b": 47054
+        },
+        {
+          "u": "/apocrypha-new/in_patn_lasar.html",
+          "t": "В пятницу цветной недели слово святых апостолов от Адама в аду к Лазарю",
+          "b": 32004
+        },
+        {
+          "u": "/apocrypha-new/iohan_i_razb.html",
+          "t": "Иоанн и разбойник",
+          "b": 33220
+        },
+        {
+          "u": "/apocrypha-new/iohan.html",
+          "t": "О кончине святого Иоханнана, апостола и евангелиста",
+          "b": 39010
+        },
+        {
+          "u": "/apocrypha-new/iosif-plotnik.html",
+          "t": "Книга Иосифа Плотника",
+          "b": 79334
+        },
+        {
+          "u": "/apocrypha-new/iscelenie_Tiberiya.html",
+          "t": "Исцеление Тиберия",
+          "b": 54705
+        },
+        {
+          "u": "/apocrypha-new/isrechen_egip.html",
+          "t": "Изречения Египетских отцов",
+          "b": 379186
+        },
+        {
+          "u": "/apocrypha-new/ist_sim_kif.html",
+          "t": "История Симона Кифы, первоверховного апостола",
+          "b": 103245
+        },
+        {
+          "u": "/apocrypha-new/istoriya_Iosifa_Arimafeiskogo.html",
+          "t": "История Иосифа Аримафейского",
+          "b": 58911
+        },
+        {
+          "u": "/apocrypha-new/jitie_ion_krest_by_serap.html",
+          "t": "Житие Иоанна Крестителя, написанное Серапионом",
+          "b": 91690
+        },
+        {
+          "u": "/apocrypha-new/jitie_iudi.shtml",
+          "t": "Житие Иуды",
+          "b": 37598
+        },
+        {
+          "u": "/apocrypha-new/jitie_Marii_Magdalini.html",
+          "t": "Житие Марии Магдалины",
+          "b": 57686
+        },
+        {
+          "u": "/apocrypha-new/jitie_svyat_jen.html",
+          "t": "Житие святых жён Ксантиппы, Поликсены и Ревекки",
+          "b": 129080
+        },
+        {
+          "u": "/apocrypha-new/jizn_ioanna_krest.html",
+          "t": "Жизнь и мученичество Иоанна Крестителя",
+          "b": 48908
+        },
+        {
+          "u": "/apocrypha-new/kanon_muratory.html",
+          "t": "Канон Мypатоpи",
+          "b": 32434
+        },
+        {
+          "u": "/apocrypha-new/kifa.html",
+          "t": "Учение Симона Кифы в Риме городе",
+          "b": 41470
+        },
+        {
+          "u": "/apocrypha-new/kliment_orhid.html",
+          "t": "Краткое житие Климента Охридского",
+          "b": 38416
+        },
+        {
+          "u": "/apocrypha-new/kliment-to-devstv1.html",
+          "t": "Первое послание Климента Епископа римского к девственникам",
+          "b": 62708
+        },
+        {
+          "u": "/apocrypha-new/kliment-to-devstv2.html",
+          "t": "Второе послание Климента Епископа римского к девственникам",
+          "b": 60203
+        },
+        {
+          "u": "/apocrypha-new/kliment-to-iakov.html",
+          "t": "Послание Климента Епископа римского к апостолу Иакову",
+          "b": 70899
+        },
+        {
+          "u": "/apocrypha-new/kliment-to-korinf1.html",
+          "t": "Первое послание Климента Епископа римского к Коринфянам",
+          "b": 134428
+        },
+        {
+          "u": "/apocrypha-new/kliment-to-korinf2.html",
+          "t": "Второе послание Климента Епископа римского к Коринфянам",
+          "b": 57414
+        },
+        {
+          "u": "/apocrypha-new/kniga_Varfolomeya.html",
+          "t": "Книга Варфоломея",
+          "b": 134748
+        },
+        {
+          "u": "/apocrypha-new/krestitel_vo_ad.html",
+          "t": "Слово о сошествии Иоанна Крестителя во Ад",
+          "b": 56933
+        },
+        {
+          "u": "/apocrypha-new/krestnoe_derevo.html",
+          "t": "Слово о крестном древе",
+          "b": 41768
+        },
+        {
+          "u": "/apocrypha-new/lentul-to-senat.html",
+          "t": "Письмо Лентула сенату и Римскому народу",
+          "b": 27175
+        },
+        {
+          "u": "/apocrypha-new/let_varnav.html",
+          "t": "Послание апостола Варнавы",
+          "b": 104975
+        },
+        {
+          "u": "/apocrypha-new/let-laod.html",
+          "t": "Послание к Лаодикийцам",
+          "b": 27395
+        },
+        {
+          "u": "/apocrypha-new/m_pavel.html",
+          "t": "Мученичество св. апостола Павла",
+          "b": 94628
+        },
+        {
+          "u": "/apocrypha-new/nastavlenie_petra.html",
+          "t": "Наставление Петра",
+          "b": 43426
+        },
+        {
+          "u": "/apocrypha-new/nepodchinenie_Dimasa.html",
+          "t": "Неподчинение Димаса",
+          "b": 40020
+        },
+        {
+          "u": "/apocrypha-new/nikita.html",
+          "t": "Житие святого мученика Никиты",
+          "b": 45903
+        },
+        {
+          "u": "/apocrypha-new/osud_marfa_pilat.html",
+          "t": "Слово о том, как осудила Марфа Пилата перед Кесарем царем",
+          "b": 33669
+        },
+        {
+          "u": "/apocrypha-new/otkrov_ioanna_ob_antichriste.html",
+          "t": "Откровение Иоанна Богослова об Антихристе",
+          "b": 31106
+        },
+        {
+          "u": "/apocrypha-new/otkrov_volhvov.html",
+          "t": "Откровение волхвов",
+          "b": 126664
+        },
+        {
+          "u": "/apocrypha-new/otvet_tiveriy_pilatu.html",
+          "t": "Ответ Тиверия Кесаря Пилату Понтийскому и в ответ воеводе Рахааву и с ним воинам числом две тысячи",
+          "b": 30468
+        },
+        {
+          "u": "/apocrypha-new/papir_iz_oksir_5072.html",
+          "t": "Папирус из Оксиринха 5072",
+          "b": 28155
+        },
+        {
+          "u": "/apocrypha-new/papirus1.html",
+          "t": "Папирус из Оксиринха",
+          "b": 27874
+        },
+        {
+          "u": "/apocrypha-new/papirus2.html",
+          "t": "Папирус Эджертона",
+          "b": 29781
+        },
+        {
+          "u": "/apocrypha-new/pavel_seneka.html",
+          "t": "Переписка апостола Павла с Сенекой",
+          "b": 43016
+        },
+        {
+          "u": "/apocrypha-new/pavel-to-corinf3.html",
+          "t": "Третье послание апостола Павла к Коринфянам",
+          "b": 31659
+        },
+        {
+          "u": "/apocrypha-new/petr-to-iakov.html",
+          "t": "Послание апостола Петра к апостолу Иакову",
+          "b": 38487
+        },
+        {
+          "u": "/apocrypha-new/petropavel1.html",
+          "t": "Страсти апостолов Петра и Павла (малые)",
+          "b": 56565
+        },
+        {
+          "u": "/apocrypha-new/petropavel2.html",
+          "t": "Страсти апостолов Петра и Павла (большие)",
+          "b": 92642
+        },
+        {
+          "u": "/apocrypha-new/pilat1.html",
+          "t": "Обращение Пилата",
+          "b": 36289
+        },
+        {
+          "u": "/apocrypha-new/pilat2.html",
+          "t": "Смерть Пилата",
+          "b": 35724
+        },
+        {
+          "u": "/apocrypha-new/pohval_marii_magdal.html",
+          "t": "Похвальное слово Марии Магдалине",
+          "b": 74312
+        },
+        {
+          "u": "/apocrypha-new/pohvala_ioannu.html",
+          "t": "Похвала Иоанну Крестителю",
+          "b": 67422
+        },
+        {
+          "u": "/apocrypha-new/poklonenie_volhvov.html",
+          "t": "Поклонение волхвов",
+          "b": 31016
+        },
+        {
+          "u": "/apocrypha-new/posl_12_apost.html",
+          "t": "Послание двенадцати Апостолов",
+          "b": 146318
+        },
+        {
+          "u": "/apocrypha-new/posl_pilata.html",
+          "t": "Послание Пилата к Тиверию Кесарю",
+          "b": 33340
+        },
+        {
+          "u": "/apocrypha-new/poslan_psevdo_di.html",
+          "t": "Послание псевдо-Дионисия Ареопагита к Тимофею о смерти апостолов Петра и Павла",
+          "b": 51108
+        },
+        {
+          "u": "/apocrypha-new/pravila_apost.html",
+          "t": "Церковные правила святых апостолов",
+          "b": 47089
+        },
+        {
+          "u": "/apocrypha-new/prenie.html",
+          "t": "Прение Господне с диаволом",
+          "b": 41333
+        },
+        {
+          "u": "/apocrypha-new/priest-ih.html",
+          "t": "О священстве Иисуса Христа",
+          "b": 45084
+        },
+        {
+          "u": "/apocrypha-new/prokula-to-silvii.html",
+          "t": "Письмо Клавдии Прокулы к Фульвии",
+          "b": 62039
+        },
+        {
+          "u": "/apocrypha-new/propoved_o_jizni_Iisusa_i_ego_lubvi_k_aposto.html",
+          "t": "Проповедь о жизни Иисуса и его любви к апостолам",
+          "b": 70120
+        },
+        {
+          "u": "/apocrypha-new/rech_spasitelya_i_tanec.shtml",
+          "t": "Речь Спасителя и танец Спасителя",
+          "b": 36431
+        },
+        {
+          "u": "/apocrypha-new/skaz_o_30_serebr.shtml",
+          "t": "Сказание о тридцати серебряниках- Новозаветные апокрифы",
+          "b": 38272
+        },
+        {
+          "u": "/apocrypha-new/skazan_makarii.html",
+          "t": "Сказание о Макарии Римском",
+          "b": 60355
+        },
+        {
+          "u": "/apocrypha-new/skazanie_o_svyachshennom_krestnom_dreve.html",
+          "t": "Сказание о священном крестном древе",
+          "b": 49523
+        },
+        {
+          "u": "/apocrypha-new/slovo_zlatoust.html",
+          "t": "В субботу цветную слово святого Иоанна Златоуста о воскресении друга христова Лазаря",
+          "b": 33954
+        },
+        {
+          "u": "/apocrypha-new/smert_iudi.html",
+          "t": "Смерть Иуды по Папию",
+          "b": 27076
+        },
+        {
+          "u": "/apocrypha-new/soshestv.html",
+          "t": "О сошествии Иоанна Предтечи во ад",
+          "b": 56873
+        },
+        {
+          "u": "/apocrypha-new/stranstviya_petra.shtml",
+          "t": "Странствия Петра",
+          "b": 30151
+        },
+        {
+          "u": "/apocrypha-new/tiburt_sivil.html",
+          "t": "Тибуртинская Сивилла",
+          "b": 55088
+        },
+        {
+          "u": "/apocrypha-new/tri_svatitel.html",
+          "t": "Из \"Беседы трех святителей\"",
+          "b": 39297
+        }
+      ],
+      "images": []
+    },
+    {
+      "id": "apocrypha-old",
+      "label": "Ветхозаветные апокрифы",
+      "count": 35,
+      "bytes": 2563692,
+      "items": [
+        {
+          "u": "/apocrypha-old/",
+          "t": "Ветхозаветные апокрифы",
+          "b": 14259
+        },
+        {
+          "u": "/apocrypha-old/adam_eva_lat.html",
+          "t": "Житие Адама и Евы [Латинская версия]",
+          "b": 52499
+        },
+        {
+          "u": "/apocrypha-old/adam_eva_slav.html",
+          "t": "Житие Адама и Евы [Славянская версия]",
+          "b": 19149
+        },
+        {
+          "u": "/apocrypha-old/adam.html",
+          "t": "Сказание о сотворении Богом Адама",
+          "b": 25798
+        },
+        {
+          "u": "/apocrypha-old/adameva.html",
+          "t": "Об Адаме и Еве",
+          "b": 28356
+        },
+        {
+          "u": "/apocrypha-old/agada_solomon.html",
+          "t": "Агада о Соломоне",
+          "b": 74094
+        },
+        {
+          "u": "/apocrypha-old/ap_ilia.html",
+          "t": "Апокалипсис Илии",
+          "b": 49101
+        },
+        {
+          "u": "/apocrypha-old/ap_sedrax.html",
+          "t": "Откровение Седраха",
+          "b": 40290
+        },
+        {
+          "u": "/apocrypha-old/ap-bar.html",
+          "t": "Откровение Варуха",
+          "b": 44992
+        },
+        {
+          "u": "/apocrypha-old/ap-ezd.html",
+          "t": "Откровение Ездры",
+          "b": 38242
+        },
+        {
+          "u": "/apocrypha-old/ap-mos.html",
+          "t": "Вознесение Моисея",
+          "b": 36288
+        },
+        {
+          "u": "/apocrypha-old/ap-mos2.html",
+          "t": "Апокалипсис Моисея",
+          "b": 53465
+        },
+        {
+          "u": "/apocrypha-old/apokrif_ieremii.html",
+          "t": "Апокриф пророка Иеремии",
+          "b": 127839
+        },
+        {
+          "u": "/apocrypha-old/arist_to_filokrat.html",
+          "t": "Письмо Аристея к Филократу",
+          "b": 193860
+        },
+        {
+          "u": "/apocrypha-old/asenef_sir_vers.html",
+          "t": "Отрывок из Сирийской версии \"Повести об Асенефе\"",
+          "b": 22950
+        },
+        {
+          "u": "/apocrypha-old/baruh2.html",
+          "t": "Откровение Варуха, сына Нерии",
+          "b": 152077
+        },
+        {
+          "u": "/apocrypha-old/bilam.html",
+          "t": "Пророчество Бильама сына Беора",
+          "b": 14920
+        },
+        {
+          "u": "/apocrypha-old/book_ahiahars.html",
+          "t": "Книга Ахиахара Премудрого",
+          "b": 92804
+        },
+        {
+          "u": "/apocrypha-old/david1.html",
+          "t": "Сказания о царе Давиде",
+          "b": 34458
+        },
+        {
+          "u": "/apocrypha-old/enoh.html",
+          "t": "Книга тайн Еноха",
+          "b": 41339
+        },
+        {
+          "u": "/apocrypha-old/iosif_asenefa.html",
+          "t": "Повесть об Иосифе и Асенефе",
+          "b": 117147
+        },
+        {
+          "u": "/apocrypha-old/jubilees.html",
+          "t": "Книга Юбилеев",
+          "b": 434323
+        },
+        {
+          "u": "/apocrypha-old/lachish_pism.html",
+          "t": "Лахишские письма",
+          "b": 35498
+        },
+        {
+          "u": "/apocrypha-old/melchis1.html",
+          "t": "Сказание о Мелхиседеке",
+          "b": 22106
+        },
+        {
+          "u": "/apocrypha-old/moisey.html",
+          "t": "Житие пророка Моисея",
+          "b": 82400
+        },
+        {
+          "u": "/apocrypha-old/much_isaii.html",
+          "t": "Мученичество Исайи",
+          "b": 22936
+        },
+        {
+          "u": "/apocrypha-old/potop.html",
+          "t": "О потопе",
+          "b": 20459
+        },
+        {
+          "u": "/apocrypha-old/solomon1.html",
+          "t": "Псалмы Соломона",
+          "b": 66915
+        },
+        {
+          "u": "/apocrypha-old/solomon2.html",
+          "t": "Суды Соломона",
+          "b": 51645
+        },
+        {
+          "u": "/apocrypha-old/ts-abr.html",
+          "t": "Завещание Авраама",
+          "b": 83245
+        },
+        {
+          "u": "/apocrypha-old/vozn_enoch.html",
+          "t": "Вознесение Еноха",
+          "b": 87207
+        },
+        {
+          "u": "/apocrypha-old/vozn_is.html",
+          "t": "Вознесение Исайи (Видение Исайи)",
+          "b": 47922
+        },
+        {
+          "u": "/apocrypha-old/zav-12.html",
+          "t": "Завещания двенадцати патриархов, сыновей Иакова",
+          "b": 269830
+        },
+        {
+          "u": "/apocrypha-old/zav-moisey.html",
+          "t": "Завещание Моисея",
+          "b": 34290
+        },
+        {
+          "u": "/apocrypha-old/zorov.html",
+          "t": "Слово блаженного Зоровавеля",
+          "b": 30989
+        }
+      ],
+      "images": []
+    },
+    {
+      "id": "hermetic",
+      "label": "Герметизм",
+      "count": 28,
+      "bytes": 945344,
+      "items": [
+        {
+          "u": "/hermetic/",
+          "t": "Герметизм",
+          "b": 13022
+        },
+        {
+          "u": "/hermetic/asklepy.html",
+          "t": "Асклепий",
+          "b": 124666
+        },
+        {
+          "u": "/hermetic/germ_1.html",
+          "t": "Гермес к Тату",
+          "b": 88661
+        },
+        {
+          "u": "/hermetic/germ_2.html",
+          "t": "Гермес к Аммону",
+          "b": 19906
+        },
+        {
+          "u": "/hermetic/germ_3.html",
+          "t": "Из речей Гермеса",
+          "b": 28500
+        },
+        {
+          "u": "/hermetic/germ_4.html",
+          "t": "Фрагмент из \"Афродиты\"",
+          "b": 11491
+        },
+        {
+          "u": "/hermetic/germ_5.html",
+          "t": "Из книги \"Дева, или зеница мира\"",
+          "b": 121775
+        },
+        {
+          "u": "/hermetic/germ_6.html",
+          "t": "Фрагменты разные",
+          "b": 52114
+        },
+        {
+          "u": "/hermetic/germ1.html",
+          "t": "I. Пэмандр",
+          "b": 37229
+        },
+        {
+          "u": "/hermetic/germ10.html",
+          "t": "Х. Ключ",
+          "b": 36469
+        },
+        {
+          "u": "/hermetic/germ11.html",
+          "t": "XI. Ум к Гермесу",
+          "b": 33800
+        },
+        {
+          "u": "/hermetic/germ12.html",
+          "t": "XII. О Всеобщем Уме",
+          "b": 34951
+        },
+        {
+          "u": "/hermetic/germ13.html",
+          "t": "XIII. Тайная проповедь на горе о возрождении и правиле молчания",
+          "b": 34838
+        },
+        {
+          "u": "/hermetic/germ14.html",
+          "t": "XIV. Здоровье души",
+          "b": 19736
+        },
+        {
+          "u": "/hermetic/germ16.html",
+          "t": "XVI. Определения",
+          "b": 28120
+        },
+        {
+          "u": "/hermetic/germ17.html",
+          "t": "XVII. Без названия",
+          "b": 11459
+        },
+        {
+          "u": "/hermetic/germ18.html",
+          "t": "XVIII. О Волнениях тела, сковывающих душу",
+          "b": 26067
+        },
+        {
+          "u": "/hermetic/germ2.html",
+          "t": "II. Вселенская речь",
+          "b": 27469
+        },
+        {
+          "u": "/hermetic/germ3.html",
+          "t": "III. Священная речь Гермеса Триждывеличайшего",
+          "b": 14824
+        },
+        {
+          "u": "/hermetic/germ4.html",
+          "t": "IV. Кубок, или Единство",
+          "b": 21074
+        },
+        {
+          "u": "/hermetic/germ5.html",
+          "t": "V. О том, что Бог невидим и в то же время в наивысшей степени явен",
+          "b": 23545
+        },
+        {
+          "u": "/hermetic/germ6.html",
+          "t": "VI. О том, что Благо существует только в Боге одном, и нигде более",
+          "b": 20364
+        },
+        {
+          "u": "/hermetic/germ7.html",
+          "t": "VII. О том, что наибольшее зло для людей есть незнание Бога",
+          "b": 12988
+        },
+        {
+          "u": "/hermetic/germ8.html",
+          "t": "VIII. О том, что ни одно из существ не погибает и заблуждение есть то, что люди называют перемены разрушением и смертью",
+          "b": 16111
+        },
+        {
+          "u": "/hermetic/germ9.html",
+          "t": "IX. О мышлении и об ощущении",
+          "b": 21844
+        },
+        {
+          "u": "/hermetic/hermes1.html",
+          "t": "ПЭМАНДР - пастырь человеческий",
+          "b": 32575
+        },
+        {
+          "u": "/hermetic/icida_to_gor.html",
+          "t": "Исида Прорицательница своему сыну Гору",
+          "b": 17178
+        },
+        {
+          "u": "/hermetic/tablica.html",
+          "t": "Завещание (или слова тайн) Гермеса Трисмегиста [Изумрудная таблица]",
+          "b": 14568
+        }
+      ],
+      "images": []
+    },
+    {
+      "id": "gnostic",
+      "label": "Гностицизм",
+      "count": 30,
+      "bytes": 7000373,
+      "items": [
+        {
+          "u": "/gnostic/",
+          "t": "Гностицизм",
+          "b": 9981
+        },
+        {
+          "u": "/gnostic/about_pistis.html",
+          "t": "Немного о Пистис Софии",
+          "b": 74149
+        },
+        {
+          "u": "/gnostic/about-ev-iuda.shtml",
+          "t": "О Евангелии Иуды (Искариота)",
+          "b": 24135
+        },
+        {
+          "u": "/gnostic/b_petr1.html",
+          "t": "Деяние Петра",
+          "b": 19926
+        },
+        {
+          "u": "/gnostic/beseda_iisus.html",
+          "t": "Беседа Иисуса с учениками",
+          "b": 43691
+        },
+        {
+          "u": "/gnostic/cb_text1.html",
+          "t": "Текст без названия",
+          "b": 108853
+        },
+        {
+          "u": "/gnostic/comment_pistis.html",
+          "t": "Примечания к Пистис Софии",
+          "b": 105099
+        },
+        {
+          "u": "/gnostic/ev_maria_gnost.html",
+          "t": "Евангелие от Марии",
+          "b": 19432
+        },
+        {
+          "u": "/gnostic/ev-iuda.shtml",
+          "t": "Евангелие Иуды (Искариота)",
+          "b": 39982
+        },
+        {
+          "u": "/gnostic/gnost_lit.html",
+          "t": "Гностическая литература",
+          "b": 13622
+        },
+        {
+          "u": "/gnostic/gnost_molitva2.html",
+          "t": "Вторая гностическая молитва без названия",
+          "b": 12635
+        },
+        {
+          "u": "/gnostic/kniga-ieu1.html",
+          "t": "Первая Книга Иеу",
+          "b": 117519
+        },
+        {
+          "u": "/gnostic/kniga-ieu2.html",
+          "t": "Вторая Книга Иеу",
+          "b": 105997
+        },
+        {
+          "u": "/gnostic/komments-ieu1.html",
+          "t": "Примечания к Первой Книге Иеу",
+          "b": 33339
+        },
+        {
+          "u": "/gnostic/komments-ieu2.html",
+          "t": "Примечания ко Второй Книге Иеу",
+          "b": 24450
+        },
+        {
+          "u": "/gnostic/mand_lit.html",
+          "t": "Мандейские тексты",
+          "b": 10706
+        },
+        {
+          "u": "/gnostic/manich_lit.html",
+          "t": "Манихейские тексты",
+          "b": 12419
+        },
+        {
+          "u": "/gnostic/mol_iosif.html",
+          "t": "Молитва Иосифа",
+          "b": 14006
+        },
+        {
+          "u": "/gnostic/oda_solomon_c.html",
+          "t": "Оды Соломона (полный вариант)",
+          "b": 89341
+        },
+        {
+          "u": "/gnostic/oda_solomon.html",
+          "t": "Оды Соломона",
+          "b": 23893
+        },
+        {
+          "u": "/gnostic/pistis_book1.html",
+          "t": "Первая Книга ПИСТИС СОФИИ",
+          "b": 261200
+        },
+        {
+          "u": "/gnostic/pistis_book2.html",
+          "t": "Вторая Книга ПИСТИС СОФИИ",
+          "b": 266824
+        },
+        {
+          "u": "/gnostic/pistis_book3.html",
+          "t": "Третья Книга ПИСТИС СОФИИ",
+          "b": 208144
+        },
+        {
+          "u": "/gnostic/pistis_book4.html",
+          "t": "Четвертая Книга ПИСТИС СОФИИ",
+          "b": 79193
+        },
+        {
+          "u": "/gnostic/pistis1.html",
+          "t": "Пистис Софии - главы 1-38",
+          "b": 127487
+        },
+        {
+          "u": "/gnostic/pistis2.html",
+          "t": "Пистис Софии - главы 60-63",
+          "b": 28592
+        },
+        {
+          "u": "/gnostic/pistis3.html",
+          "t": "Пистис Софии - глава 100",
+          "b": 20742
+        },
+        {
+          "u": "/gnostic/pistis4.html",
+          "t": "Пистис Софии - главы 111-113",
+          "b": 38713
+        },
+        {
+          "u": "/gnostic/pistis5.html",
+          "t": "Пистис Софии - выдержки из глав 131-133",
+          "b": 21630
+        },
+        {
+          "u": "/gnostic/put_d.html",
+          "t": "Фрагмент о путешествии души",
+          "b": 11717
+        }
+      ],
+      "images": [
+        {
+          "u": "/gnostic/01.jpg",
+          "b": 44532
+        },
+        {
+          "u": "/gnostic/02.jpg",
+          "b": 5032
+        },
+        {
+          "u": "/gnostic/03.jpg",
+          "b": 20546
+        },
+        {
+          "u": "/gnostic/04.jpg",
+          "b": 31874
+        },
+        {
+          "u": "/gnostic/05.jpg",
+          "b": 24794
+        },
+        {
+          "u": "/gnostic/06.jpg",
+          "b": 16569
+        },
+        {
+          "u": "/gnostic/07.jpg",
+          "b": 68493
+        },
+        {
+          "u": "/gnostic/08.jpg",
+          "b": 43651
+        },
+        {
+          "u": "/gnostic/09.jpg",
+          "b": 49776
+        },
+        {
+          "u": "/gnostic/10.jpg",
+          "b": 55362
+        },
+        {
+          "u": "/gnostic/11.jpg",
+          "b": 56514
+        },
+        {
+          "u": "/gnostic/12.jpg",
+          "b": 55887
+        },
+        {
+          "u": "/gnostic/13.jpg",
+          "b": 57238
+        },
+        {
+          "u": "/gnostic/14.jpg",
+          "b": 60405
+        },
+        {
+          "u": "/gnostic/15.jpg",
+          "b": 59538
+        },
+        {
+          "u": "/gnostic/16.jpg",
+          "b": 56238
+        },
+        {
+          "u": "/gnostic/17.jpg",
+          "b": 53828
+        },
+        {
+          "u": "/gnostic/18.jpg",
+          "b": 56465
+        },
+        {
+          "u": "/gnostic/19.jpg",
+          "b": 62368
+        },
+        {
+          "u": "/gnostic/20.jpg",
+          "b": 52993
+        },
+        {
+          "u": "/gnostic/21.jpg",
+          "b": 53640
+        },
+        {
+          "u": "/gnostic/22.jpg",
+          "b": 55987
+        },
+        {
+          "u": "/gnostic/23.jpg",
+          "b": 57535
+        },
+        {
+          "u": "/gnostic/24.jpg",
+          "b": 57494
+        },
+        {
+          "u": "/gnostic/25.jpg",
+          "b": 56007
+        },
+        {
+          "u": "/gnostic/26.jpg",
+          "b": 55952
+        },
+        {
+          "u": "/gnostic/27.jpg",
+          "b": 55994
+        },
+        {
+          "u": "/gnostic/28.jpg",
+          "b": 58351
+        },
+        {
+          "u": "/gnostic/29.jpg",
+          "b": 61687
+        },
+        {
+          "u": "/gnostic/30.jpg",
+          "b": 56436
+        },
+        {
+          "u": "/gnostic/31.jpg",
+          "b": 56134
+        },
+        {
+          "u": "/gnostic/32.jpg",
+          "b": 55582
+        },
+        {
+          "u": "/gnostic/33.jpg",
+          "b": 53458
+        },
+        {
+          "u": "/gnostic/34.jpg",
+          "b": 4276
+        },
+        {
+          "u": "/gnostic/35-(kript).jpg",
+          "b": 1405
+        },
+        {
+          "u": "/gnostic/36.jpg",
+          "b": 6982
+        },
+        {
+          "u": "/gnostic/37.jpg",
+          "b": 4582
+        },
+        {
+          "u": "/gnostic/39.jpg",
+          "b": 5776
+        },
+        {
+          "u": "/gnostic/40.jpg",
+          "b": 16980
+        },
+        {
+          "u": "/gnostic/41.jpg",
+          "b": 7789
+        },
+        {
+          "u": "/gnostic/43.jpg",
+          "b": 20346
+        },
+        {
+          "u": "/gnostic/44.jpg",
+          "b": 26856
+        },
+        {
+          "u": "/gnostic/45-(kript).jpg",
+          "b": 2423
+        },
+        {
+          "u": "/gnostic/46-(kript).jpg",
+          "b": 1124
+        },
+        {
+          "u": "/gnostic/47.jpg",
+          "b": 5640
+        },
+        {
+          "u": "/gnostic/48-(kript).jpg",
+          "b": 1408
+        },
+        {
+          "u": "/gnostic/49.jpg",
+          "b": 7265
+        },
+        {
+          "u": "/gnostic/50-(kript).jpg",
+          "b": 2223
+        },
+        {
+          "u": "/gnostic/51.jpg",
+          "b": 8275
+        },
+        {
+          "u": "/gnostic/52-(kript).jpg",
+          "b": 1262
+        },
+        {
+          "u": "/gnostic/53.jpg",
+          "b": 20234
+        },
+        {
+          "u": "/gnostic/54.jpg",
+          "b": 4651
+        },
+        {
+          "u": "/gnostic/55.jpg",
+          "b": 14627
+        },
+        {
+          "u": "/gnostic/56.jpg",
+          "b": 3195
+        },
+        {
+          "u": "/gnostic/57.jpg",
+          "b": 2800
+        },
+        {
+          "u": "/gnostic/58.jpg",
+          "b": 4779
+        },
+        {
+          "u": "/gnostic/59.jpg",
+          "b": 2836
+        },
+        {
+          "u": "/gnostic/60.jpg",
+          "b": 11846
+        },
+        {
+          "u": "/gnostic/61.jpg",
+          "b": 4169
+        },
+        {
+          "u": "/gnostic/62.jpg",
+          "b": 4149
+        },
+        {
+          "u": "/gnostic/63.jpg",
+          "b": 4832
+        },
+        {
+          "u": "/gnostic/64.jpg",
+          "b": 3013
+        },
+        {
+          "u": "/gnostic/65.jpg",
+          "b": 4139
+        },
+        {
+          "u": "/gnostic/66.jpg",
+          "b": 10604
+        },
+        {
+          "u": "/gnostic/67.jpg",
+          "b": 5427
+        },
+        {
+          "u": "/gnostic/68.jpg",
+          "b": 7197
+        },
+        {
+          "u": "/gnostic/69.jpg",
+          "b": 10568
+        },
+        {
+          "u": "/gnostic/Image1.gif",
+          "b": 2545
+        },
+        {
+          "u": "/gnostic/Image2.gif",
+          "b": 2537
+        },
+        {
+          "u": "/gnostic/Image3.gif",
+          "b": 2685
+        },
+        {
+          "u": "/gnostic/Pistis_Sophia_predisl_literatur_per_komm_i_tablici_A_Moma_2009.pdf",
+          "b": 3115151
+        }
+      ]
+    },
+    {
+      "id": "kumran",
+      "label": "Свитки Иудейской пустыни",
+      "count": 55,
+      "bytes": 1878312,
+      "items": [
+        {
+          "u": "/kumran/",
+          "t": "Свитки Иудейской пустыни",
+          "b": 21147
+        },
+        {
+          "u": "/kumran/2fragm.html",
+          "t": "Два небольших свитка списка (4Q 339 и 4Q 340)",
+          "b": 15564
+        },
+        {
+          "u": "/kumran/2ways.html",
+          "t": "Два пути (4Q 473)",
+          "b": 14148
+        },
+        {
+          "u": "/kumran/all.html",
+          "t": "Находки в Иудейской пустыне",
+          "b": 102003
+        },
+        {
+          "u": "/kumran/astron_enoch.html",
+          "t": "Астрономическая книга Еноха (4 Q En astr)",
+          "b": 45748
+        },
+        {
+          "u": "/kumran/bar-hoba_docs.html",
+          "t": "Документы периода восстания Бар-Кохбы",
+          "b": 48257
+        },
+        {
+          "u": "/kumran/blagosl_patr.html",
+          "t": "Благословения патриархов",
+          "b": 19359
+        },
+        {
+          "u": "/kumran/book_enoh1.html",
+          "t": "Первая книга Еноха [семь экземпляров]",
+          "b": 88262
+        },
+        {
+          "u": "/kumran/book_ispolin.html",
+          "t": "\"Книга исполинов\" (1Q 23, 2Q 26, 4Q 203, 4Q 530-532, 6Q 8)",
+          "b": 29823
+        },
+        {
+          "u": "/kumran/book_tain.html",
+          "t": "Книга Тайн (1Q 27, 4Q 299-301)",
+          "b": 22005
+        },
+        {
+          "u": "/kumran/bookyub-a_b.html",
+          "t": "Фрагменты а и b «Книги Юбилеев» (1Q Jub a.b.)",
+          "b": 15030
+        },
+        {
+          "u": "/kumran/bytie.html",
+          "t": "Апокриф книги Бытия",
+          "b": 43755
+        },
+        {
+          "u": "/kumran/calendarn_docum.html",
+          "t": "Календарный документ (4Q Сalendrical Document (4Q 327))",
+          "b": 17224
+        },
+        {
+          "u": "/kumran/comm_mihei.html",
+          "t": "Комментарий на книгу Михея",
+          "b": 16973
+        },
+        {
+          "u": "/kumran/comm_osaii.html",
+          "t": "Комментарии на Книгу пророка Осаии (4Q pHos b)",
+          "b": 16062
+        },
+        {
+          "u": "/kumran/comm_psalom37.html",
+          "t": "Комментарий на псалом 37 (4Q pPs (4Q 171))",
+          "b": 21421
+        },
+        {
+          "u": "/kumran/d_doc.html",
+          "t": "Дамасский документ",
+          "b": 86746
+        },
+        {
+          "u": "/kumran/d_doc2.html",
+          "t": "Фрагменты Дамасского документа (6Q СD (6Q 15) и 4Q Da)",
+          "b": 23509
+        },
+        {
+          "u": "/kumran/deti_spas_1.html",
+          "t": "Дети Спасения и тайна бытия [фрагменты 1 и 410 (4Q 416, 418)]",
+          "b": 22600
+        },
+        {
+          "u": "/kumran/dopoln1.html",
+          "t": "Первое дополнение к «Уставу общины» под названием «Две колонки» (1Q Sa)",
+          "b": 24412
+        },
+        {
+          "u": "/kumran/dopoln2.html",
+          "t": "Второе дополнение к «Уставу общины» (1Q S) под названием «Благословение отцов и князя» (1Q Sb)",
+          "b": 22795
+        },
+        {
+          "u": "/kumran/filakterii_teffilin.html",
+          "t": "Филактерии Тефиллин (Mur4 Phylactery)",
+          "b": 16515
+        },
+        {
+          "u": "/kumran/fis_gor.html",
+          "t": "Физиогномические гороскопы (4Q Physiogn= 4Q 561)",
+          "b": 16495
+        },
+        {
+          "u": "/kumran/florilegium.html",
+          "t": "Флорилегиум (4Q Florilegium=174)",
+          "b": 22747
+        },
+        {
+          "u": "/kumran/fragm_pyatikn.html",
+          "t": "Переработанный фрагмент Пятикнижия (4Q158 (4QRPa) 4QReworked Pentateucha)",
+          "b": 31069
+        },
+        {
+          "u": "/kumran/galah_pismo.html",
+          "t": "Галахическое письмо а, с (4Q 394, 396 (4QMMT а, с) 4QHalakhic Letter а, с)",
+          "b": 22479
+        },
+        {
+          "u": "/kumran/gymns_fragm1.html",
+          "t": "Фрагменты Благодарственных гимнов",
+          "b": 28885
+        },
+        {
+          "u": "/kumran/gymns.html",
+          "t": "Благодарственные гимны",
+          "b": 116258
+        },
+        {
+          "u": "/kumran/hram_svitok.html",
+          "t": "\"Храмовый свиток\" (11Q Temple Scroll)",
+          "b": 182450
+        },
+        {
+          "u": "/kumran/komment_a1.html",
+          "t": "Комментарии на Книгу пророка Авакума (1Q pHab)",
+          "b": 29623
+        },
+        {
+          "u": "/kumran/levit_a.html",
+          "t": "Левит а 11Q1 (11QpaleoLev a) 11QLeviticus a",
+          "b": 16881
+        },
+        {
+          "u": "/kumran/medn_svitok.html",
+          "t": "Медный свиток (3Q 15)",
+          "b": 34442
+        },
+        {
+          "u": "/kumran/mess_lider.html",
+          "t": "Мессианский лидер (4Q 285)",
+          "b": 14187
+        },
+        {
+          "u": "/kumran/mess_sbornik.html",
+          "t": "Мессианский сборник или Антология мессианских пророчеств (4Q Test)",
+          "b": 18474
+        },
+        {
+          "u": "/kumran/midrash_melch.html",
+          "t": "Мидраш Мельхиседека (11Q Melchisedek)",
+          "b": 18634
+        },
+        {
+          "u": "/kumran/mol-enoch.html",
+          "t": "Молитва Еноха [4Q 369]",
+          "b": 16858
+        },
+        {
+          "u": "/kumran/nabonid.html",
+          "t": "Курманский фрагмент молитвы вавилонского царя Набонида (4Q Or Nab)",
+          "b": 15113
+        },
+        {
+          "u": "/kumran/naum1.html",
+          "t": "Коментарий на Книгу пророка Наума (4Q pNahum)",
+          "b": 22893
+        },
+        {
+          "u": "/kumran/o_messii.html",
+          "t": "Фрагменты кумранских текстов о Мессии",
+          "b": 20765
+        },
+        {
+          "u": "/kumran/obiln_derevo.html",
+          "t": "Притча Обильного Дерева (4Q 302a)",
+          "b": 14900
+        },
+        {
+          "u": "/kumran/pesn_subb_prin.html",
+          "t": "Песни субботнего жертвоприношения 4Q403 (4QShirShabbd)",
+          "b": 18916
+        },
+        {
+          "u": "/kumran/plameni.html",
+          "t": "Языки пламени (1Q 29, 4Q 376)",
+          "b": 16686
+        },
+        {
+          "u": "/kumran/psalom_king_ionafan.html",
+          "t": "Апокрифический псалом и молитва короля Ионафана (4Q 448)",
+          "b": 17470
+        },
+        {
+          "u": "/kumran/psevdo_yubil.html",
+          "t": "«Псевдо-«Книга юбилеев» (4Q Pseudo-Jubilees)",
+          "b": 18045
+        },
+        {
+          "u": "/kumran/rasputn.html",
+          "t": "Проделки распутной женщины (4Q 184)",
+          "b": 17260
+        },
+        {
+          "u": "/kumran/rit_zak_chist.html",
+          "t": "Ритуальные законы чистоты (4Q Tohorot a=4Q 274)",
+          "b": 23852
+        },
+        {
+          "u": "/kumran/shifr_doc.html",
+          "t": "Шифрованные астрологические документы (4Q Crypt)",
+          "b": 19516
+        },
+        {
+          "u": "/kumran/slova_moisea.html",
+          "t": "Слова Моисея (1Q DM)",
+          "b": 19476
+        },
+        {
+          "u": "/kumran/slova_svet.html",
+          "t": "Слова светильные",
+          "b": 26211
+        },
+        {
+          "u": "/kumran/sobr_posl.html",
+          "t": "Собрание пословиц (4Q Wisd=4Q 424)",
+          "b": 21008
+        },
+        {
+          "u": "/kumran/suns_of_light.html",
+          "t": "Война сынов света против сынов тьмы",
+          "b": 88224
+        },
+        {
+          "u": "/kumran/targum_iova.html",
+          "t": "Таргум Иова (4QtgJob=4Q 157, 11QtgJob=11Q 10)",
+          "b": 46166
+        },
+        {
+          "u": "/kumran/ustav.html",
+          "t": "Устав общины",
+          "b": 85020
+        },
+        {
+          "u": "/kumran/voshvalen1.html",
+          "t": "Восхваления (4Q 427- 433a)",
+          "b": 66512
+        },
+        {
+          "u": "/kumran/words_michail.html",
+          "t": "Слова архангела Михаила (4Q mich=4Q 529, 6Q unidar=6 Q23)",
+          "b": 17439
+        }
+      ],
+      "images": []
+    },
+    {
+      "id": "study",
+      "label": "Исследования",
+      "count": 42,
+      "bytes": 3399871,
+      "items": [
+        {
+          "u": "/study/",
+          "t": "Исследования",
+          "b": 21622
+        },
+        {
+          "u": "/study/about_sec_ev_mark.html",
+          "t": "Историчность Тайного евангелия от Марка",
+          "b": 43347
+        },
+        {
+          "u": "/study/acts_simon.html",
+          "t": "Деяния Симона Волхва",
+          "b": 266488
+        },
+        {
+          "u": "/study/adam-shel.html",
+          "t": "Апокалипсис Адама: Очевидность его гностико-христианского происхождения. Г.М. Шеллурд.",
+          "b": 60247
+        },
+        {
+          "u": "/study/afon1.html",
+          "t": "ГНОСИС В ЗЕРКАЛЕ ЕГО КРИТИКОВ: Античный гностицизм в контексте платонической философии поздней античности",
+          "b": 291715
+        },
+        {
+          "u": "/study/bernsnev.html",
+          "t": "Ветхозаветные апокрифы: Книга Еноха; Книга Юбилеев, или Малое Бытие; Заветы двенадцати патриархов; Псалмы Соломона",
+          "b": 65748
+        },
+        {
+          "u": "/study/budanov.html",
+          "t": "К вопросу о влиянии еретических воззрений на христианство Древней Руси",
+          "b": 187197
+        },
+        {
+          "u": "/study/cerkovrimbog.html",
+          "t": "Церковь Римская и Церковь Божья",
+          "b": 152741
+        },
+        {
+          "u": "/study/contraiegova.html",
+          "t": "Обращение к христианам. Carroll R. Bierbower",
+          "b": 42009
+        },
+        {
+          "u": "/study/diakov.html",
+          "t": "Гностицизм как религия и философия",
+          "b": 48795
+        },
+        {
+          "u": "/study/dual1.html",
+          "t": "Апология дуализма",
+          "b": 58318
+        },
+        {
+          "u": "/study/evluka-markion.html",
+          "t": "Евангелие Маркиона и Евангелие Луки в сравнении. Чарльз Б. Уайт",
+          "b": 63496
+        },
+        {
+          "u": "/study/harlamov.html",
+          "t": "Три века гностицизма",
+          "b": 153825
+        },
+        {
+          "u": "/study/heraclion1.html",
+          "t": "Фрагменты Гераклиона гностика из трактата Оригена \"Толкование на Евангелие от Иоанна\"",
+          "b": 115071
+        },
+        {
+          "u": "/study/huan_1.html",
+          "t": "ГЛАВА ПЕРВАЯ. ЖИЗНЬ И СМЕРТЬ НОВЫХ ВИДЯЩИХ - А. Логинов. Ошибка дона Хуана / Тайны вечной жизни: от Египетской книги мёртвых до учения Кастанеды",
+          "b": 55921
+        },
+        {
+          "u": "/study/huan_2.html",
+          "t": "ГЛАВА ВТОРАЯ. АРХАИЧНЫЕ ВЕРОВАНИЯ - А. Логинов. Ошибка дона Хуана / Тайны вечной жизни: от Египетской книги мёртвых до учения Кастанеды",
+          "b": 91526
+        },
+        {
+          "u": "/study/huan_ogl.html",
+          "t": "Оглавление - А. Логинов. Ошибка дона Хуана / Тайны вечной жизни: от Египетской книги мёртвых до учения Кастанеды",
+          "b": 17077
+        },
+        {
+          "u": "/study/huan_poyasnenie.html",
+          "t": "Пояснение - А. Логинов. Ошибка дона Хуана / Тайны вечной жизни: от Египетской книги мёртвых до учения Кастанеды",
+          "b": 16652
+        },
+        {
+          "u": "/study/isabel1.html",
+          "t": "Воскресение плоти согласно валентинианам и Иринею Лионскому",
+          "b": 69088
+        },
+        {
+          "u": "/study/kispel1.html",
+          "t": "Демиург в апокрифе Иоанна. Жилль Киспель",
+          "b": 148045
+        },
+        {
+          "u": "/study/kliment.html",
+          "t": "Перевоплощения - путь души к Богу. Учение о спасении Климента Александрийского",
+          "b": 56030
+        },
+        {
+          "u": "/study/kontur-markion.html",
+          "t": "Контуры евангелия Маркиона. Чарльз Б. Уайт",
+          "b": 55549
+        },
+        {
+          "u": "/study/kumran-iisus.html",
+          "t": "Кумран и Иисус, или прорыв к Абсолюту - В.Е. Крылов",
+          "b": 70535
+        },
+        {
+          "u": "/study/litavrin1.html",
+          "t": "Г. Г. Литаврин. Как жили византийцы (Отрывок о дуалистических ересях)",
+          "b": 23652
+        },
+        {
+          "u": "/study/logan.html",
+          "t": "Послание Евгноста и валентинианство (Элистер Х.Б. Логан.)",
+          "b": 87333
+        },
+        {
+          "u": "/study/loginov1.html",
+          "t": "О ДАТИРОВКЕ ЕВАНГЕЛИЯ ОТ ФОМЫ. ГНОСТИЦИЗМ И ПРОПОВЕДЬ ИИСУСА",
+          "b": 106357
+        },
+        {
+          "u": "/study/loginov3.html",
+          "t": "Свет Крещения: Раннехристианские свидетельства",
+          "b": 33812
+        },
+        {
+          "u": "/study/loginov4.html",
+          "t": "Вечный свет Воскресения. Раннехристианские свидетельства о плащанице",
+          "b": 77933
+        },
+        {
+          "u": "/study/macdalina.html",
+          "t": "Мария Магдалина - автор Четвёртого Евангелия?",
+          "b": 128118
+        },
+        {
+          "u": "/study/macdemont1.html",
+          "t": "Идея Плеромы в Гностицизме. Виолет МакДермот",
+          "b": 41791
+        },
+        {
+          "u": "/study/markion4evang.html",
+          "t": "Маркионитское происхождение четвертого евангелия. Жозеф Турмель.",
+          "b": 119397
+        },
+        {
+          "u": "/study/moma1.html",
+          "t": "Заметки о гностических книгах Иеу",
+          "b": 31354
+        },
+        {
+          "u": "/study/moma2.html",
+          "t": "Немного о Пистис Софии",
+          "b": 77320
+        },
+        {
+          "u": "/study/moma3.html",
+          "t": "Из гностических текстов II века. Заметки о \"Тексте без названия\" из Кодекса Брюса",
+          "b": 28919
+        },
+        {
+          "u": "/study/moma4.html",
+          "t": "Е.Коузе. Буддизм и Гнозис",
+          "b": 26678
+        },
+        {
+          "u": "/study/moma5.html",
+          "t": "Алексей Мома. Гностицизм и новозаветные тексты",
+          "b": 25729
+        },
+        {
+          "u": "/study/robinson-gnost_plot.html",
+          "t": "\"Три стелы Сифа\" и гностики Плотина. Джеймс М. Робинсон.",
+          "b": 67729
+        },
+        {
+          "u": "/study/shilling-iuda.html",
+          "t": "О Евангелии Иуды. Клаус Шиллинг.",
+          "b": 30568
+        },
+        {
+          "u": "/study/shtokh.html",
+          "t": "Карлхайнц Штокхаузен и гностицизм",
+          "b": 66077
+        },
+        {
+          "u": "/study/valentin.html",
+          "t": "В поисках \"исторического Валентина\"",
+          "b": 128439
+        },
+        {
+          "u": "/study/veger1.html",
+          "t": "Письмо Аристея как историческое свидетельство",
+          "b": 110806
+        },
+        {
+          "u": "/study/ziber.html",
+          "t": "Эон \"Барбело\" в \"Зостриане\" и связанных с ним трактатах",
+          "b": 36817
+        }
+      ],
+      "images": []
+    },
+    {
+      "id": "links",
+      "label": "Ссылки",
+      "count": 1,
+      "bytes": 10146,
+      "items": [
+        {
+          "u": "/links/",
+          "t": "Ссылки",
+          "b": 10146
+        }
+      ],
+      "images": []
+    },
+    {
+      "id": "contacts",
+      "label": "Контакты",
+      "count": 1,
+      "bytes": 7379,
+      "items": [
+        {
+          "u": "/contacts/",
+          "t": "Контакты",
+          "b": 7379
+        }
+      ],
+      "images": []
+    }
+  ],
+  "root": {
+    "id": "root",
+    "label": "Служебные страницы",
+    "count": 2,
+    "bytes": 80259,
+    "items": [
+      {
+        "u": "/about.html",
+        "t": "О студии",
+        "b": 43630
+      },
+      {
+        "u": "/animation.html",
+        "t": "Pleroma — An Opening in Seven Breaths",
+        "b": 36629
+      }
+    ],
+    "images": []
+  },
+  "allUrls": [
+    "/",
+    "/offline.html",
+    "/manifest.webmanifest",
+    "/favicon.svg",
+    "/src/styles/main.css",
+    "/src/scripts/nav.js",
+    "/src/scripts/offline-core.js",
+    "/src/scripts/offline.js",
+    "/offline-manifest.json",
+    "/nag-hammadi/",
+    "/nag-hammadi/2_sif-moma.html",
+    "/nag-hammadi/2_sif.html",
+    "/nag-hammadi/3-part-text.html",
+    "/nag-hammadi/8-9.html",
+    "/nag-hammadi/about_nh.html",
+    "/nag-hammadi/about_soul.html",
+    "/nag-hammadi/acts.html",
+    "/nag-hammadi/allogen.html",
+    "/nag-hammadi/ap-adam.html",
+    "/nag-hammadi/ap-iak1-moma.html",
+    "/nag-hammadi/ap-iak1.html",
+    "/nag-hammadi/ap-iak2-moma.html",
+    "/nag-hammadi/ap-iak2.html",
+    "/nag-hammadi/ap-john_kratk.html",
+    "/nag-hammadi/ap-john.html",
+    "/nag-hammadi/apoc_paul.html",
+    "/nag-hammadi/apokpetr.html",
+    "/nag-hammadi/apokrif_iak.html",
+    "/nag-hammadi/archonts.html",
+    "/nag-hammadi/book_foma.html",
+    "/nag-hammadi/dialog.html",
+    "/nag-hammadi/ev_istiny.html",
+    "/nag-hammadi/ev-eg.html",
+    "/nag-hammadi/ev-foma.html",
+    "/nag-hammadi/ev-phil.html",
+    "/nag-hammadi/evgnost.html",
+    "/nag-hammadi/grom.html",
+    "/nag-hammadi/hips.html",
+    "/nag-hammadi/marsan.html",
+    "/nag-hammadi/melhiz.html",
+    "/nag-hammadi/mol-germ-moma.html",
+    "/nag-hammadi/mol-germ.html",
+    "/nag-hammadi/mol-paul.html",
+    "/nag-hammadi/nh_asklepiy.html",
+    "/nag-hammadi/nh_platon.html",
+    "/nag-hammadi/noria.html",
+    "/nag-hammadi/noria2.html",
+    "/nag-hammadi/parafras.html",
+    "/nag-hammadi/podlinnoe.html",
+    "/nag-hammadi/pon_sila.html",
+    "/nag-hammadi/proten.html",
+    "/nag-hammadi/regin.html",
+    "/nag-hammadi/sent.html",
+    "/nag-hammadi/siluan.html",
+    "/nag-hammadi/sophia_iisus.html",
+    "/nag-hammadi/stel_sif.html",
+    "/nag-hammadi/svidet.html",
+    "/nag-hammadi/tophil.html",
+    "/nag-hammadi/valentine.html",
+    "/nag-hammadi/world.html",
+    "/nag-hammadi/znanie.html",
+    "/nag-hammadi/zostrian.html",
+    "/nag-hammadi/Evangelie_Egiptyan_2019_rus_lit_per.pdf",
+    "/apocrypha-new/",
+    "/apocrypha-new/12_patnic.html",
+    "/apocrypha-new/act_bartolomey.html",
+    "/apocrypha-new/act_joann_prohor.html",
+    "/apocrypha-new/act_john.html",
+    "/apocrypha-new/act_matafia.html",
+    "/apocrypha-new/act_pavel.html",
+    "/apocrypha-new/act_philip.html",
+    "/apocrypha-new/acts_andrey-and-matafia.html",
+    "/apocrypha-new/acts_andrey1.html",
+    "/apocrypha-new/acts_cornilii_sot.html",
+    "/apocrypha-new/acts_faddey1.html",
+    "/apocrypha-new/acts_faddey2.html",
+    "/apocrypha-new/acts_foma.html",
+    "/apocrypha-new/acts_petr-andrey.html",
+    "/apocrypha-new/acts_timofei.html",
+    "/apocrypha-new/acts_tit.html",
+    "/apocrypha-new/acts_varnava.html",
+    "/apocrypha-new/afroditian.html",
+    "/apocrypha-new/agapi1.html",
+    "/apocrypha-new/agrapha.html",
+    "/apocrypha-new/andr_yurodiv.html",
+    "/apocrypha-new/ap_pavel.html",
+    "/apocrypha-new/ap-ioann.html",
+    "/apocrypha-new/ap-petr.html",
+    "/apocrypha-new/ap-petr2.html",
+    "/apocrypha-new/apost-postanovl.html",
+    "/apocrypha-new/arm_varfol.html",
+    "/apocrypha-new/berlin_strasb_ap.html",
+    "/apocrypha-new/bogomil.html",
+    "/apocrypha-new/deyaniya_fomi_i_ego_chudotvornaya_koja.html",
+    "/apocrypha-new/deyaniya_petra_v_ashdode.html",
+    "/apocrypha-new/didache.html",
+    "/apocrypha-new/dionisii-to-dorofei.html",
+    "/apocrypha-new/dionisii-to-ferapevt.html",
+    "/apocrypha-new/dionisii-to-ioann.html",
+    "/apocrypha-new/dionisii-to-polikarp.html",
+    "/apocrypha-new/dionisii-to-sosipatr.html",
+    "/apocrypha-new/dionisii-to-timofei.html",
+    "/apocrypha-new/dionisii-to-tit.html",
+    "/apocrypha-new/edes_chronika.html",
+    "/apocrypha-new/ev_matf2.html",
+    "/apocrypha-new/ev_secret_mark.html",
+    "/apocrypha-new/ev-arab.html",
+    "/apocrypha-new/ev-egipt.html",
+    "/apocrypha-new/ev-eva.html",
+    "/apocrypha-new/ev-evion.html",
+    "/apocrypha-new/ev-evr.html",
+    "/apocrypha-new/ev-fom.html",
+    "/apocrypha-new/ev-iakov.html",
+    "/apocrypha-new/ev-mar.html",
+    "/apocrypha-new/ev-nikodim.html",
+    "/apocrypha-new/ev-petr.html",
+    "/apocrypha-new/ev-phil.html",
+    "/apocrypha-new/ev-psmatf.html",
+    "/apocrypha-new/fedor_tiron.html",
+    "/apocrypha-new/fekla.html",
+    "/apocrypha-new/foma-6.html",
+    "/apocrypha-new/fragm-arhel.html",
+    "/apocrypha-new/galeno_hipp.html",
+    "/apocrypha-new/germa.html",
+    "/apocrypha-new/gimn.html",
+    "/apocrypha-new/gimn2.html",
+    "/apocrypha-new/gomilia_michail.html",
+    "/apocrypha-new/gostepriim_dismas.html",
+    "/apocrypha-new/grigor_magistr_otvet.html",
+    "/apocrypha-new/hozden.html",
+    "/apocrypha-new/iisus_avgar.html",
+    "/apocrypha-new/in_patn_lasar.html",
+    "/apocrypha-new/iohan_i_razb.html",
+    "/apocrypha-new/iohan.html",
+    "/apocrypha-new/iosif-plotnik.html",
+    "/apocrypha-new/iscelenie_Tiberiya.html",
+    "/apocrypha-new/isrechen_egip.html",
+    "/apocrypha-new/ist_sim_kif.html",
+    "/apocrypha-new/istoriya_Iosifa_Arimafeiskogo.html",
+    "/apocrypha-new/jitie_ion_krest_by_serap.html",
+    "/apocrypha-new/jitie_iudi.shtml",
+    "/apocrypha-new/jitie_Marii_Magdalini.html",
+    "/apocrypha-new/jitie_svyat_jen.html",
+    "/apocrypha-new/jizn_ioanna_krest.html",
+    "/apocrypha-new/kanon_muratory.html",
+    "/apocrypha-new/kifa.html",
+    "/apocrypha-new/kliment_orhid.html",
+    "/apocrypha-new/kliment-to-devstv1.html",
+    "/apocrypha-new/kliment-to-devstv2.html",
+    "/apocrypha-new/kliment-to-iakov.html",
+    "/apocrypha-new/kliment-to-korinf1.html",
+    "/apocrypha-new/kliment-to-korinf2.html",
+    "/apocrypha-new/kniga_Varfolomeya.html",
+    "/apocrypha-new/krestitel_vo_ad.html",
+    "/apocrypha-new/krestnoe_derevo.html",
+    "/apocrypha-new/lentul-to-senat.html",
+    "/apocrypha-new/let_varnav.html",
+    "/apocrypha-new/let-laod.html",
+    "/apocrypha-new/m_pavel.html",
+    "/apocrypha-new/nastavlenie_petra.html",
+    "/apocrypha-new/nepodchinenie_Dimasa.html",
+    "/apocrypha-new/nikita.html",
+    "/apocrypha-new/osud_marfa_pilat.html",
+    "/apocrypha-new/otkrov_ioanna_ob_antichriste.html",
+    "/apocrypha-new/otkrov_volhvov.html",
+    "/apocrypha-new/otvet_tiveriy_pilatu.html",
+    "/apocrypha-new/papir_iz_oksir_5072.html",
+    "/apocrypha-new/papirus1.html",
+    "/apocrypha-new/papirus2.html",
+    "/apocrypha-new/pavel_seneka.html",
+    "/apocrypha-new/pavel-to-corinf3.html",
+    "/apocrypha-new/petr-to-iakov.html",
+    "/apocrypha-new/petropavel1.html",
+    "/apocrypha-new/petropavel2.html",
+    "/apocrypha-new/pilat1.html",
+    "/apocrypha-new/pilat2.html",
+    "/apocrypha-new/pohval_marii_magdal.html",
+    "/apocrypha-new/pohvala_ioannu.html",
+    "/apocrypha-new/poklonenie_volhvov.html",
+    "/apocrypha-new/posl_12_apost.html",
+    "/apocrypha-new/posl_pilata.html",
+    "/apocrypha-new/poslan_psevdo_di.html",
+    "/apocrypha-new/pravila_apost.html",
+    "/apocrypha-new/prenie.html",
+    "/apocrypha-new/priest-ih.html",
+    "/apocrypha-new/prokula-to-silvii.html",
+    "/apocrypha-new/propoved_o_jizni_Iisusa_i_ego_lubvi_k_aposto.html",
+    "/apocrypha-new/rech_spasitelya_i_tanec.shtml",
+    "/apocrypha-new/skaz_o_30_serebr.shtml",
+    "/apocrypha-new/skazan_makarii.html",
+    "/apocrypha-new/skazanie_o_svyachshennom_krestnom_dreve.html",
+    "/apocrypha-new/slovo_zlatoust.html",
+    "/apocrypha-new/smert_iudi.html",
+    "/apocrypha-new/soshestv.html",
+    "/apocrypha-new/stranstviya_petra.shtml",
+    "/apocrypha-new/tiburt_sivil.html",
+    "/apocrypha-new/tri_svatitel.html",
+    "/apocrypha-old/",
+    "/apocrypha-old/adam_eva_lat.html",
+    "/apocrypha-old/adam_eva_slav.html",
+    "/apocrypha-old/adam.html",
+    "/apocrypha-old/adameva.html",
+    "/apocrypha-old/agada_solomon.html",
+    "/apocrypha-old/ap_ilia.html",
+    "/apocrypha-old/ap_sedrax.html",
+    "/apocrypha-old/ap-bar.html",
+    "/apocrypha-old/ap-ezd.html",
+    "/apocrypha-old/ap-mos.html",
+    "/apocrypha-old/ap-mos2.html",
+    "/apocrypha-old/apokrif_ieremii.html",
+    "/apocrypha-old/arist_to_filokrat.html",
+    "/apocrypha-old/asenef_sir_vers.html",
+    "/apocrypha-old/baruh2.html",
+    "/apocrypha-old/bilam.html",
+    "/apocrypha-old/book_ahiahars.html",
+    "/apocrypha-old/david1.html",
+    "/apocrypha-old/enoh.html",
+    "/apocrypha-old/iosif_asenefa.html",
+    "/apocrypha-old/jubilees.html",
+    "/apocrypha-old/lachish_pism.html",
+    "/apocrypha-old/melchis1.html",
+    "/apocrypha-old/moisey.html",
+    "/apocrypha-old/much_isaii.html",
+    "/apocrypha-old/potop.html",
+    "/apocrypha-old/solomon1.html",
+    "/apocrypha-old/solomon2.html",
+    "/apocrypha-old/ts-abr.html",
+    "/apocrypha-old/vozn_enoch.html",
+    "/apocrypha-old/vozn_is.html",
+    "/apocrypha-old/zav-12.html",
+    "/apocrypha-old/zav-moisey.html",
+    "/apocrypha-old/zorov.html",
+    "/hermetic/",
+    "/hermetic/asklepy.html",
+    "/hermetic/germ_1.html",
+    "/hermetic/germ_2.html",
+    "/hermetic/germ_3.html",
+    "/hermetic/germ_4.html",
+    "/hermetic/germ_5.html",
+    "/hermetic/germ_6.html",
+    "/hermetic/germ1.html",
+    "/hermetic/germ10.html",
+    "/hermetic/germ11.html",
+    "/hermetic/germ12.html",
+    "/hermetic/germ13.html",
+    "/hermetic/germ14.html",
+    "/hermetic/germ16.html",
+    "/hermetic/germ17.html",
+    "/hermetic/germ18.html",
+    "/hermetic/germ2.html",
+    "/hermetic/germ3.html",
+    "/hermetic/germ4.html",
+    "/hermetic/germ5.html",
+    "/hermetic/germ6.html",
+    "/hermetic/germ7.html",
+    "/hermetic/germ8.html",
+    "/hermetic/germ9.html",
+    "/hermetic/hermes1.html",
+    "/hermetic/icida_to_gor.html",
+    "/hermetic/tablica.html",
+    "/gnostic/",
+    "/gnostic/about_pistis.html",
+    "/gnostic/about-ev-iuda.shtml",
+    "/gnostic/b_petr1.html",
+    "/gnostic/beseda_iisus.html",
+    "/gnostic/cb_text1.html",
+    "/gnostic/comment_pistis.html",
+    "/gnostic/ev_maria_gnost.html",
+    "/gnostic/ev-iuda.shtml",
+    "/gnostic/gnost_lit.html",
+    "/gnostic/gnost_molitva2.html",
+    "/gnostic/kniga-ieu1.html",
+    "/gnostic/kniga-ieu2.html",
+    "/gnostic/komments-ieu1.html",
+    "/gnostic/komments-ieu2.html",
+    "/gnostic/mand_lit.html",
+    "/gnostic/manich_lit.html",
+    "/gnostic/mol_iosif.html",
+    "/gnostic/oda_solomon_c.html",
+    "/gnostic/oda_solomon.html",
+    "/gnostic/pistis_book1.html",
+    "/gnostic/pistis_book2.html",
+    "/gnostic/pistis_book3.html",
+    "/gnostic/pistis_book4.html",
+    "/gnostic/pistis1.html",
+    "/gnostic/pistis2.html",
+    "/gnostic/pistis3.html",
+    "/gnostic/pistis4.html",
+    "/gnostic/pistis5.html",
+    "/gnostic/put_d.html",
+    "/gnostic/01.jpg",
+    "/gnostic/02.jpg",
+    "/gnostic/03.jpg",
+    "/gnostic/04.jpg",
+    "/gnostic/05.jpg",
+    "/gnostic/06.jpg",
+    "/gnostic/07.jpg",
+    "/gnostic/08.jpg",
+    "/gnostic/09.jpg",
+    "/gnostic/10.jpg",
+    "/gnostic/11.jpg",
+    "/gnostic/12.jpg",
+    "/gnostic/13.jpg",
+    "/gnostic/14.jpg",
+    "/gnostic/15.jpg",
+    "/gnostic/16.jpg",
+    "/gnostic/17.jpg",
+    "/gnostic/18.jpg",
+    "/gnostic/19.jpg",
+    "/gnostic/20.jpg",
+    "/gnostic/21.jpg",
+    "/gnostic/22.jpg",
+    "/gnostic/23.jpg",
+    "/gnostic/24.jpg",
+    "/gnostic/25.jpg",
+    "/gnostic/26.jpg",
+    "/gnostic/27.jpg",
+    "/gnostic/28.jpg",
+    "/gnostic/29.jpg",
+    "/gnostic/30.jpg",
+    "/gnostic/31.jpg",
+    "/gnostic/32.jpg",
+    "/gnostic/33.jpg",
+    "/gnostic/34.jpg",
+    "/gnostic/35-(kript).jpg",
+    "/gnostic/36.jpg",
+    "/gnostic/37.jpg",
+    "/gnostic/39.jpg",
+    "/gnostic/40.jpg",
+    "/gnostic/41.jpg",
+    "/gnostic/43.jpg",
+    "/gnostic/44.jpg",
+    "/gnostic/45-(kript).jpg",
+    "/gnostic/46-(kript).jpg",
+    "/gnostic/47.jpg",
+    "/gnostic/48-(kript).jpg",
+    "/gnostic/49.jpg",
+    "/gnostic/50-(kript).jpg",
+    "/gnostic/51.jpg",
+    "/gnostic/52-(kript).jpg",
+    "/gnostic/53.jpg",
+    "/gnostic/54.jpg",
+    "/gnostic/55.jpg",
+    "/gnostic/56.jpg",
+    "/gnostic/57.jpg",
+    "/gnostic/58.jpg",
+    "/gnostic/59.jpg",
+    "/gnostic/60.jpg",
+    "/gnostic/61.jpg",
+    "/gnostic/62.jpg",
+    "/gnostic/63.jpg",
+    "/gnostic/64.jpg",
+    "/gnostic/65.jpg",
+    "/gnostic/66.jpg",
+    "/gnostic/67.jpg",
+    "/gnostic/68.jpg",
+    "/gnostic/69.jpg",
+    "/gnostic/Image1.gif",
+    "/gnostic/Image2.gif",
+    "/gnostic/Image3.gif",
+    "/gnostic/Pistis_Sophia_predisl_literatur_per_komm_i_tablici_A_Moma_2009.pdf",
+    "/kumran/",
+    "/kumran/2fragm.html",
+    "/kumran/2ways.html",
+    "/kumran/all.html",
+    "/kumran/astron_enoch.html",
+    "/kumran/bar-hoba_docs.html",
+    "/kumran/blagosl_patr.html",
+    "/kumran/book_enoh1.html",
+    "/kumran/book_ispolin.html",
+    "/kumran/book_tain.html",
+    "/kumran/bookyub-a_b.html",
+    "/kumran/bytie.html",
+    "/kumran/calendarn_docum.html",
+    "/kumran/comm_mihei.html",
+    "/kumran/comm_osaii.html",
+    "/kumran/comm_psalom37.html",
+    "/kumran/d_doc.html",
+    "/kumran/d_doc2.html",
+    "/kumran/deti_spas_1.html",
+    "/kumran/dopoln1.html",
+    "/kumran/dopoln2.html",
+    "/kumran/filakterii_teffilin.html",
+    "/kumran/fis_gor.html",
+    "/kumran/florilegium.html",
+    "/kumran/fragm_pyatikn.html",
+    "/kumran/galah_pismo.html",
+    "/kumran/gymns_fragm1.html",
+    "/kumran/gymns.html",
+    "/kumran/hram_svitok.html",
+    "/kumran/komment_a1.html",
+    "/kumran/levit_a.html",
+    "/kumran/medn_svitok.html",
+    "/kumran/mess_lider.html",
+    "/kumran/mess_sbornik.html",
+    "/kumran/midrash_melch.html",
+    "/kumran/mol-enoch.html",
+    "/kumran/nabonid.html",
+    "/kumran/naum1.html",
+    "/kumran/o_messii.html",
+    "/kumran/obiln_derevo.html",
+    "/kumran/pesn_subb_prin.html",
+    "/kumran/plameni.html",
+    "/kumran/psalom_king_ionafan.html",
+    "/kumran/psevdo_yubil.html",
+    "/kumran/rasputn.html",
+    "/kumran/rit_zak_chist.html",
+    "/kumran/shifr_doc.html",
+    "/kumran/slova_moisea.html",
+    "/kumran/slova_svet.html",
+    "/kumran/sobr_posl.html",
+    "/kumran/suns_of_light.html",
+    "/kumran/targum_iova.html",
+    "/kumran/ustav.html",
+    "/kumran/voshvalen1.html",
+    "/kumran/words_michail.html",
+    "/study/",
+    "/study/about_sec_ev_mark.html",
+    "/study/acts_simon.html",
+    "/study/adam-shel.html",
+    "/study/afon1.html",
+    "/study/bernsnev.html",
+    "/study/budanov.html",
+    "/study/cerkovrimbog.html",
+    "/study/contraiegova.html",
+    "/study/diakov.html",
+    "/study/dual1.html",
+    "/study/evluka-markion.html",
+    "/study/harlamov.html",
+    "/study/heraclion1.html",
+    "/study/huan_1.html",
+    "/study/huan_2.html",
+    "/study/huan_ogl.html",
+    "/study/huan_poyasnenie.html",
+    "/study/isabel1.html",
+    "/study/kispel1.html",
+    "/study/kliment.html",
+    "/study/kontur-markion.html",
+    "/study/kumran-iisus.html",
+    "/study/litavrin1.html",
+    "/study/logan.html",
+    "/study/loginov1.html",
+    "/study/loginov3.html",
+    "/study/loginov4.html",
+    "/study/macdalina.html",
+    "/study/macdemont1.html",
+    "/study/markion4evang.html",
+    "/study/moma1.html",
+    "/study/moma2.html",
+    "/study/moma3.html",
+    "/study/moma4.html",
+    "/study/moma5.html",
+    "/study/robinson-gnost_plot.html",
+    "/study/shilling-iuda.html",
+    "/study/shtokh.html",
+    "/study/valentin.html",
+    "/study/veger1.html",
+    "/study/ziber.html",
+    "/links/",
+    "/contacts/",
+    "/about.html",
+    "/animation.html",
+    "/poisk.html",
+    "/search-index.json"
+  ]
+}

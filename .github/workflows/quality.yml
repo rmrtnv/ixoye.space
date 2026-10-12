@@ -22,5 +22,6 @@ jobs:
         run: |
           node scripts/generate-sitemap.mjs --write
           node scripts/generate-search-index.mjs --write
-          git diff --exit-code -- sitemap.xml search-index.json \
-            || { echo "::error::sitemap.xml / search-index.json are stale — run 'npm run maintenance' and commit."; exit 1; }
+          node scripts/generate-offline-manifest.mjs --write
+          git diff --exit-code -- sitemap.xml search-index.json offline-manifest.json \
+            || { echo "::error::sitemap.xml / search-index.json / offline-manifest.json are stale — run 'npm run maintenance' and commit."; exit 1; }

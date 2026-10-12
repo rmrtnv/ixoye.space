@@ -23,6 +23,10 @@
   --spacing-xl: 3rem;
 
   --max-width: 750px;
+
+  /* Reader-adjustable text size. nav.js scales this between 0.8 and 1.6 in
+     0.1 steps; the inline <head> bootstrap restores a saved value before paint. */
+  --text-scale: 1;
 }
 
 /* Reset & Base */
@@ -39,7 +43,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: var(--font-main);
-  font-size: 1rem;
+  font-size: calc(1.2rem * var(--text-scale));
   line-height: 1.6;
   color: var(--color-text);
   background-color: var(--color-bg);
@@ -569,7 +573,7 @@ hr {
     top: calc(100% + 6px);
     z-index: 50;
     margin: 0;
-    background-color: #fff;
+    background-color: var(--color-bg);
     border: 1px solid var(--color-border);
     border-radius: 10px;
     box-shadow: 0 8px 28px rgba(0, 0, 0, 0.22);
@@ -616,6 +620,85 @@ hr {
     padding-bottom: 11px;
   }
 
+  /* Text-size control: last row of the hamburger dropdown. One row —
+     label on the left, the decrease/increase pair on the right. Styled like
+     the menu options above (full width, same padding and text colour) so it
+     does not look like a floating card. */
+  .nav-drop-list .nav-text-size {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-sm);
+    margin: 6px 0 0;
+    padding: 11px 16px;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .nav-text-size-label {
+    font-family: var(--font-ui);
+    font-size: 0.95rem;
+    color: var(--color-link);
+    white-space: nowrap;
+  }
+
+  .nav-text-size-controls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 0 0 auto;
+  }
+
+  .nav-text-size-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    min-width: 48px;
+    height: 40px;
+    padding: 0 8px;
+    font-family: var(--font-ui);
+    color: var(--color-text);
+    background-color: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  /* the A glyph is what makes the control self-explanatory: small A for
+     decrease, large A for increase */
+  .nav-text-size-a {
+    font-family: var(--font-main);
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .nav-text-size-a-sm { font-size: 0.85rem; }
+  .nav-text-size-a-lg { font-size: 1.25rem; }
+
+  .nav-text-size-sign {
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .nav-text-size-btn:hover,
+  .nav-text-size-btn:active {
+    background-color: rgba(0, 0, 0, 0.08);
+  }
+
+  .nav-text-size-btn:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 1px;
+  }
+
+  /* out of range at the min/max step — keep it visible but inert-looking */
+  .nav-text-size-btn[disabled] {
+    opacity: 0.4;
+    cursor: default;
+  }
+
   .nav-search-form input[type="search"] {
     display: block;
     width: min(78vw, 320px);
@@ -641,4 +724,165 @@ hr {
     background-color: white;
     box-shadow: none;
   }
+}
+
+/* ---------------------------------------------------------------------------
+   Offline reading
+   - .offline-save is the per-text control nav.js adds inside <article>;
+   - the rest styles the /offline.html management page.
+   --------------------------------------------------------------------------- */
+.offline-save {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--color-border);
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+}
+
+.offline-save-btn,
+.offline-btn {
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+  line-height: 1.2;
+  color: var(--color-text);
+  background-color: rgba(255, 255, 255, 0.6);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
+.offline-save-btn:hover,
+.offline-btn:hover {
+  background-color: rgba(0, 0, 0, 0.07);
+}
+
+.offline-save-btn:disabled,
+.offline-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.offline-btn-primary {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+}
+
+.offline-btn-primary:hover {
+  background-color: #a55a38;
+}
+
+.offline-btn-primary:disabled:hover {
+  background-color: var(--color-primary);
+}
+
+.offline-btn-saved {
+  background-color: rgba(63, 114, 68, 0.12);
+  border-color: rgba(63, 114, 68, 0.55);
+  color: #3a6a3f;
+}
+
+.offline-btn-saved:hover {
+  background-color: rgba(63, 114, 68, 0.2);
+}
+
+.offline-btn-saved:disabled:hover {
+  background-color: rgba(63, 114, 68, 0.12);
+}
+
+.offline-save-status {
+  color: var(--color-text);
+  opacity: 0.85;
+}
+
+.offline-section {
+  margin-top: var(--spacing-lg);
+}
+
+.offline-section h2 {
+  margin-top: 0;
+  margin-bottom: var(--spacing-sm);
+}
+
+.offline-muted {
+  color: var(--color-text);
+  opacity: 0.75;
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+}
+
+.offline-list {
+  list-style: none;
+  margin: var(--spacing-sm) 0;
+  padding: 0;
+}
+
+.offline-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  padding: 10px 0;
+  border-top: 1px solid var(--color-border);
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+}
+
+.offline-row-info {
+  flex: 1 1 60%;
+  min-width: 0;
+}
+
+.offline-empty {
+  list-style: none;
+  padding: 10px 0;
+  color: var(--color-text);
+  opacity: 0.75;
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+}
+
+.offline-progress {
+  margin: var(--spacing-sm) 0;
+}
+
+.offline-progress-track {
+  height: 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background-color: rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.offline-progress-bar {
+  height: 100%;
+  width: 0;
+  background-color: var(--color-primary);
+  transition: width 0.2s linear;
+}
+
+.offline-progress-text,
+.offline-status {
+  min-height: 1.4em;
+  margin: var(--spacing-sm) 0 0;
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  color: var(--color-text);
+}
+
+.offline-note {
+  margin-top: var(--spacing-lg);
+}
+
+.offline-unsupported {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--color-primary);
+  border-radius: 8px;
+  background-color: rgba(186, 104, 65, 0.1);
 }

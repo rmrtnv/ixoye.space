@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="dark">
+<title>Плерома</title>
+<meta name="description" content="Плерома — созерцательная анимация: искра света нисходит из полноты в воды материи, забывает себя и, услышав своё имя, восходит обратно. 48-секундная петля.">
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; background: #05060F; overflow: hidden; }
+  body {
+    font-family: Georgia, 'Times New Roman', 'Droid Serif', serif;
+    color: #FBF7EC;
+    -webkit-tap-highlight-color: transparent;
+  }
+  #stage { position: fixed; inset: 0; width: 100vw; height: 100vh; display: block; }
+
+  /* Optical vignette — cheaper in CSS than per-frame on the canvas. */
+  #vignette {
+    position: fixed; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse at center,
+      rgba(0,0,0,0) 42%, rgba(5,6,15,.42) 78%, rgba(5,6,15,.86) 100%);
+  }
+
+  /* Sources, kept quiet at the foot of the frame. */
+  #caption {
+    position: fixed; left: 0; right: 0; bottom: max(12px, env(safe-area-inset-bottom));
+    margin: 0 auto; padding: 0 14px; max-width: 900px;
+    text-align: center; pointer-events: none; user-select: none;
+    font-size: clamp(9px, 1.5vw, 12px); line-height: 1.6;
+    letter-spacing: .12em; color: rgba(244, 227, 178, .38);
+    text-shadow: 0 0 12px rgba(0,0,0,.8);
+    transition: opacity 1.4s ease;
+  }
+  #caption b { font-weight: 400; color: rgba(244, 227, 178, .55); }
+
+  /* The one invitation; it breathes once, then steps aside. */
+  #hint {
+    position: fixed; left: 0; right: 0; bottom: calc(max(12px, env(safe-area-inset-bottom)) + 34px);
+    margin: 0; text-align: center; pointer-events: none; user-select: none;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(10px, 1.6vw, 13px);
+    letter-spacing: .5em; padding-left: .5em; text-transform: lowercase;
+    color: rgba(191, 233, 255, .62);
+    text-shadow: 0 0 16px rgba(191, 233, 255, .28);
+    opacity: 0; animation: hint-in 2.4s ease 1.6s forwards;
+    transition: opacity 1.2s ease;
+  }
+  #hint.gone { opacity: 0 !important; }
+  @keyframes hint-in { to { opacity: .9; } }
+
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0;
+  }
+
+  noscript .fallback {
+    position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+    padding: 8vw; text-align: center; color: #F4E3B2; font-size: 1.05rem; line-height: 1.9;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #hint { display: none; }
+  }
+</style>
+</head>
+<body>
+<canvas id="stage" aria-hidden="true"></canvas>
+<div id="vignette" aria-hidden="true"></div>
+
+<p id="hint" aria-hidden="true">гнозис — двигайте</p>
+
+<p id="caption" aria-hidden="true">
+  <b>Плерома</b> · апокриф Иоанна · Ипостась архонтов · Гром, совершенный ум · Поймандр · гимны Кумрана
+</p>
+
+<!-- Accessible fallback: the canvas is decorative; the verses live in text. -->
+<div class="sr-only" id="a11y">
+  <h1>Плерома</h1>
+  <p>Созерцательная анимация: искра света нисходит из полноты в воды материи, забывает себя и, услышав своё имя, восходит обратно.</p>
+  <blockquote>
+    <p>Я — свет, который в свете, и я — тот, кто помнит тебя.</p>
+    <p>Прежде меня — тишина Плеромы, после меня — восхождение.</p>
+  </blockquote>
+  <p>Источники: Апокриф Иоанна, Ипостась архонтов, Гром — совершенный ум, Поймандр, гимны Кумрана.</p>
+</div>
+
+<noscript>
+  <div class="fallback">
+    <p>Я — свет, который в свете.<br>Для этой страницы нужен JavaScript.</p>
+  </div>
+</noscript>
+
+<script>
+/* =====================================================================
+   ПЛЕРОМА — a 48-second light cycle
+   ---------------------------------------------------------------------
+   A single divine spark falls from the fullness (Плерома) into the dark
+   water of matter, is caught by the archons, forgets itself, and —
+   hearing its own name — climbs back as a thread of light.
+
+   Self-contained: Canvas2D + requestAnimationFrame, no build step, no
+   external assets, no network. All glyphs are real strings from VERSES,
+   pre-rasterised into offscreen atlases (one per ink) and stamped with
+   additive blending. Particles are a fixed, object-pooled field.
+
+   Beats (t seconds of the 48s loop):
+     00–06  emanation   glyph rings ripple out from a point of light
+     06–16  the fall    the point stretches to a droplet; indigo deepens
+     16–28  archons     nested jittered polygons with particle eyes
+     28–38  recollection  one word survives: «Свет»; colour bleeds cyan
+     38–48  ascent      the spark spirals home; archon dust → opening rings
+
+   Config:  window.PLEROMA_JR = { speed, palette, verses, pause, resume, seek }
+   Debug:   append ?t=31.5 to freeze any instant; ?reduced=1 for the still.
+   ===================================================================== */
+(() => {
+  'use strict';
+
+  /* ------------------------------------------------------------------ */
+  /* 1 · Verses & configuration                                          */
+  /* ------------------------------------------------------------------ */
+
+  const VERSES = [
+    'Я — свет, который в свете',
+    'Свет — это я, Ум',
+    'Я первая и последняя',
+    'Я — голос, пробуждающийся из света',
+    'Непорочный свет явился',
+    'Ты — свет мой во тьме',
+    'Свет восходит из бездны',
+    'Я есть всё, и всё во мне',
+    'И тьма не объяла его',
+    'Плерома, полнота света',
+    'Σοφία · Πλήρωμα · Φῶς',
+    'ⲟⲩⲱⲓⲛ ⲙⲛ ⲥⲟⲫⲓⲁ'
+  ];
+
+  // The hidden verse, drawn beneath the surface and revealed by gnosis.
+  const HIDDEN = [
+    'Я — свет, который в свете',
+    'и я — тот, кто помнит тебя',
+    'Прежде меня — тишина Плеромы,',
+    'после меня — восхождение'
+  ];
+
+  const VERSE_POOL = VERSES.join('  ');
+  const VERSE_ALL = VERSES.join('');
+
+  // Fallback scramble pool (pseudo-Coptic / Old-Cyrillic flavour).
+  const SCRAMBLE =
+    'АБВГДЕЖЗИКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ' +
+    'αβγδεζηθικλμνξοπρστυφχψω' +
+    'ⲁⲃⲅⲇⲉⲍⲏⲑⲓⲕⲗⲙⲛⲝⲟⲡⲣⲥⲧⲩⲫⲭⲱ' +
+    '·—«»';
+
+  const PALETTE = {
+    pleromaA: '#F4E3B2',   // warm gold
+    pleromaB: '#FBF7EC',   // bone white
+    matterA:  '#0B1026',   // deep indigo
+    matterB:  '#05060F',   // abyss black
+    archon:   '#5A2A6E',   // bruise violet
+    archonRim:'#BA6841',   // the site's brand clay
+    spark:    '#BFE9FF'    // pure cyan-white
+  };
+
+  const CONFIG = (window.PLEROMA_JR = Object.assign(
+    { speed: 1, palette: PALETTE, verses: VERSES },
+    window.PLEROMA_JR || {}
+  ));
+
+  const TAU = Math.PI * 2;
+  const DURATION = 48;                 // seconds
+  const W0 = TAU / DURATION;           // one angular unit: n·W0 loops n times per cycle
+  const FONT = "Georgia, 'Times New Roman', 'Droid Serif', serif";
+
+  /* ------------------------------------------------------------------ */
+  /* 2 · Math                                                            */
+  /* ------------------------------------------------------------------ */
+
+  const clamp = (x, a = 0, b = 1) => (x < a ? a : x > b ? b : x);
+  const lerp = (a, b, k) => a + (b - a) * k;
+  const smooth = (a, b, x) => { const k = clamp((x - a) / (b - a)); return k * k * (3 - 2 * k); };
+  const easeOutCubic = k => 1 - Math.pow(1 - k, 3);
+  const easeInOutCubic = k => (k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2);
+  const easeInOutSine = k => -(Math.cos(Math.PI * k) - 1) / 2;
+
+  function hash(n) { const s = Math.sin(n * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s); }
+  function rng(seed) {
+    return () => {
+      seed = (seed + 0x6D2B79F5) | 0;
+      let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  const hexToRgb = h => {
+    const s = h.replace('#', '');
+    return [parseInt(s.slice(0, 2), 16), parseInt(s.slice(2, 4), 16), parseInt(s.slice(4, 6), 16)];
+  };
+  const mix = (a, b, k) => [lerp(a[0], b[0], k), lerp(a[1], b[1], k), lerp(a[2], b[2], k)];
+  const rgba = (c, a) => `rgba(${c[0] | 0},${c[1] | 0},${c[2] | 0},${clamp(a).toFixed(3)})`;
+
+  const C = {};
+  for (const k in PALETTE) C[k] = hexToRgb(PALETTE[k]);
+  C.white = [255, 255, 255];
+  C.violetHi = mix(C.archon, C.pleromaB, 0.45);   // legible violet ink
+  C.bone = C.pleromaB;
+  C.gold = C.pleromaA;
+
+  /* Colour over the whole cycle: gold → indigo → violet → cyan → gold. */
+  function stops(list, t) {
+    if (t <= list[0][0]) return list[0][1];
+    for (let i = 1; i < list.length; i++) {
+      if (t <= list[i][0]) return mix(list[i - 1][1], list[i][1], smooth(list[i - 1][0], list[i][0], t));
+    }
+    return list[list.length - 1][1];
+  }
+  const SPARK_STOPS = [
+    [0, C.pleromaB], [5, C.gold], [10, mix(C.gold, C.violetHi, 0.5)],
+    [18, C.violetHi], [27, mix(C.violetHi, C.spark, 0.4)], [31, C.spark],
+    [38, mix(C.spark, C.bone, 0.5)], [44, C.bone], [48, C.pleromaB]
+  ];
+  const sparkColor = t => stops(SPARK_STOPS, t);
+
+  /* ------------------------------------------------------------------ */
+  /* 3 · Simplex noise (2D), fixed seed — reproducible loops             */
+  /* ------------------------------------------------------------------ */
+
+  function makeNoise2D(seed) {
+    const GRAD = [[1, 1], [-1, 1], [1, -1], [-1, -1], [1, 0], [-1, 0], [0, 1], [0, -1]];
+    const p = new Uint8Array(256);
+    for (let i = 0; i < 256; i++) p[i] = i;
+    const r = rng(seed);
+    for (let i = 255; i > 0; i--) { const j = (r() * (i + 1)) | 0; const t = p[i]; p[i] = p[j]; p[j] = t; }
+    const perm = new Uint8Array(512), mod8 = new Uint8Array(512);
+    for (let i = 0; i < 512; i++) { perm[i] = p[i & 255]; mod8[i] = perm[i] % 8; }
+    const F2 = 0.5 * (Math.sqrt(3) - 1), G2 = (3 - Math.sqrt(3)) / 6;
+    return function (xin, yin) {
+      const s = (xin + yin) * F2;
+      const i = Math.floor(xin + s), j = Math.floor(yin + s);
+      const tt = (i + j) * G2;
+      const x0 = xin - (i - tt), y0 = yin - (j - tt);
+      const i1 = x0 > y0 ? 1 : 0, j1 = x0 > y0 ? 0 : 1;
+      const x1 = x0 - i1 + G2, y1 = y0 - j1 + G2;
+      const x2 = x0 - 1 + 2 * G2, y2 = y0 - 1 + 2 * G2;
+      const ii = i & 255, jj = j & 255;
+      let n = 0, t0 = 0.5 - x0 * x0 - y0 * y0;
+      if (t0 > 0) { const g = GRAD[mod8[ii + perm[jj]]]; t0 *= t0; n += t0 * t0 * (g[0] * x0 + g[1] * y0); }
+      let t1 = 0.5 - x1 * x1 - y1 * y1;
+      if (t1 > 0) { const g = GRAD[mod8[ii + i1 + perm[jj + j1]]]; t1 *= t1; n += t1 * t1 * (g[0] * x1 + g[1] * y1); }
+      let t2 = 0.5 - x2 * x2 - y2 * y2;
+      if (t2 > 0) { const g = GRAD[mod8[ii + 1 + perm[jj + 1]]]; t2 *= t2; n += t2 * t2 * (g[0] * x2 + g[1] * y2); }
+      return 70 * n;
+    };
+  }
+  const noise = makeNoise2D(1337);
+
+  /* ------------------------------------------------------------------ */
+  /* 4 · Canvas & layout                                                 */
+  /* ------------------------------------------------------------------ */
+
+  const canvas = document.getElementById('stage');
+  const ctx = canvas.getContext('2d', { alpha: false });
+  const hintEl = document.getElementById('hint');
+  const captionEl = document.getElementById('caption');
+  const reducedQuery = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)');
+  let reduced = (reducedQuery && reducedQuery.matches) || /(\?|&)reduced=1\b/.test(location.search);
+
+  let W = 1, H = 1, dpr = 1, S = 1;
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth; H = window.innerHeight;
+    canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+    S = Math.min(W, H) * 0.5;                       // the world unit
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    if (!running) render(reduced ? stillT : currentT);
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* 5 · Cached radial glow sprites                                      */
+  /* ------------------------------------------------------------------ */
+
+  const glowCache = new Map();
+  function glow(c) {
+    const key = ((c[0] >> 3) << 10) | ((c[1] >> 3) << 5) | (c[2] >> 3);
+    let g = glowCache.get(key);
+    if (g) return g;
+    const s = 64, cv = document.createElement('canvas');
+    cv.width = cv.height = s;
+    const x = cv.getContext('2d');
+    const gr = x.createRadialGradient(s / 2, s / 2, 0, s / 2, s / 2, s / 2);
+    gr.addColorStop(0.00, rgba(mix(c, C.white, 0.55), 1));
+    gr.addColorStop(0.12, rgba(c, 0.82));
+    gr.addColorStop(0.34, rgba(c, 0.22));
+    gr.addColorStop(0.66, rgba(c, 0.05));
+    gr.addColorStop(1.00, rgba(c, 0));
+    x.fillStyle = gr; x.fillRect(0, 0, s, s);
+    glowCache.set(key, cv);
+    return cv;
+  }
+  function sprite(img, x, y, size, a) {
+    if (a <= 0.003 || size <= 0) return;
+    ctx.globalAlpha = clamp(a);
+    ctx.drawImage(img, x - size / 2, y - size / 2, size, size);
+  }
+  function spriteWH(img, x, y, w, h, a) {
+    if (a <= 0.003 || w <= 0 || h <= 0) return;
+    ctx.globalAlpha = clamp(a);
+    ctx.drawImage(img, x - w / 2, y - h / 2, w, h);
+  }
+
+  /* Subtle film grain (generated once). */
+  const noiseTile = document.createElement('canvas');
+  noiseTile.width = noiseTile.height = 128;
+  {
+    const nx = noiseTile.getContext('2d'), id = nx.createImageData(128, 128), r = rng(99);
+    for (let i = 0; i < id.data.length; i += 4) {
+      const v = r() * 255;
+      id.data[i] = id.data[i + 1] = id.data[i + 2] = v; id.data[i + 3] = 255;
+    }
+    nx.putImageData(id, 0, 0);
+  }
+  let grainPattern = null;
+
+  /* ------------------------------------------------------------------ */
+  /* 6 · Glyph atlases                                                   */
+  /* ------------------------------------------------------------------ */
+
+  const ATLAS_SIZE = 52;                 // font px inside the atlas
+  const ATLAS_PAD = 10;                  // room for the baked glow
+  const ATLAS_CELL = ATLAS_SIZE + ATLAS_PAD * 2;
+
+  const mctx = document.createElement('canvas').getContext('2d');
+  const notdefW = (() => { mctx.font = `300 ${ATLAS_SIZE}px ${FONT}`; return mctx.measureText('\uFFFF').width; })();
+  const renderable = ch => {
+    if (ch === ' ' || ch === '\n') return false;
+    const w = mctx.measureText(ch).width;
+    if (w <= 0) return false;
+    if (Math.abs(w - notdefW) < 0.01) return false;   // .notdef tofu
+    return true;
+  };
+
+  const ADV = new Map();
+  function advance(ch) {
+    let a = ADV.get(ch);
+    if (a === undefined) { a = mctx.measureText(ch).width; ADV.set(ch, a); }
+    return a;
+  }
+
+  const INK = {
+    bone: PALETTE.pleromaB,
+    gold: PALETTE.pleromaA,
+    cyan: PALETTE.spark,
+    violet: null,     // filled from palette below
+    clay: PALETTE.archonRim,
+    white: '#FFFFFF'
+  };
+  INK.violet = '#' + mix(C.archon, C.pleromaB, 0.42).map(v => Math.round(v).toString(16).padStart(2, '0')).join('');
+
+  // Unique, renderable glyph set drawn from verses + scramble pool + cues.
+  const GLYPHS = (() => {
+    const set = new Set();
+    for (const s of VERSES) for (const ch of s) if (renderable(ch)) set.add(ch);
+    for (const s of HIDDEN) for (const ch of s) if (renderable(ch)) set.add(ch);
+    for (const ch of SCRAMBLE) if (renderable(ch)) set.add(ch);
+    for (const ch of 'Свет') if (renderable(ch)) set.add(ch);
+    set.add('·'); set.add('—'); set.add('«'); set.add('»');
+    return [...set].filter(renderable);
+  })();
+  const SCRAMBLE_OK = [...SCRAMBLE].filter(renderable);
+
+  const atlases = {};
+  function buildAtlas(name, cssColor) {
+    const cols = Math.ceil(Math.sqrt(GLYPHS.length));
+    const rows = Math.ceil(GLYPHS.length / cols);
+    const cv = document.createElement('canvas');
+    cv.width = cols * ATLAS_CELL; cv.height = rows * ATLAS_CELL;
+    const c = cv.getContext('2d');
+    c.font = `300 ${ATLAS_SIZE}px ${FONT}`;
+    c.textAlign = 'center'; c.textBaseline = 'middle';
+    c.fillStyle = cssColor;
+    c.shadowColor = cssColor; c.shadowBlur = 7;
+    const map = new Map();
+    GLYPHS.forEach((g, i) => {
+      const col = i % cols, row = (i / cols) | 0;
+      const sx = col * ATLAS_CELL, sy = row * ATLAS_CELL;
+      c.fillText(g, sx + ATLAS_CELL / 2, sy + ATLAS_CELL / 2);
+      map.set(g, { sx, sy });
+    });
+    atlases[name] = { canvas: cv, map };
+  }
+  function buildAtlases() {
+    for (const name in INK) buildAtlas(name, INK[name]);
+  }
+
+  function glyph(ch, inkA, inkB, k, x, y, size, rot, alpha) {
+    if (alpha <= 0.004 || size < 3) return;
+    ctx.globalCompositeOperation = 'lighter';
+    const d = (size / ATLAS_SIZE) * ATLAS_CELL;
+    const stamp = (name, a) => {
+      const at = atlases[name]; if (!at) return;
+      const info = at.map.get(ch); if (!info) return;
+      ctx.globalAlpha = clamp(a);
+      if (rot) {
+        ctx.save(); ctx.translate(x, y); ctx.rotate(rot);
+        ctx.drawImage(at.canvas, info.sx, info.sy, ATLAS_CELL, ATLAS_CELL, -d / 2, -d / 2, d, d);
+        ctx.restore();
+      } else {
+        ctx.drawImage(at.canvas, info.sx, info.sy, ATLAS_CELL, ATLAS_CELL, x - d / 2, y - d / 2, d, d);
+      }
+    };
+    if (k <= 0.001) stamp(inkA, alpha);
+    else if (k >= 0.999) stamp(inkB, alpha);
+    else { stamp(inkA, alpha * (1 - k)); stamp(inkB, alpha * k); }
+  }
+
+  // Place a string glyph-by-glyph, centred on (cx, cy); revealFn(ch, i) → 0..1.
+  function textLine(str, cx, cy, size, inkA, inkB, k, baseAlpha, scrambleAmt, t, revealFn) {
+    const scale = size / ATLAS_SIZE;
+    let total = 0;
+    for (const ch of str) total += advance(ch) * scale;
+    let x = cx - total / 2;
+    let i = 0;
+    for (const ch of str) {
+      const adv = advance(ch) * scale;
+      const show = scrambleAmt > 0.001 ? glyphFor(ch, i, t, 1 - scrambleAmt) : ch;
+      let a = baseAlpha;
+      if (revealFn) a *= revealFn(i);
+      glyph(show, inkA, inkB, k, x + adv / 2, cy, size, 0, a);
+      x += adv; i++;
+    }
+  }
+
+  /* Scrambled glyph: as memory returns, the true glyph wins more often. */
+  function glyphFor(ch, slot, t, memory) {
+    if (memory >= 0.999) return ch;
+    const bucket = Math.floor(t * 9);
+    const h = hash(slot * 1.7 + bucket * 3.1 + 0.5);
+    if (h < memory) return ch;
+    if (!SCRAMBLE_OK.length) return ch;
+    return SCRAMBLE_OK[(hash(slot * 5.3 + bucket * 1.9) * SCRAMBLE_OK.length) | 0];
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* 7 · Particle pools (object-pooled, no per-frame allocation)         */
+  /* ------------------------------------------------------------------ */
+
+  const QUALITY_BASE = { dust: 760, eyes: 240, frag: 170, spiral: 260, shed: 220 };
+  let quality = 1;                       // lowered if the device struggles
+  const cap = n => Math.max(24, Math.round(n * quality));
+
+  function pool(n, build) { const a = new Array(n); for (let i = 0; i < n; i++) a[i] = build(i); return a; }
+
+  const DUST = pool(QUALITY_BASE.dust, i => {
+    const r = rng(11 + i);
+    return {
+      x: (r() * 2 - 1) * 1.8, y: (r() * 2 - 1) * 2.6, z: 0.15 + r() * 0.85,
+      s: 0.5 + Math.pow(r(), 3) * 2.6, ph: r() * TAU,
+      tw: (1 + ((r() * 7) | 0)) * W0,           // integer cycles → loops seamlessly
+      kx: 1 + ((r() * 4) | 0), ky: 1 + ((r() * 3) | 0),
+      conv: r(), g: r()
+    };
+  });
+  const SHED = pool(QUALITY_BASE.shed, i => {
+    const r = rng(23 + i);
+    return { tb: 6.0 + r() * 9.0, life: 0.8 + r() * 1.6, vx: (r() - 0.5) * 0.18, vy: (r() - 0.5) * 0.12 + 0.02, s: 0.5 + r() * 1.6, ph: r() * TAU };
+  });
+  const EYES = pool(QUALITY_BASE.eyes, i => {
+    const r = rng(37 + i);
+    return { a: r() * TAU, side: (r() * 5) | 0, jit: r(), s: 0.6 + r() * 2.2, ph: r() * TAU, drift: (r() - 0.5) * 0.3 };
+  });
+  const SPIRAL = pool(QUALITY_BASE.spiral, i => {
+    const r = rng(53 + i);
+    return { u: i / QUALITY_BASE.spiral, jit: r(), s: 0.6 + r() * 1.4, ph: r() * TAU };
+  });
+  const FRAG = pool(QUALITY_BASE.frag, i => {
+    const r = rng(71 + i);
+    return {
+      ch: VERSES[(r() * VERSES.length) | 0][(r() * 8) | 0] || '·',
+      x: (r() * 2 - 1) * 1.5, wy: -1.4 + r() * 3.2, z: 0.2 + r() * 0.8,
+      s: 18 + r() * 34, rot: (r() - 0.5) * 1.4, spin: (r() - 0.5) * 0.5,
+      tb: 6.2 + r() * 8.0, life: 3.5 + r() * 5.5, ph: r() * TAU
+    };
+  });
+
+  /* ------------------------------------------------------------------ */
+  /* 8 · Scene scalars                                                   */
+  /* ------------------------------------------------------------------ */
+
+  // Camera depth: how far the spark has sunk into matter (0 = Плерома).
+  function depthAt(t) {
+    const down = smooth(6, 15, t);
+    const up = smooth(38, 46, t);
+    return 0.98 * down * (1 - up);
+  }
+
+  function scalars(t) {
+    const pleroma = Math.max(
+      smooth(-2, 0.6, t) * (1 - smooth(5.2, 8.0, t)),
+      smooth(44.5, 47.5, t) * smooth(-2, 0.6, 0)   // returning rings reach the opening brightness
+    );
+    const fall = smooth(5.6, 9.0, t) * (1 - smooth(13.5, 17.0, t));
+    const matter = smooth(5.5, 11, t) * (1 - smooth(33, 39, t));
+    const archon = smooth(15, 20, t) * (1 - smooth(26.5, 32, t));
+    const recollect = smooth(27.5, 31.8, t) * (1 - smooth(37, 41.5, t));
+    const ascent = smooth(37.5, 42, t) * (1 - smooth(45.5, 48, t));   // dissolves into the opening rings
+    return { pleroma, fall, matter, archon, recollect, ascent };
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* 9 · Layer: background, water, caustics                              */
+  /* ------------------------------------------------------------------ */
+
+  function drawBackground(t, sc, depth) {
+    const breath = 0.5 + 0.5 * Math.sin(t * W0 * 4);
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = rgba(C.matterB, 1);
+    ctx.fillRect(0, 0, W, H);
+
+    // Indigo floods in with matter; the centre stays warm near the spark.
+    const inner = mix(C.matterB, mix(C.matterA, C.archon, 0.25), sc.matter);
+    const cx = W / 2, cy = H / 2;
+    const r = Math.hypot(W, H) * (0.55 + 0.03 * breath);
+    const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+    g.addColorStop(0, rgba(mix(inner, C.matterA, 0.5), 0.9));
+    g.addColorStop(0.45, rgba(inner, 0.62));
+    g.addColorStop(1, rgba(C.matterB, 1));
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, W, H);
+
+    // A cold linear wash, top→bottom, that deepens with the fall.
+    const lg = ctx.createLinearGradient(0, 0, 0, H);
+    lg.addColorStop(0, rgba(mix(C.matterA, C.pleromaA, 0.16 * (1 - sc.matter)), 0.5 * (0.6 + 0.4 * breath)));
+    lg.addColorStop(0.55, rgba(C.matterB, 0.5));
+    lg.addColorStop(1, rgba(C.matterB, 0.9));
+    ctx.fillStyle = lg;
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  // Light shafts drifting up through the water.
+  function drawCaustics(t, sc) {
+    if (sc.matter < 0.02 || quality < 0.6) return;
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.save();
+    ctx.translate(W / 2, H / 2);
+    for (let i = 0; i < 4; i++) {
+      const ang = -0.5 + i * 0.32 + Math.sin(t * W0 + i * 1.7) * 0.14;
+      const a = 0.05 * sc.matter * (0.6 + 0.4 * Math.sin(t * W0 * 3 + i));
+      ctx.save();
+      ctx.rotate(ang);
+      const g = ctx.createLinearGradient(0, -H * 0.9, 0, H * 0.2);
+      const col = i % 2 ? C.spark : C.violetHi;
+      g.addColorStop(0, rgba(col, a));
+      g.addColorStop(0.5, rgba(col, a * 0.35));
+      g.addColorStop(1, rgba(col, 0));
+      ctx.fillStyle = g;
+      ctx.fillRect(-W * 0.08, -H * 0.9, W * 0.16, H * 1.1);
+      ctx.restore();
+    }
+    ctx.restore();
+    ctx.globalAlpha = 1;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* 10 · Layer: drifting dust with parallax                             */
+  /* ------------------------------------------------------------------ */
+
+  function drawDust(t, sc, depth) {
+    ctx.globalCompositeOperation = 'lighter';
+    const pull = easeInOutCubic(smooth(38, 44, t) * (1 - smooth(44, 48, t)));   // drawn home during ascent, fades back
+    const gather = easeInOutCubic(smooth(43, 45.5, t) * (1 - smooth(45.5, 48, t))); // end → opening rings, returns to start
+    let col = mix(C.pleromaA, C.violetHi, sc.matter);
+    col = mix(col, C.pleromaA, clamp(sc.recollect * 0.6 + sc.ascent));
+    const n = cap(QUALITY_BASE.dust);
+    for (let i = 0; i < n; i++) {
+      const p = DUST[i];
+      const appear = smooth(p.conv, p.conv + 0.8, t);
+      if (appear <= 0) continue;
+      let x = p.x + Math.sin(t * W0 * p.kx + p.ph) * 0.2 + Math.sin(t * W0 * 5 + p.conv * TAU) * 0.04;
+      let y = p.y + Math.cos(t * W0 * p.ky + p.ph) * 0.2 + Math.cos(t * W0 * 3 + p.ph * 1.3) * 0.05 + 0.25 * depth;
+      // ascent draws motes upward into the source
+      y -= pull * (0.4 + p.z * 1.2);
+      const k = gather * (0.35 + p.conv * 0.6);
+      x = lerp(x, 0, k); y = lerp(y, 0, k);
+      const tw = 0.55 + 0.45 * Math.sin(t * p.tw + p.ph);
+      let a = appear * tw * (0.25 + p.z * 0.7) * (0.3 + 0.7 * sc.matter) * (1 + pull * 0.9);
+      // near-black water swallows the faint ones
+      a *= 1 - sc.matter * 0.35 * (1 - p.z);
+      if (a < 0.01) continue;
+      const sy = H / 2 + (y - depth) * S;
+      const sx = W / 2 + x * S;
+      if (sx < -60 || sx > W + 60 || sy < -60 || sy > H + 60) continue;
+      const size = p.s * 9 * (0.4 + p.z) * (0.7 + 0.3 * S / 500);
+      sprite(glow(mix(col, C.bone, p.conv * 0.4)), sx, sy, size, a);
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* 11 · Layer: emanation — glyph rings                                 */
+  /* ------------------------------------------------------------------ */
+
+  const RING_PERIODS = [6, 8, 12, 16, 6, 8, 12];
+
+  function drawPleroma(t, sc, depth) {
+    if (sc.pleroma < 0.004) return;
+    const cx = W / 2, cy = H / 2 - depth * S;
+    ctx.globalCompositeOperation = 'lighter';
+
+    // a soft bed of light behind the rings
+    sprite(glow(C.pleromaA), cx, cy, S * 1.6 * sc.pleroma, 0.12 * sc.pleroma);
+
+    // the point of light itself
+    const pulse = 0.85 + 0.15 * Math.sin(t * W0 * 8);
+    sprite(glow(C.pleromaB), cx, cy, S * 0.5 * sc.pleroma * pulse, 0.55 * sc.pleroma);
+    sprite(glow(C.pleromaA), cx, cy, S * 0.16 * sc.pleroma, 0.8 * sc.pleroma);
+    sprite(glow(C.white), cx, cy, S * 0.05 * sc.pleroma, sc.pleroma);
+
+    for (let i = 0; i < RING_PERIODS.length; i++) {
+      const per = RING_PERIODS[i];
+      const off = i * 2.3;
+      const u = (((t + off) / per) % 1 + 1) % 1;
+      const rPx = easeOutCubic(u) * S * (0.4 + i * 0.42);
+      const a = Math.sin(u * Math.PI) * sc.pleroma * (0.72 - i * 0.05);
+      if (a <= 0.01) continue;
+
+      // faint ring line
+      ctx.globalAlpha = a * 0.5;
+      ctx.lineWidth = (1.3 - i * 0.1);
+      ctx.strokeStyle = rgba(mix(C.pleromaB, C.pleromaA, i / 6), 1);
+      ctx.beginPath(); ctx.arc(cx, cy, rPx, 0, TAU); ctx.stroke();
+
+      const count = Math.max(7, Math.round(rPx / (S * 0.13)));
+      const size = clamp(rPx / (S * 5.5), 12, 36) * (0.9 + 0.2 * Math.sin(t * W0 * 8 + i));
+      const dir = i % 2 ? -1 : 1;
+      const base = t * W0 * (1 + (i % 3)) * dir + i;
+      for (let k = 0; k < count; k++) {
+        const ang = base + (k / count) * TAU;
+        const jr = noise(k * 1.7 + i * 5.1 + Math.cos(t * W0 * 2) * 1.6, Math.sin(t * W0 * 2) * 1.6) * 0.02 * rPx;
+        const r2 = rPx + jr;
+        const gx = cx + Math.cos(ang) * r2;
+        const gy = cy + Math.sin(ang) * r2;
+        const ch = VERSE_POOL[(k + i * 3) % VERSE_POOL.length];
+        if (ch === ' ') continue;
+        const inkK = clamp(0.5 + noise(k * 0.7 + Math.cos(t * W0) * 1.6, Math.sin(t * W0) * 1.6) * 0.6);
+        glyph(glyphFor(ch, i * 31 + k, t, memory), 'gold', 'bone', inkK, gx, gy, size, ang + Math.PI / 2, a);
+      }
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* 12 · Layer: the fall — droplet, trail, peeled text                  */
+  /* ------------------------------------------------------------------ */
+
+  function drawFall(t, sc, depth) {
+    if (sc.fall < 0.004 && sc.ascent < 0.02) return;
+    const cx = W / 2, cy = H / 2;
+
+    // trailing light: shed particles + a soft smear
+    ctx.globalCompositeOperation = 'lighter';
+    const n = cap(QUALITY_BASE.shed);
+    for (let i = 0; i < n; i++) {
+      const p = SHED[i];
+      const age = t - p.tb;
+      if (age <= 0 || age >= p.life) continue;
+      const x = (p.vx * age + Math.sin(age * 3 + p.ph) * 0.01) * S;
+      const y = (p.vy * age - 0.05 * age) * S;
+      const a = smooth(0, 0.1, age) * Math.pow(1 - age / p.life, 1.6) * 0.6 * sc.fall;
+      sprite(glow(sparkColor(t - age * 0.5)), cx + x, cy + y, p.s * 10 * (0.6 + S / 900), a);
+    }
+
+    // peeled fragments of verse, sinking slower than the drop (parallax)
+    const fn = cap(QUALITY_BASE.frag);
+    for (let i = 0; i < fn; i++) {
+      const f = FRAG[i];
+      const age = t - f.tb;
+      if (age <= 0 || age >= f.life) continue;
+      const life = clamp(age / f.life);
+      const a = smooth(0, 0.12, life) * (1 - smooth(0.72, 1, life)) * 0.55 * (0.4 + f.z * 0.6);
+      const wy = f.wy + depth * (0.35 + f.z * 0.2);   // trails the camera
+      const sx = cx + f.x * S * (0.6 + f.z * 0.5);
+      const sy = H / 2 + (wy - depth) * S;
+      glyph(f.ch, 'gold', 'violet', 1 - f.z, sx, sy, f.s * (0.5 + f.z * 0.7), f.rot + t * f.spin, a);
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* 13 · Layer: archons                                                 */
+  /* ------------------------------------------------------------------ */
+
+  const ARCHONS = (() => {
+    const r = rng(7);
+    const a = [];
+    for (let i = 0; i < 5; i++) {
+      a.push({
+        sides: 5 + i * 2,
+        rad: 0.9 - i * 0.13,
+        spin: (i % 2 ? -1 : 1) * (0.12 + i * 0.05),
+        phase: r() * TAU,
+        jit: 0.05 + i * 0.02,
+        rise: 1.15 - i * 0.14
+      });
+    }
+    return a;
+  })();
+
+  function drawArchons(t, sc, depth) {
+    if (sc.archon < 0.004) return;
+    const cx = W / 2, cy = H / 2;
+    const rise = easeOutCubic(smooth(15, 21, t));
+    const dissolve = smooth(26.5, 32, t);
+    const lw = 0.7 + S / 900;
+
+    for (let i = ARCHONS.length - 1; i >= 0; i--) {
+      const A = ARCHONS[i];
+      const vy = lerp(A.rise, 0.12, rise);
+      const ox = Math.sin(t * 0.23 + A.phase) * 0.06 * S;
+      const accx = cx + ox, accy = H / 2 + vy * S + Math.sin(t * 0.2 + i) * 6;
+      const radius = A.rad * S * (0.5 + 0.5 * rise) * (1 + 0.04 * Math.sin(t * 0.7 + i));
+      const rot = t * A.spin + A.phase;
+      const aa = sc.archon * (1 - dissolve * 0.9) * (0.95 - i * 0.1);
+      if (aa <= 0.01) continue;
+
+      // vertices, jittered by simplex noise (same seed → same loop)
+      const pts = [];
+      for (let k = 0; k <= A.sides; k++) {
+        const ang = rot + (k / A.sides) * TAU;
+        const nz = noise(Math.cos(ang) * 1.6 + i * 4.2, Math.sin(ang) * 1.6 + t * 0.35);
+        const rr = radius * (1 + A.jit * nz);
+        pts.push([accx + Math.cos(ang) * rr, accy + Math.sin(ang) * rr, ang, rr]);
+      }
+
+      // occluding body: near-black radial fill so nested faces read as depth
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.beginPath();
+      for (let k = 0; k < pts.length; k++) k ? ctx.lineTo(pts[k][0], pts[k][1]) : ctx.moveTo(pts[k][0], pts[k][1]);
+      ctx.closePath();
+      const fg = ctx.createRadialGradient(accx, accy, radius * 0.1, accx, accy, radius);
+      fg.addColorStop(0, rgba(C.matterB, 0.92 * aa));
+      fg.addColorStop(0.72, rgba(C.matterB, 0.66 * aa));
+      fg.addColorStop(1, rgba(C.matterB, 0.12 * aa));
+      ctx.fillStyle = fg;
+      ctx.fill();
+
+      ctx.globalCompositeOperation = 'lighter';
+
+      // radial spokes — the face's structure
+      ctx.lineWidth = 0.8 * lw;
+      ctx.strokeStyle = rgba(C.violetHi, 0.16 * aa);
+      ctx.beginPath();
+      for (let k = 0; k < A.sides; k++) {
+        ctx.moveTo(accx, accy);
+        ctx.lineTo(pts[k][0], pts[k][1]);
+      }
+      ctx.stroke();
+
+      // violet halo, then a bright violet rim, then the clay edge
+      ctx.beginPath();
+      for (let k = 0; k < pts.length; k++) k ? ctx.lineTo(pts[k][0], pts[k][1]) : ctx.moveTo(pts[k][0], pts[k][1]);
+      ctx.lineWidth = 6.5 * lw; ctx.strokeStyle = rgba(C.violetHi, 0.10 * aa); ctx.stroke();
+      ctx.lineWidth = 2.6 * lw; ctx.strokeStyle = rgba(C.violetHi, 0.62 * aa); ctx.stroke();
+      ctx.lineWidth = 1.0 * lw; ctx.strokeStyle = rgba(C.archonRim, 0.72 * aa); ctx.stroke();
+
+      // eyes: a particle at each vertex
+      for (let k = 0; k < A.sides; k++) {
+        const p = pts[k];
+        const blink = 0.6 + 0.4 * Math.sin(t * 3 + k * 1.7 + i);
+        sprite(glow(C.archonRim), p[0], p[1], 13 + i * 3, 0.62 * aa * blink);
+        sprite(glow(C.violetHi), p[0], p[1], 6 + i * 1.5, 0.5 * aa * blink);
+        sprite(glow(C.white), p[0], p[1], 3.4, 0.85 * aa * blink);
+      }
+
+      // the pupils: one hidden eye at the centre, the spark reflected
+      sprite(glow(C.archonRim), accx, accy, radius * 0.5, 0.28 * aa);
+      sprite(glow(C.matterB), accx, accy, radius * 0.16, 0.7 * aa);
+      sprite(glow(C.white), accx, accy, 4.5, 0.6 * aa);
+
+      // reflected verse, skewed along the inner rim
+      for (let k = 0; k < A.sides; k++) {
+        const ang = rot + ((k + 0.5) / A.sides) * TAU;
+        const rr = radius * 0.72;
+        const gx = accx + Math.cos(ang) * rr;
+        const gy = accy + Math.sin(ang) * rr;
+        const ch = VERSE_ALL[(((k * 7 + i * 13) % VERSE_ALL.length) + VERSE_ALL.length) % VERSE_ALL.length];
+        if (!ch || ch === ' ') continue;
+        glyph(glyphFor(ch, i * 17 + k, t, memory), 'violet', 'clay', clamp(0.4 + noise(k, t * 0.5) * 0.6),
+          gx, gy, 18 + i * 4, ang + Math.PI / 2 + noise(k, t * 0.3) * 0.6, 0.55 * aa);
+      }
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* 14 · Layer: recollection — the surviving word                       */
+  /* ------------------------------------------------------------------ */
+
+  function drawRecollection(t, sc, depth) {
+    if (sc.recollect < 0.004) return;
+    const cx = W / 2, cy = H / 2;
+    const pulse = 0.8 + 0.2 * Math.sin(t * (1.6 + sc.recollect));
+    const aa = sc.recollect;
+    ctx.globalCompositeOperation = 'lighter';
+
+    // colour bleeds back from cyan around the word
+    sprite(glow(C.spark), cx, cy, S * 1.5 * aa, 0.22 * aa);
+    sprite(glow(C.pleromaB), cx, cy, S * 0.5 * aa * pulse, 0.5 * aa);
+
+    const k = 1 - sc.recollect;   // cyan → gold as memory firms up
+    textLine('Свет', cx, cy, clamp(S * 0.34, 34, 132) * (0.96 + 0.04 * pulse),
+      'cyan', 'gold', k, aa * 0.95, 0, t, null);
+
+    // glyphs reorder around it: a tightening ring of true letters
+    const n = 26;
+    for (let i = 0; i < n; i++) {
+      const align = easeInOutCubic(clamp(sc.recollect * 1.4));
+      const ang = (i / n) * TAU + t * 0.05 * (1 - align);
+      const r = lerp(1.5, 0.62, align) * S;
+      const gx = cx + Math.cos(ang) * r;
+      const gy = cy + Math.sin(ang) * r * 0.9;
+      const ch = VERSES[i % VERSES.length][0];
+      glyph(glyphFor(ch, 400 + i, t, memory), 'cyan', 'gold', k,
+        gx, gy, 18 + 6 * Math.sin(i + t), ang + Math.PI / 2, aa * 0.5 * (0.4 + align));
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* 15 · Layer: ascent — a spiral of restored letters                   */
+  /* ------------------------------------------------------------------ */
+
+  function drawAscent(t, sc, depth) {
+    if (sc.ascent < 0.004) return;
+    const cx = W / 2, cy = H / 2;
+    ctx.globalCompositeOperation = 'lighter';
+    const n = cap(QUALITY_BASE.spiral);
+    const u0 = smooth(38, 46, t);
+    for (let i = 0; i < n; i++) {
+      const p = SPIRAL[i];
+      const u = clamp(p.u * 0.92 + u0 * 0.1);
+      const ang = u * TAU * 2.4 + t * W0 * 4 + p.ph * 0.2;
+      const rad = (1 - u) * S * 0.95 * (0.6 + 0.4 * sc.ascent);
+      const gx = cx + Math.cos(ang) * rad;
+      const gy = cy + (u - 0.5) * S * 1.25 + Math.sin(ang) * rad * 0.1;
+      const a = sc.ascent * (1 - u) * 0.7 * (0.6 + 0.4 * Math.sin(t * W0 * 15 + p.ph));
+      const ch = VERSES[(i * 3) % VERSES.length][(i % 7)];
+      glyph(glyphFor(ch, 700 + i, t, memory), 'gold', 'white', clamp(u + 0.3), gx, gy, 14 + p.s * 10, ang + Math.PI / 2, a);
+    }
+    // thread of light between spark and home
+    const homeY = H / 2 - depth * S;
+    const lg = ctx.createLinearGradient(cx, cy, cx, homeY);
+    lg.addColorStop(0, rgba(C.spark, 0.22 * sc.ascent));
+    lg.addColorStop(1, rgba(C.pleromaA, 0));
+    ctx.fillStyle = lg;
+    ctx.fillRect(cx - 1.2, Math.min(cy, homeY), 2.4, Math.abs(homeY - cy));
+    ctx.globalAlpha = 1;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* 16 · Layer: the spark                                               */
+  /* ------------------------------------------------------------------ */
+
+  function drawSpark(t, sc, depth) {
+    const cx = W / 2 + Math.sin(t * W0 * 4) * 0.01 * S;
+    const cy = H / 2;
+    const col = sparkColor(t);
+    const hb = 0.85 + 0.15 * Math.sin(t * W0 * 15);
+    const stretch = 1 + sc.fall * 1.6;           // the droplet elongates as it falls
+    ctx.globalCompositeOperation = 'lighter';
+
+    // trail
+    if (sc.fall > 0.02) {
+      const dir = 1;   // falling: smear above the spark
+      const lg = ctx.createLinearGradient(cx, cy, cx, cy - dir * S * 0.9);
+      lg.addColorStop(0, rgba(col, 0.4 * sc.fall));
+      lg.addColorStop(1, rgba(col, 0));
+      ctx.fillStyle = lg;
+      ctx.fillRect(cx - S * 0.06, cy - S * 0.9, S * 0.12, S * 0.9);
+    }
+
+    spriteWH(glow(col), cx, cy, S * 0.42 * hb, S * 0.42 * hb * stretch, 0.28 + 0.2 * sc.fall);
+    sprite(glow(col), cx, cy, S * 0.13 * hb, 0.65);
+    sprite(glow(C.white), cx, cy, S * 0.035 * hb, 0.95);
+
+    // anamorphic whisper at the recollections
+    const st = 0.14 * (sc.recollect + sc.ascent);
+    if (st > 0.01) spriteWH(glow(mix(col, C.spark, 0.4)), cx, cy, S * 1.1, S * 0.012, st);
+    ctx.globalAlpha = 1;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* 17 · Layer: gnosis — the hidden verse revealed under the surface    */
+  /* ------------------------------------------------------------------ */
+
+  const pointer = { x: 0, y: 0, active: false, strength: 0, lastMove: -1e9 };
+  let memory = 1;         // 1 = remembers the verses, 0 = forgets
+
+  function drawHidden(t, sc, depth) {
+    const cx = W / 2, cy = H / 2 - depth * S * 0.4;
+    const size = clamp(S * 0.075, 12, 34);
+    const base = 0.028 + 0.09 * sc.recollect;
+    const radius = S * (0.55 + 0.35 * pointer.strength);
+    const pStr = pointer.strength;
+
+    const revealFn = (() => {
+      if (pStr < 0.01) return null;
+      return (i, lx, ly) => {
+        const d = Math.hypot(lx - pointer.x, ly - pointer.y);
+        const near = Math.exp(-(d * d) / (radius * radius));
+        return clamp(0.15 + near * 1.6) * (0.4 + 0.6 * pStr);
+      };
+    })();
+
+    ctx.globalCompositeOperation = 'lighter';
+    const scrambleAmt = 1 - memory;
+    const k = clamp(0.5 + Math.sin(t * W0) * 0.5);
+    for (let li = 0; li < HIDDEN.length; li++) {
+      const line = HIDDEN[li];
+      const ly = cy + (li - (HIDDEN.length - 1) / 2) * size * 1.9;
+      const scale = size / ATLAS_SIZE;
+      let total = 0;
+      for (const ch of line) total += advance(ch) * scale;
+      let x = cx - total / 2;
+      let i = 0;
+      for (const ch of line) {
+        const adv = advance(ch) * scale;
+        const gx = x + adv / 2, gy = ly;
+        let a = base;
+        if (pStr > 0.01) {
+          const d = Math.hypot(gx - pointer.x, gy - pointer.y);
+          const near = Math.exp(-(d * d) / (radius * radius));
+          a += near * 0.85 * pStr;
+        }
+        const show = glyphFor(ch, li * 100 + i, t, memory);
+        glyph(show, 'bone', 'cyan', k, gx, gy, size, 0, a);
+        x += adv; i++;
+      }
+    }
+
+    // the gnosis light itself
+    if (pStr > 0.01) {
+      ctx.globalCompositeOperation = 'lighter';
+      sprite(glow(C.spark), pointer.x, pointer.y, S * 1.1 * pStr, 0.16 * pStr);
+      sprite(glow(C.bone), pointer.x, pointer.y, S * 0.3 * pStr, 0.28 * pStr);
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* 18 · Finishing: bloom, grain                                        */
+  /* ------------------------------------------------------------------ */
+
+  function drawGrain(t) {
+    if (!grainPattern || quality < 0.6) return;
+    ctx.save();
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.globalAlpha = 0.028;
+    const ox = (hash(Math.floor(t * 24)) * 128) | 0;
+    const oy = (hash(Math.floor(t * 24) + 7) * 128) | 0;
+    ctx.translate(-ox, -oy);
+    ctx.fillStyle = grainPattern;
+    ctx.fillRect(ox, oy, W, H);
+    ctx.restore();
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* 19 · Render                                                         */
+  /* ------------------------------------------------------------------ */
+
+  function render(t) {
+    const sc = scalars(t);
+    const depth = depthAt(t);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.globalAlpha = 1;
+
+    drawBackground(t, sc, depth);
+    drawCaustics(t, sc);
+    drawPleroma(t, sc, depth);
+    drawFall(t, sc, depth);
+    drawArchons(t, sc, depth);
+    drawRecollection(t, sc, depth);
+    drawAscent(t, sc, depth);
+    drawSpark(t, sc, depth);
+    drawDust(t, sc, depth);
+    drawHidden(t, sc, depth);
+    drawGrain(t);
+  }
+
+  /* Reduced-motion: a single contemplative frame, only slow cross-fades. */
+  let stillT = 31;
+  function renderStill(t) {
+    const sc = scalars(stillT);
+    const depth = depthAt(stillT);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    // Slow, gentle breathing between two quiet states — no fast motion.
+    const cross = 0.5 + 0.5 * Math.sin(t * 0.09);
+    const breathe = { ...sc, recollect: 0.35 + 0.25 * cross, matter: 0.15 * cross, pleroma: 0.3 + 0.2 * cross };
+    ctx.globalAlpha = 1;
+    drawBackground(t, breathe, depth);
+    drawPleroma(t, breathe, depth);
+    drawRecollection(t, breathe, depth);
+    drawSpark(t, breathe, depth);
+    drawDust(t, breathe, depth);
+    drawGrain(t);
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* 20 · Loop, throttling, visibility                                   */
+  /* ------------------------------------------------------------------ */
+
+  let currentT = 0;
+  let last = -1, acc = 0, running = false, paused = false;
+  const FRAME = 1 / 60;
+  let perfFrames = 0, perfAcc = 0, perfDone = false;
+
+  function frame(now) {
+    if (!running) return;
+    requestAnimationFrame(frame);
+    if (last < 0) last = now;
+    let dt = (now - last) / 1000;
+    last = now;
+    if (dt > 0.1) dt = 0.1;
+
+    // measure the first 60 frames, then degrade on weak devices
+    if (!perfDone && !reduced) {
+      perfFrames++; perfAcc += dt;
+      if (perfFrames >= 60) {
+        const avg = perfAcc / perfFrames;
+        if (avg > 1 / 42) quality = 0.5;
+        perfDone = true;
+      }
+    }
+
+    if (paused) return;
+    acc += dt;
+    if (acc < FRAME) return;           // target ~60 fps
+    const step = Math.min(acc, 0.05);
+    acc = 0;
+
+    const speed = CONFIG.speed > 0 ? CONFIG.speed : 1;
+    currentT = (currentT + step * speed) % DURATION;
+    render(currentT);
+  }
+
+  function start() {
+    if (running) return;
+    running = true; last = -1; acc = 0;
+    requestAnimationFrame(frame);
+  }
+  function stop() { running = false; }
+
+  /* Reduced motion: cross-fades only, rendered at a gentle rate. */
+  let stillLast = -1;
+  function stillFrame(now) {
+    if (!running) return;
+    requestAnimationFrame(stillFrame);
+    if (stillLast < 0) stillLast = now;
+    const dt = (now - stillLast) / 1000;
+    stillLast = now;
+    stillT += dt * 0.5;
+    renderStill(stillT);
+  }
+  function startStill() {
+    if (running) return;
+    running = true; stillLast = -1;
+    requestAnimationFrame(stillFrame);
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* 21 · Interaction                                                    */
+  /* ------------------------------------------------------------------ */
+
+  function pointerMove(e) {
+    const p = e.touches ? e.touches[0] : e;
+    pointer.x = p.clientX; pointer.y = p.clientY;
+    pointer.active = true;
+    pointer.lastMove = performance.now();
+    memory = 1;                        // movement restores memory
+    if (hintEl && !hintEl.classList.contains('gone')) hintEl.classList.add('gone');
+  }
+  window.addEventListener('pointermove', pointerMove, { passive: true });
+  window.addEventListener('touchmove', pointerMove, { passive: true });
+  window.addEventListener('pointerdown', pointerMove, { passive: true });
+  window.addEventListener('pointerleave', () => { pointer.active = false; });
+  window.addEventListener('blur', () => { pointer.active = false; });
+
+  // Idle → the animation forgets and re-scrambles.
+  function updateMemory(dt) {
+    const idle = performance.now() - pointer.lastMove > 3200;
+    const target = idle ? 0 : (pointer.active ? 1 : 0.75);
+    const rate = idle ? 0.55 : 1.6;
+    memory += (target - memory) * clamp(dt * rate);
+    memory = clamp(memory);
+    pointer.strength += ((pointer.active ? 1 : 0) - pointer.strength) * clamp(dt * (pointer.active ? 4 : 1.4));
+    pointer.strength = clamp(pointer.strength);
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* 22 · Boot                                                           */
+  /* ------------------------------------------------------------------ */
+
+  window.addEventListener('resize', resize, { passive: true });
+  window.addEventListener('orientationchange', resize, { passive: true });
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) { paused = true; }
+    else { paused = false; last = -1; stillLast = -1; }
+  });
+
+  // Public hook for embedding (intro pop / screensaver).
+  CONFIG.pause = () => { paused = true; };
+  CONFIG.resume = () => { paused = false; last = -1; stillLast = -1; };
+  CONFIG.toggle = () => (paused ? CONFIG.resume() : CONFIG.pause());
+  CONFIG.seek = (s) => { currentT = ((s % DURATION) + DURATION) % DURATION; stillT = currentT; render(reduced ? stillT : currentT); };
+  CONFIG.duration = DURATION;
+  CONFIG.reduced = () => reduced;
+  CONFIG.scalars = t => scalars(typeof t === 'number' ? t : currentT);
+  CONFIG.depth = t => depthAt(typeof t === 'number' ? t : currentT);
+
+  // Debug: freeze an instant with ?t=31.5
+  const freeze = parseFloat(new URLSearchParams(location.search).get('t'));
+
+  buildAtlases();
+  grainPattern = ctx.createPattern(noiseTile, 'repeat');
+  resize();
+
+  if (!isNaN(freeze)) {
+    currentT = clamp(freeze, 0, DURATION); stillT = currentT;
+    render(reduced ? stillT : currentT);
+  } else if (reduced) {
+    stillT = 31;
+    renderStill(stillT);
+    startStill();
+  } else {
+    start();
+  }
+
+  // Memory must be updated inside render passes; hook it into the frame via rAF.
+  (function tickMemory() {
+    let prev = performance.now();
+    (function loop(now) {
+      const dt = Math.min((now - prev) / 1000, 0.05); prev = now;
+      if (!document.hidden && !reduced) updateMemory(dt);
+      requestAnimationFrame(loop);
+    })(prev);
+  })();
+})();
+</script>
+</body>
+</html>

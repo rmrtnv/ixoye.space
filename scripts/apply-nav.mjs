@@ -21,7 +21,7 @@
  */
 import fs from "node:fs";
 import path from "node:path";
-import { renderHeader, buildShell, SECTIONS } from "./structurize-pages.mjs";
+import { renderHeader, buildShell, SECTIONS, SIZE_BOOTSTRAP } from "./structurize-pages.mjs";
 import { collectPages, rel } from "./site-utils.mjs";
 
 const ROOT = process.cwd();
@@ -94,10 +94,44 @@ function pageTitle(html) {
 }
 
 function injectScript(html) {
+  // The text-size bootstrap is an inline, parser-blocking snippet: it must sit
+  // in <head> ahead of the deferred nav.js so a saved reading size is applied
+  // before the first paint (otherwise the page renders at the default size and
+  // then jumps when nav.js runs).
+  if (!html.includes("--text-scale") && /<\/head>/i.test(html)) {
+    html = html.replace(/<\/head>/i, `${SIZE_BOOTSTRAP}\n</head>`);
+  }
   if (html.includes(NAV_SCRIPT)) return html;
   if (/<\/head>/i.test(html)) return html.replace(/<\/head>/i, `<script src="${NAV_SCRIPT}" defer></script>\n</head>`);
   if (/<\/body>/i.test(html)) return html.replace(/<\/body>/i, `<script src="${NAV_SCRIPT}"></script>\n</body>`);
   return null;
+}
+
+// Web-app metadata + the offline core script, injected on every page:
+//   - the manifest and the iOS/Android web-app metas make the site installable
+//     as a standalone app (and, on iOS, make navigator.standalone true);
+//   - offline-core.js must load before nav.js so nav.js can use the
+//     window.IxoyeOffline API it defines.
+const OFFLINE_CORE = "/src/scripts/offline-core.js";
+const WEBAPP_HEAD = [
+  '<link rel="manifest" href="/manifest.webmanifest">',
+  '<meta name="mobile-web-app-capable" content="yes">',
+  '<meta name="apple-mobile-web-app-capable" content="yes">',
+  '<meta name="apple-mobile-web-app-status-bar-style" content="default">',
+  '<meta name="theme-color" content="#E7EBCB">',
+].join("\n");
+
+function injectHeadExtras(html) {
+  if (!html.includes(OFFLINE_CORE) && html.includes(NAV_SCRIPT)) {
+    html = html.replace(
+      /<script\s+src="\/src\/scripts\/nav\.js"([^>]*)><\/script>/i,
+      `<script src="${OFFLINE_CORE}" defer></script>\n<script src="${NAV_SCRIPT}"$1></script>`
+    );
+  }
+  if (!/rel="manifest"/i.test(html) && /<\/head>/i.test(html)) {
+    html = html.replace(/<\/head>/i, `${WEBAPP_HEAD}\n</head>`);
+  }
+  return html;
 }
 
 function dirKey(rel) {
@@ -218,7 +252,7 @@ for (const rel of files) {
 
   const withScript = injectScript(out);
   if (withScript === null) noScript.push(rel);
-  else out = withScript;
+  else out = injectHeadExtras(withScript);
 
   if (out !== html) {
     updated++;

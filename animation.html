@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pleroma — An Opening in Seven Breaths</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+  body { -webkit-tap-highlight-color: transparent; }
+  canvas { display: block; width: 100vw; height: 100vh; }
+
+  /* Optical vignette — cheaper in CSS than per-frame on canvas */
+  #vignette {
+    position: fixed; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0) 45%, rgba(0,0,0,.55) 85%, rgba(0,0,0,.85) 100%);
+  }
+
+  /* The single word that remains after revelation */
+  #word {
+    position: fixed; left: 50%; top: 70%;
+    transform: translate(-50%, -50%);
+    margin: 0; padding-left: .9em; /* balances trailing letter-spacing */
+    font: 300 clamp(13px, 1.5vw, 20px)/1 'Cormorant Garamond', 'Cormorant', Georgia, 'Times New Roman', serif;
+    letter-spacing: .9em; color: #eadcbc; opacity: 0;
+    white-space: nowrap; pointer-events: none; user-select: none;
+    text-shadow: 0 0 18px rgba(255, 214, 150, .35);
+  }
+
+  /* Reduced motion: no timeline, only a quiet fade into the final icon */
+  @media (prefers-reduced-motion: reduce) {
+    canvas, #word { transition: opacity 1.6s ease; }
+  }
+</style>
+</head>
+<body>
+<canvas id="stage" role="img" aria-label="An abstract animation: light emanates, descends into matter, and returns to its source."></canvas>
+<div id="vignette"></div>
+<p id="word" aria-hidden="true">ΓΝΩΣΙΣ</p>
+
+<script>
+/* =====================================================================
+   PLEROMA — a seven-second micro-myth
+   ---------------------------------------------------------------------
+   The film is a PURE FUNCTION OF TIME: render(t) paints any instant from
+   scratch using deterministic, pre-seeded elements. Nothing accumulates,
+   so frames are reproducible, resizing is painless, and reduced-motion
+   simply renders t = 7.
+
+   Debug:  append ?t=4.3 to the URL to freeze any instant.
+   Hook:   window event 'gnosis:complete' fires at the end.
+           document.body.dataset.phase mirrors the current phase.
+   Replay: click / tap / Space / Enter after the end.
+   ===================================================================== */
+(() => {
+  'use strict';
+
+  /* ---------------- Timeline / phase system ---------------- */
+  const DURATION = 7.0;
+  const PHASES = [
+    { name: 'depth',     start: 0, end: 1 }, // the Unknowable Depth
+    { name: 'emanation', start: 1, end: 2 }, // the Pleroma unfolds
+    { name: 'sophia',    start: 2, end: 3 }, // Sophia's descent
+    { name: 'matter',    start: 3, end: 4 }, // the lower world
+    { name: 'spark',     start: 4, end: 5 }, // the trapped divine spark
+    { name: 'awakening', start: 5, end: 6 }, // remembrance
+    { name: 'return',    start: 6, end: 7 }  // reintegration
+  ];
+  const phaseAt = t => PHASES.find(p => t >= p.start && t < p.end) || PHASES[PHASES.length - 1];
+
+  /* ---------------- Math & easing ---------------- */
+  const TAU = Math.PI * 2;
+  const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+  const lerp = (a, b, k) => a + (b - a) * k;
+  const smooth = (a, b, x) => { const k = clamp((x - a) / (b - a)); return k * k * (3 - 2 * k); };
+  const env = (t, a, b, c, d) => smooth(a, b, t) * (1 - smooth(c, d, t)); // rise a→b, fall c→d
+  const easeInOutSine  = k => -(Math.cos(Math.PI * k) - 1) / 2;
+  const easeInOutCubic = k => k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+  const easeOutCubic   = k => 1 - Math.pow(1 - k, 3);
+  const hash = n => { const s = Math.sin(n * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s); };
+  function rng(seed) { // mulberry32 — the same constellations every time
+    return () => {
+      seed = (seed + 0x6D2B79F5) | 0;
+      let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  const bez = (p0, p1, p2, p3, u) => {
+    const v = 1 - u, a = v * v * v, b = 3 * v * v * u, c = 3 * v * u * u, d = u * u * u;
+    return { x: a * p0.x + b * p1.x + c * p2.x + d * p3.x, y: a * p0.y + b * p1.y + c * p2.y + d * p3.y };
+  };
+
+  /* ---------------- Palette ---------------- */
+  const C = {
+    white:   [255, 248, 236], gold: [255, 212, 140], paleGold:[255, 230, 188],
+    violet:  [166, 128, 255], indigo: [96, 92, 210], cyan: [150, 228, 255],
+    crimson: [214, 66, 102], umber: [138, 108, 80], rust: [150, 84, 64], ash: [112, 100, 142]
+  };
+  const mix = (a, b, k) => [lerp(a[0], b[0], k), lerp(a[1], b[1], k), lerp(a[2], b[2], k)];
+  const rgba = (c, a) => `rgba(${c[0] | 0},${c[1] | 0},${c[2] | 0},${clamp(a).toFixed(3)})`;
+  const stopsAt = (stops, t) => {
+    if (t <= stops[0][0]) return stops[0][1];
+    for (let i = 1; i < stops.length; i++)
+      if (t <= stops[i][0]) return mix(stops[i - 1][1], stops[i][1], smooth(stops[i - 1][0], stops[i][0], t));
+    return stops[stops.length - 1][1];
+  };
+
+  /* Sophia's colour journey: white-gold → violet → crimson → gold → cyan-white → white-gold */
+  const SOPHIA_STOPS = [
+    [2.0, [255, 244, 222]], [2.45, C.gold], [2.9, C.violet], [3.4, C.crimson],
+    [4.6, [226, 82, 104]], [5.1, [255, 206, 142]], [5.7, [196, 240, 255]], [6.7, [255, 236, 206]]
+  ];
+  const sophiaColor = t => stopsAt(SOPHIA_STOPS, t);
+
+  /* ---------------- Canvas & layout ---------------- */
+  const canvas = document.getElementById('stage');
+  const ctx = canvas.getContext('2d', { alpha: false });
+  const word = document.getElementById('word');
+  const reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let W = 1, H = 1, dpr = 1, R = 1, zoom = 1, dustCount = 400;
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth; H = window.innerHeight;
+    canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+    R = Math.min(W * 0.6, H * 0.5);                       // world unit — portrait & landscape
+    dustCount = Math.round(clamp(W * H / 2200, 240, DUST.length));
+    word.style.top = (H / 2 + R * 0.25 + Math.max(34, R * 0.19)) + 'px';
+    grainPattern = ctx.createPattern(noiseTile, 'repeat');
+    if (!running) render(currentT);                       // repaint still frames immediately
+  }
+
+  /* ---------------- Pre-rendered light sprites ---------------- */
+  const glowCache = new Map();
+  function glow(c) {
+    const key = ((c[0] >> 3) << 10) | ((c[1] >> 3) << 5) | (c[2] >> 3);
+    let g = glowCache.get(key);
+    if (g) return g;
+    const s = 64, cv = document.createElement('canvas');
+    cv.width = cv.height = s;
+    const x = cv.getContext('2d');
+    const gr = x.createRadialGradient(s / 2, s / 2, 0, s / 2, s / 2, s / 2);
+    gr.addColorStop(0.00, rgba(mix(c, [255, 255, 255], 0.6), 1));
+    gr.addColorStop(0.10, rgba(c, 0.8));
+    gr.addColorStop(0.32, rgba(c, 0.22));
+    gr.addColorStop(0.65, rgba(c, 0.05));
+    gr.addColorStop(1.00, rgba(c, 0));
+    x.fillStyle = gr; x.fillRect(0, 0, s, s);
+    glowCache.set(key, cv);
+    return cv;
+  }
+  function sprite(img, x, y, size, a) {
+    if (a <= 0.003 || size <= 0) return;
+    ctx.globalAlpha = Math.min(1, a);
+    ctx.drawImage(img, x - size / 2, y - size / 2, size, size);
+  }
+
+  /* Film-grain tile (generated once) */
+  const noiseTile = document.createElement('canvas');
+  noiseTile.width = noiseTile.height = 128;
+  {
+    const nx = noiseTile.getContext('2d'), id = nx.createImageData(128, 128), r = rng(99);
+    for (let i = 0; i < id.data.length; i += 4) {
+      const v = r() * 255;
+      id.data[i] = id.data[i + 1] = id.data[i + 2] = v; id.data[i + 3] = 255;
+    }
+    nx.putImageData(id, 0, 0);
+  }
+  let grainPattern = null;
+
+  /* ---------------- The myth's geography (units of R; y grows downward) ---------------- */
+  const RINGS = [0.06, 0.11, 0.17, 0.25, 0.34, 0.46, 0.60];  // the aeons
+  const S_ANG = Math.PI * 0.30;                               // where Sophia leaves the fullness
+  const S0 = { x: Math.cos(S_ANG) * RINGS[5], y: Math.sin(S_ANG) * RINGS[5] };
+  const P  = { x: -0.06, y: 0.64 };                           // the place of imprisonment
+  const D1 = { x: 0.66, y: 0.40 }, D2 = { x: 0.36, y: 1.00 }; // descent curve controls
+  const drift = t => { const k = t - 3.5; return { x: P.x + Math.sin(k * 1.7) * 0.006, y: P.y + Math.sin(k * 1.1) * 0.005 }; };
+  const PD = drift(5.3);
+  const U1 = { x: P.x + 0.22, y: P.y - 0.26 }, U2 = { x: -0.12, y: 0.14 }, ORIGIN = { x: 0, y: 0 };
+
+  /* Sophia / the spark: one continuous path through the whole film */
+  function sparkPos(t) {
+    if (t < 2.0) return S0;                                                    // a node in the fullness
+    if (t < 3.5) return bez(S0, D1, D2, P, easeInOutSine((t - 2.0) / 1.5));   // the fall
+    if (t < 5.3) return drift(t);                                              // imprisoned
+    if (t < 6.6) return bez(PD, U1, U2, ORIGIN, easeInOutCubic((t - 5.3) / 1.3)); // the return
+    return ORIGIN;
+  }
+
+  /* Global intensities */
+  const matterAmt = t => smooth(2.85, 3.6, t) * (1 - smooth(5.0, 5.9, t));
+  const glitchAmt = t => env(t, 3.0, 3.15, 3.95, 4.5);
+  function heartbeat(t) { // lub-dub; beats at 3.9, 4.45 and 5.0 (the awakening)
+    const e = env(t, 3.65, 3.95, 5.05, 5.4);
+    if (e <= 0) return 0;
+    const per = 0.55, ph = (((t - 3.9) % per) + per) % per / per;
+    const d1 = Math.min(ph, 1 - ph);
+    return e * (Math.exp(-Math.pow(d1 / 0.07, 2)) + 0.6 * Math.exp(-Math.pow((ph - 0.25) / 0.08, 2)));
+  }
+
+  /* ---------------- Seeded elements ---------------- */
+  // Primordial dust
+  const DUST = [];
+  {
+    const r = rng(11);
+    for (let i = 0; i < 720; i++) {
+      const q = r();
+      DUST.push({
+        x: (r() * 2 - 1) * 2.7, y: (r() * 2 - 1) * 1.9, z: 0.25 + r() * 0.75,
+        s: 0.6 + Math.pow(r(), 3) * 2.4, ph: r() * TAU, tw: 0.8 + r() * 3,
+        d: Math.pow(r(), 0.8) * 0.95, vx: (r() - .5) * 0.02, vy: (r() - .5) * 0.02 - 0.006,
+        conv: r(),
+        c: q < 0.58 ? C.paleGold : q < 0.80 ? C.violet : q < 0.94 ? C.cyan : C.white
+      });
+    }
+  }
+
+  // Light shed by Sophia as she falls
+  const SHED = [];
+  {
+    const r = rng(29);
+    for (let i = 0; i < 180; i++) {
+      SHED.push({ tb: 2.05 + r() * 1.45, life: 0.7 + r() * 1.1,
+        vx: (r() - .5) * 0.12, vy: (r() - .5) * 0.10 + 0.035, s: 0.5 + r() * 1.5, ph: r() * TAU });
+    }
+  }
+
+  // Shards of the lower world
+  const SHARDS = [];
+  {
+    const r = rng(23);
+    for (let i = 0; i < 50; i++) {
+      const n = 3 + Math.floor(r() * 3), rad = 0.15 + Math.pow(r(), 0.8) * 1.15;
+      const size = (0.025 + r() * 0.07) * (0.6 + rad * 0.7);
+      const verts = [];
+      let a = r() * TAU;
+      for (let k = 0; k < n; k++) { a += TAU / n * (0.6 + r() * 0.8); verts.push([Math.cos(a) * size * (0.5 + r() * 0.7), Math.sin(a) * size * (0.5 + r() * 0.7)]); }
+      const q = r();
+      SHARDS.push({ ang: r() * TAU, rad, verts, rot: r() * TAU, spin: (r() - .5) * 0.7,
+        delay: r() * 0.4, tint: q < 0.45 ? C.umber : q < 0.8 ? C.ash : C.rust, id: i });
+    }
+  }
+
+  // Cracks of light (relative to P), with branches
+  const CRACKS = [];
+  {
+    const r = rng(37);
+    for (let i = 0; i < 12; i++) {
+      let a = i / 12 * TAU + (r() - .5) * 0.4, x = 0, y = 0;
+      const pts = [[0, 0]], n = 8 + Math.floor(r() * 8), delay = r() * 0.12;
+      for (let j = 0; j < n; j++) {
+        a += (r() - .5) * 0.7;
+        const st = 0.035 + r() * 0.07;
+        x += Math.cos(a) * st; y += Math.sin(a) * st;
+        pts.push([x, y]);
+        if (j > 1 && r() < 0.28) { // a branch
+          let ba = a + (r() < .5 ? -1 : 1) * (0.5 + r() * 0.6), bx = x, by = y;
+          const bp = [[bx, by]];
+          for (let k = 0; k < 3 + Math.floor(r() * 3); k++) {
+            ba += (r() - .5) * 0.6; const bs = 0.025 + r() * 0.045;
+            bx += Math.cos(ba) * bs; by += Math.sin(ba) * bs; bp.push([bx, by]);
+          }
+          CRACKS.push({ pts: bp, w: 0.45, delay: delay + 0.08 + j * 0.025 });
+        }
+      }
+      CRACKS.push({ pts, w: 0.7 + r() * 0.3, delay });
+    }
+  }
+
+  // Rising particles of remembrance
+  const ASCENT = [];
+  {
+    const r = rng(51);
+    for (let i = 0; i < 240; i++) {
+      const ang = r() * TAU, rad = 0.04 + Math.pow(r(), 0.7) * 0.95, tb = 5.0 + Math.pow(r(), 1.2) * 1.25;
+      const q = r();
+      ASCENT.push({ sx: P.x + Math.cos(ang) * rad * 1.3, sy: P.y + Math.sin(ang) * rad * 0.9,
+        ex: (r() - .5) * 0.05, ey: (r() - .5) * 0.05, tb, life: Math.min(0.8 + r() * 0.9, 6.95 - tb),
+        sway: (r() - .5) * 0.4, s: 0.6 + r() * 1.6, c: q < 0.5 ? C.gold : q < 0.78 ? C.cyan : C.white });
+    }
+  }
+
+  /* ---------------- Camera: a slow dive into matter, then ascent ---------------- */
+  function camera(t) {
+    const a = easeInOutSine(clamp((t - 2.0) / 2.9));   // follow the fall
+    const b = easeInOutCubic(clamp((t - 5.0) / 2.0));  // rise with the remembering
+    let x = lerp(0, P.x * R, a), y = lerp(0, P.y * R, a);
+    let z = lerp(1 + 0.035 * smooth(0, 2, t), 1.75, a);
+    x = lerp(x, 0, b); y = lerp(y, 0, b); z = lerp(z, 1, b);
+    const g = glitchAmt(t);                              // matter trembles
+    x += Math.sin(t * 53) * g * R * 0.004;
+    y += Math.cos(t * 47) * g * R * 0.004;
+    return { x, y, z };
+  }
+  const toScreen = (wx, wy, cam) => ({ x: W / 2 + (wx - cam.x) * cam.z, y: H / 2 + (wy - cam.y) * cam.z });
+
+  /* =====================================================================
+     LAYERS
+     ===================================================================== */
+
+  /* The breathing abyss (screen space) */
+  function drawBackground(t) {
+    const appear = smooth(0, 1.4, t);
+    const breath = 0.5 + 0.5 * Math.sin(t * 1.9 - 1.4);
+    const M = matterAmt(t);
+    const inner = mix(mix([13, 10, 34], [20, 15, 14], M), [20, 15, 46], smooth(6, 7, t));
+    const k = appear * (0.72 + 0.28 * breath);
+    ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
+    ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
+    const g = ctx.createRadialGradient(W / 2, H / 2, 0, W / 2, H / 2, Math.hypot(W, H) * 0.55 * (0.92 + 0.08 * breath));
+    g.addColorStop(0, rgba(inner, k));
+    g.addColorStop(0.45, rgba([6, 5, 18], k * 0.85));
+    g.addColorStop(1, 'rgba(0,0,0,1)');
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  }
+
+  /* Slow ripples converging on the hidden centre — the abyss inhales */
+  function drawAbyss(t) {
+    const A = 1 - smooth(1.2, 2.2, t);
+    if (A <= 0) return;
+    ctx.globalCompositeOperation = 'lighter'; ctx.globalAlpha = 1;
+    for (let i = 0; i < 3; i++) {
+      const u = clamp((t + i * 0.45) / 2.0);
+      const r = lerp(1.5, 0.05, easeInOutSine(u)) * R;
+      const a = Math.sin(u * Math.PI) * 0.07 * A;
+      ctx.strokeStyle = rgba(C.indigo, a); ctx.lineWidth = (6 - i * 1.5) / zoom;
+      ctx.beginPath(); ctx.arc(0, 0, r, 0, TAU); ctx.stroke();
+    }
+  }
+
+  /* Particle field with depth parallax */
+  function drawDust(t, cam) {
+    const M = matterAmt(t);
+    const rise = Math.pow(smooth(5.1, 7.0, t), 1.6);
+    const conv = easeInOutCubic(smooth(5.9, 7.0, t));
+    const end = smooth(6.2, 7.0, t);
+    const sz = 1 / Math.sqrt(zoom);
+    ctx.globalCompositeOperation = 'lighter';
+    for (let i = 0; i < dustCount; i++) {
+      const p = DUST[i];
+      const ap = smooth(p.d, p.d + 0.9, t);
+      if (ap <= 0) continue;
+      let x = p.x + p.vx * t + Math.sin(t * 0.5 + p.ph) * 0.01;
+      let y = p.y + p.vy * t + Math.cos(t * 0.4 + p.ph) * 0.01;
+      y -= rise * (0.25 + p.z * 0.7) * 0.8;              // drawn upward
+      const k = conv * (0.3 + p.conv * 0.65);              // gathered into the source
+      x = lerp(x, 0, k); y = lerp(y, 0, k);
+      const tw = 0.55 + 0.45 * Math.sin(t * p.tw + p.ph);
+      let a = ap * tw * (1 - 0.6 * M) * (0.3 + p.z * 0.7) * (1 + rise * 0.9 * (1 - end));
+      a *= 1 - end * (p.conv > 0.25 ? 0.93 : 0.45);       // most dissolve; a few remain as silence
+      if (a < 0.01) continue;
+      const wx = x * R + cam.x * (1 - p.z), wy = y * R + cam.y * (1 - p.z);
+      const sx = (wx - cam.x) * zoom, sy = (wy - cam.y) * zoom;
+      if (sx < -W / 2 - 20 || sx > W / 2 + 20 || sy < -H / 2 - 20 || sy > H / 2 + 20) continue;
+      sprite(glow(p.c), wx, wy, p.s * 7 * (0.5 + p.z) * sz, a);
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  /* A ring as polyline — partial sweep, trembling, and a wound (gap) */
+  function strokeRing(r, a0, sweep, jit, gapLocal, gapW, t, i) {
+    const seg = Math.max(2, Math.ceil(150 * Math.abs(sweep) / TAU));
+    const q = Math.floor(t * 12);
+    ctx.beginPath();
+    let pen = false;
+    for (let j = 0; j <= seg; j++) {
+      const th = a0 + sweep * j / seg;
+      if (gapW > 0.001) {
+        let d = ((th - gapLocal) % TAU + TAU) % TAU; if (d > Math.PI) d = TAU - d;
+        if (d < gapW) { pen = false; continue; }
+      }
+      const rr = jit ? r + Math.sin(th * 7 + t * 30 + i) * jit * 0.5 + (hash(q * 7 + i + j * 0.13) - 0.5) * jit : r;
+      const x = Math.cos(th) * rr, y = Math.sin(th) * rr;
+      if (pen) ctx.lineTo(x, y); else { ctx.moveTo(x, y); pen = true; }
+    }
+    ctx.stroke();
+  }
+
+  /* The Pleroma: living architecture around an invisible centre */
+  function drawPleroma(o, t) {
+    if (o.a < 0.004 || o.prog <= 0) return;
+    ctx.save();
+    ctx.translate(o.x, o.y); ctx.rotate(o.rot);
+    ctx.globalCompositeOperation = 'lighter'; ctx.globalAlpha = 1;
+    const S = R * o.s, lw = 1 / zoom;
+    const gapLocal = o.gapAng - o.rot;
+
+    // seed geometry: six circles passing through the centre
+    const sp = easeInOutCubic(clamp((o.prog - 0.15) / 0.7));
+    if (sp > 0) {
+      const rr = RINGS[2] * S;
+      ctx.lineWidth = 0.6 * lw; ctx.strokeStyle = rgba(o.col, o.a * 0.2);
+      for (let k = 0; k < 6; k++) {
+        const a = k * TAU / 6, cx = Math.cos(a) * rr, cy = Math.sin(a) * rr;
+        ctx.beginPath(); ctx.arc(cx, cy, rr, a + Math.PI, a + Math.PI + TAU * sp); ctx.stroke();
+      }
+    }
+
+    // concentric aeons, each drawn by a travelling point of light
+    for (let i = 0; i < RINGS.length; i++) {
+      const pr = easeInOutCubic(clamp((o.prog - i * 0.06) / 0.6));
+      if (pr <= 0) continue;
+      const r = RINGS[i] * S, dir = i % 2 ? -1 : 1, a0 = -Math.PI / 2 + i * 0.9, sweep = pr * TAU * dir;
+      const alpha = o.a * (0.6 - i * 0.045);
+      const col = i % 2 ? o.col2 : o.col;
+      const gw = i >= 4 ? o.gapW : 0;
+      ctx.strokeStyle = rgba(col, alpha);
+      ctx.lineWidth = (i === 3 || i === 5 ? 1.15 : 0.6) * lw;
+      strokeRing(r, a0, sweep, o.jit * S, gapLocal, gw, t, i);
+      if (i === 3 || i === 5) {
+        ctx.strokeStyle = rgba(col, alpha * 0.35); ctx.lineWidth = 0.5 * lw;
+        strokeRing(r * 1.028, a0, sweep, o.jit * S, gapLocal, gw, t, i + 10);
+      }
+      if (pr < 1) {
+        const th = a0 + sweep;
+        sprite(glow(col), Math.cos(th) * r, Math.sin(th) * r, 0.07 * S, alpha * 1.4 * Math.sin(pr * Math.PI));
+        ctx.globalAlpha = 1;
+      }
+    }
+
+    // radial filaments
+    const lp = easeInOutCubic(clamp((o.prog - 0.25) / 0.6));
+    if (lp > 0) {
+      ctx.lineWidth = 0.5 * lw; ctx.strokeStyle = rgba(o.col2, o.a * 0.2);
+      ctx.beginPath();
+      for (let k = 0; k < 24; k++) {
+        const a = k * TAU / 24 + TAU / 48, r1 = RINGS[2] * S;
+        const r2 = r1 + (RINGS[k % 2 ? 4 : 5] - RINGS[2]) * S * lp;
+        ctx.moveTo(Math.cos(a) * r1, Math.sin(a) * r1); ctx.lineTo(Math.cos(a) * r2, Math.sin(a) * r2);
+      }
+      ctx.stroke();
+    }
+
+    // the transformed geometry carries an interlaced {12/5} polygon — the same order, re-seen
+    if (o.star) {
+      const sp2 = easeInOutCubic(clamp((o.prog - 0.3) / 0.7));
+      if (sp2 > 0) {
+        const r = RINGS[5] * S, steps = Math.floor(12 * sp2);
+        ctx.lineWidth = 0.5 * lw; ctx.strokeStyle = rgba(o.col, o.a * 0.22);
+        ctx.beginPath();
+        for (let k = 0; k <= steps; k++) {
+          const a = (k * 5) % 12 * TAU / 12 - Math.PI / 2;
+          const x = Math.cos(a) * r, y = Math.sin(a) * r;
+          if (k) ctx.lineTo(x, y); else ctx.moveTo(x, y);
+        }
+        ctx.stroke();
+      }
+    }
+
+    // nodes where the aeons meet (none where the wound is)
+    const na = clamp((o.prog - 0.6) / 0.3);
+    if (na > 0) {
+      const g = glow(o.col2);
+      for (let k = 0; k < 12; k++) {
+        const a = k * TAU / 12, r = RINGS[4] * S;
+        let d = ((a - gapLocal) % TAU + TAU) % TAU; if (d > Math.PI) d = TAU - d;
+        if (d < o.gapW * 1.2) continue;
+        sprite(g, Math.cos(a) * r, Math.sin(a) * r, 0.03 * S, o.a * 0.7 * na);
+      }
+      for (let k = 0; k < 6; k++) {
+        const a = k * TAU / 6 + TAU / 12, r = RINGS[6] * S;
+        sprite(g, Math.cos(a) * r, Math.sin(a) * r, 0.022 * S, o.a * 0.45 * na);
+      }
+    }
+    // the source itself is never drawn — only a faint presence
+    sprite(glow(C.paleGold), 0, 0, 0.5 * S, o.a * 0.12 * o.prog);
+    ctx.restore();
+    ctx.globalAlpha = 1;
+  }
+
+  /* The lower world: density veil, warped grid, shards */
+  function drawMatter(t) {
+    const M = matterAmt(t);
+    if (M < 0.003) return;
+    const g = glitchAmt(t);
+    const pull = smooth(3.2, 4.6, t) * (1 - smooth(5.0, 5.6, t));
+
+    // density veil (screen space)
+    ctx.save(); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
+    ctx.fillStyle = rgba([4, 3, 9], 0.5 * M); ctx.fillRect(0, 0, W, H);
+    ctx.restore();
+
+    // warped grid — a gravity well around the imprisoned light
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.lineWidth = 0.7 / zoom;
+    const span = 2.4, step = 0.11, N = Math.floor(span / step), seg = 40, q = Math.floor(t * 12);
+    const gridCol = mix(C.umber, C.ash, 0.35);
+    const warp = (x, y) => {
+      const dx = x - P.x, dy = y - P.y, w = 0.42 * pull * Math.exp(-(dx * dx + dy * dy) / 0.16);
+      x -= dx * w; y -= dy * w;
+      x += Math.sin(y * 9 + t * 2) * 0.01 * M;
+      y += Math.sin(x * 7 - t * 1.5) * 0.012 * M;
+      return [x * R, y * R];
+    };
+    for (let pass = 0; pass < 2; pass++) {
+      for (let i = -N; i <= N; i++) {
+        const off = i * step, fade = 1 - Math.abs(off) / span;
+        const trem = (hash(i * 13 + q + pass * 101) - 0.5) * 0.016 * g;
+        ctx.strokeStyle = rgba(gridCol, 0.24 * M * fade * fade);
+        ctx.beginPath();
+        for (let j = 0; j <= seg; j++) {
+          const s = -span + 2 * span * j / seg;
+          const pt = pass === 0 ? warp(P.x + s, P.y + off + trem) : warp(P.x + off + trem, P.y + s);
+          if (j) ctx.lineTo(pt[0], pt[1]); else ctx.moveTo(pt[0], pt[1]);
+        }
+        ctx.stroke();
+      }
+    }
+
+    // shards gather, tremble, then break apart into light
+    for (const s of SHARDS) {
+      const al = smooth(2.9 + s.delay, 3.6 + s.delay, t) * (1 - smooth(5.3, 6.4, t));
+      if (al < 0.005) continue;
+      const inn = easeOutCubic(smooth(2.9 + s.delay, 3.9 + s.delay, t));
+      const brk = smooth(5.0 + s.delay * 0.3, 6.3, t);
+      const r = s.rad * lerp(2.4, 1, inn) * (1 + brk * 1.4);
+      const a = s.ang + t * 0.03 / s.rad;
+      let x = P.x + Math.cos(a) * r, y = P.y + Math.sin(a) * r * 0.85 - brk * 0.5;
+      x += (hash(s.id * 3 + q) - 0.5) * 0.01 * g; y += (hash(s.id * 5 + q) - 0.5) * 0.01 * g;
+      const rot = s.rot + t * s.spin + brk * s.spin * 4;
+      const cr = Math.cos(rot), sr = Math.sin(rot);
+      ctx.beginPath();
+      for (let k = 0; k < s.verts.length; k++) {
+        const vx = s.verts[k][0], vy = s.verts[k][1];
+        const px = (x + vx * cr - vy * sr) * R, py = (y + vx * sr + vy * cr) * R;
+        if (k) ctx.lineTo(px, py); else ctx.moveTo(px, py);
+      }
+      ctx.closePath();
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.fillStyle = rgba([10, 9, 19], 0.85 * al * (1 - brk)); ctx.fill();
+      ctx.globalCompositeOperation = 'lighter';
+      if (brk > 0) { ctx.fillStyle = rgba(C.gold, 0.16 * brk * al); ctx.fill(); }
+      ctx.strokeStyle = rgba(mix(s.tint, C.paleGold, brk), (0.38 + brk * 0.6) * al);
+      ctx.lineWidth = 0.8 / zoom; ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  /* Fissures of light at the moment of remembrance */
+  function drawCracks(t) {
+    const A = env(t, 4.98, 5.06, 5.75, 6.4);
+    if (A <= 0) return;
+    ctx.globalCompositeOperation = 'lighter'; ctx.globalAlpha = 1;
+    for (let pass = 0; pass < 2; pass++) {            // pass 0: soft cyan halo, pass 1: bright core
+      ctx.lineWidth = (pass ? 1.1 : 5) / zoom;
+      for (const c of CRACKS) {
+        const prog = easeOutCubic(smooth(5.0 + c.delay, 5.45 + c.delay, t));
+        if (prog <= 0) continue;
+        const n = prog * (c.pts.length - 1), whole = Math.floor(n), frac = n - whole;
+        ctx.strokeStyle = pass ? rgba([255, 240, 214], 0.85 * A * c.w) : rgba(C.cyan, 0.1 * A);
+        ctx.beginPath();
+        ctx.moveTo((P.x + c.pts[0][0]) * R, (P.y + c.pts[0][1]) * R);
+        for (let k = 1; k <= whole; k++) ctx.lineTo((P.x + c.pts[k][0]) * R, (P.y + c.pts[k][1]) * R);
+        if (whole < c.pts.length - 1) {
+          const a = c.pts[whole], b = c.pts[whole + 1];
+          ctx.lineTo((P.x + lerp(a[0], b[0], frac)) * R, (P.y + lerp(a[1], b[1], frac)) * R);
+        }
+        ctx.stroke();
+      }
+    }
+  }
+
+  /* Light shed during the fall */
+  function drawShed(t) {
+    if (t < 2.05 || t > 5.2) return;
+    ctx.globalCompositeOperation = 'lighter';
+    for (const p of SHED) {
+      const age = t - p.tb;
+      if (age <= 0 || age >= p.life) continue;
+      const o = sparkPos(p.tb);
+      const x = (o.x + p.vx * age + Math.sin(age * 3 + p.ph) * 0.008) * R;
+      const y = (o.y + p.vy * age) * R;
+      const a = smooth(0, 0.08, age) * Math.pow(1 - age / p.life, 1.5) * 0.75;
+      sprite(glow(sophiaColor(p.tb)), x, y, p.s * 9 / Math.sqrt(zoom), a);
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  /* Particles drawn back toward the source */
+  function drawAscent(t) {
+    if (t < 5.0) return;
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.lineWidth = 0.7 / zoom;
+    for (const p of ASCENT) {
+      const u = (t - p.tb) / p.life;
+      if (u <= 0 || u >= 1) continue;
+      const pos = uu => {
+        const e = uu * uu * (3 - 2 * uu);
+        return [(lerp(p.sx, p.ex, e) + Math.sin(e * Math.PI) * p.sway) * R,
+                (lerp(p.sy, p.ey, e) - Math.sin(e * Math.PI) * 0.1) * R];
+      };
+      const [x, y] = pos(u), [px, py] = pos(Math.max(0, u - 0.07));
+      const a = Math.pow(Math.sin(u * Math.PI), 0.8) * 0.8;
+      ctx.globalAlpha = 1;
+      ctx.strokeStyle = rgba(p.c, a * 0.35);
+      ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(x, y); ctx.stroke();
+      sprite(glow(p.c), x, y, p.s * 8, a);
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  /* Sophia: orb, silk ribbon, heartbeat — and finally the returned point */
+  function drawSophia(t) {
+    if (t < 1.5) return;
+    ctx.globalCompositeOperation = 'lighter'; ctx.globalAlpha = 1;
+    const pos = sparkPos(t), x = pos.x * R, y = pos.y * R;
+    const col = sophiaColor(t), hb = heartbeat(t);
+    const presence = smooth(1.5, 2.0, t);
+
+    // ribbon trail: a luminous spine with two twisting silk strands
+    const moving = (t > 2.0 && t < 4.0) || (t > 5.3 && t < 7.0);
+    if (moving) {
+      const N = 46, dt = 0.012;
+      let prev = pos;
+      for (let k = 1; k <= N; k++) {
+        const tk = t - k * dt;
+        if (tk < 2.0) break;
+        const p = sparkPos(tk);
+        const dx = p.x - prev.x, dy = p.y - prev.y, len = Math.hypot(dx, dy);
+        if (len < 1e-5) { prev = p; continue; }
+        const f = 1 - k / N, nx = -dy / len, ny = dx / len;
+        const c = sophiaColor(tk);
+        ctx.globalAlpha = 1;
+        ctx.strokeStyle = rgba(c, 0.55 * f * f);
+        ctx.lineWidth = (2.4 * f + 0.3) / zoom;
+        ctx.beginPath(); ctx.moveTo(prev.x * R, prev.y * R); ctx.lineTo(p.x * R, p.y * R); ctx.stroke();
+        ctx.strokeStyle = rgba(mix(c, C.white, 0.2), 0.32 * f);
+        ctx.lineWidth = 0.6 / zoom;
+        for (let sgn = -1; sgn <= 1; sgn += 2) {
+          const w0 = Math.sin((k - 1) * 0.32 - t * 9) * 0.022 * ((k - 1) / N) * sgn;
+          const w1 = Math.sin(k * 0.32 - t * 9) * 0.022 * (k / N) * sgn;
+          ctx.beginPath();
+          ctx.moveTo((prev.x + nx * w0) * R, (prev.y + ny * w0) * R);
+          ctx.lineTo((p.x + nx * w1) * R, (p.y + ny * w1) * R);
+          ctx.stroke();
+        }
+        if (k % 3 === 0) sprite(glow(c), p.x * R, p.y * R, R * 0.05 * f, 0.18 * f);
+        prev = p;
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    // heartbeat wavelets (the third beat is the awakening)
+    for (let n = 0; n < 3; n++) {
+      const bt = 3.9 + n * 0.55, age = t - bt;
+      if (age <= 0 || age > 1.0) continue;
+      const big = n === 2 ? 1.8 : 1;
+      ctx.strokeStyle = rgba(mix(C.crimson, C.gold, n / 2), Math.pow(1 - age, 2) * 0.4 * big);
+      ctx.lineWidth = 0.8 / zoom;
+      ctx.beginPath(); ctx.arc(x, y, (0.03 + age * 0.32 * big) * R, 0, TAU); ctx.stroke();
+    }
+
+    // the orb: compressed in matter, swelling with each beat, calm at the end
+    const sz = lerp(1, 0.55, smooth(3.1, 3.8, t)) * (1 + hb * 0.55)
+             * lerp(1, 1.5, smooth(5.0, 5.4, t)) * lerp(1, 0.55, smooth(6.2, 7.0, t));
+    sprite(glow(col), x, y, R * 0.42 * sz, presence * (0.2 + hb * 0.35));
+    sprite(glow(col), x, y, R * 0.13 * sz, presence * 0.65);
+    sprite(glow(C.white), x, y, R * 0.035 * sz, presence * 0.95);
+
+    // a thin anamorphic whisper of light
+    const st = 0.22 * (hb * 0.6 + env(t, 4.95, 5.2, 6.0, 6.9)) + 0.06 * presence;
+    if (st > 0.01) {
+      ctx.globalAlpha = clamp(st);
+      const L = R * 0.9 * sz;
+      ctx.drawImage(glow(mix(col, C.cyan, 0.3)), x - L / 2, y - R * 0.005, L, R * 0.01);
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  /* The final icon: a single ring around the returned point */
+  function drawFinal(t) {
+    const f = smooth(6.15, 7.0, t);
+    if (f <= 0) return;
+    ctx.globalCompositeOperation = 'lighter'; ctx.globalAlpha = 1;
+    const sw = easeInOutCubic(smooth(6.15, 6.95, t)), lw = 1 / zoom;
+    ctx.lineWidth = 0.9 * lw; ctx.strokeStyle = rgba(C.gold, 0.55 * f);
+    ctx.beginPath(); ctx.arc(0, 0, 0.25 * R, -Math.PI / 2, -Math.PI / 2 + TAU * sw); ctx.stroke();
+    ctx.lineWidth = 0.5 * lw; ctx.strokeStyle = rgba(C.white, 0.14 * f);
+    ctx.beginPath(); ctx.arc(0, 0, 0.262 * R, Math.PI / 2, Math.PI / 2 - TAU * sw, true); ctx.stroke();
+    ctx.strokeStyle = rgba(C.violet, 0.07 * f);
+    ctx.beginPath(); ctx.arc(0, 0, 0.62 * R, 0, TAU); ctx.stroke();
+    sprite(glow(C.gold), 0, 0, R * 1.0, 0.09 * f);
+    ctx.globalAlpha = 1;
+  }
+
+  /* Screen-space light: awakening flash and return bloom */
+  function drawBloom(t, cam) {
+    ctx.globalCompositeOperation = 'lighter'; ctx.globalAlpha = 1;
+    const fl = env(t, 4.96, 5.04, 5.1, 5.75) * 0.45;
+    if (fl > 0.003) {
+      const p = sparkPos(t), s = toScreen(p.x * R, p.y * R, cam), r = R * 1.1 * cam.z;
+      const g = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, r);
+      g.addColorStop(0, rgba(C.white, fl)); g.addColorStop(0.25, rgba(C.gold, fl * 0.35)); g.addColorStop(1, rgba(C.gold, 0));
+      ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    }
+    const bl = env(t, 5.85, 6.35, 6.45, 7.0) * 0.26;
+    if (bl > 0.003) {
+      const s = toScreen(0, 0, cam), r = Math.max(W, H) * 0.75;
+      const g = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, r);
+      g.addColorStop(0, rgba(C.white, bl)); g.addColorStop(0.3, rgba(C.paleGold, bl * 0.45)); g.addColorStop(1, rgba(C.indigo, 0));
+      ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    }
+  }
+
+  /* Matter's illusion flickers: thin horizontal slips (device pixels) */
+  function drawGlitch(t) {
+    const g = glitchAmt(t);
+    if (g < 0.05) return;
+    const r = rng(Math.floor(t * 14) * 7919 + 3);
+    if (r() > 0.75) return; // irregular, organic
+    ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
+    const cw = canvas.width, ch = canvas.height, bands = 1 + Math.floor(r() * 3);
+    for (let i = 0; i < bands; i++) {
+      const h = Math.max(1, Math.floor((2 + r() * 16) * dpr)), y = Math.floor(r() * (ch - h));
+      const dx = Math.round((r() - 0.5) * 2 * (6 + r() * 22) * dpr * g);
+      ctx.drawImage(canvas, 0, y, cw, h, dx, y, cw, h);
+    }
+    ctx.restore();
+  }
+
+  function drawGrain(t) {
+    if (!grainPattern) return;
+    ctx.save(); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.globalAlpha = 0.03 + 0.015 * matterAmt(t);
+    const ox = (hash(Math.floor(t * 24)) * 128) | 0, oy = (hash(Math.floor(t * 24) + 7) * 128) | 0;
+    ctx.translate(-ox, -oy);
+    ctx.fillStyle = grainPattern; ctx.fillRect(ox, oy, W, H);
+    ctx.restore();
+  }
+
+  /* =====================================================================
+     RENDER — one frame of the myth at time t
+     ===================================================================== */
+  let lastPhase = '';
+  function render(t) {
+    const cam = camera(t);
+    zoom = cam.z;
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    drawBackground(t);
+
+    // world space
+    ctx.setTransform(dpr * zoom, 0, 0, dpr * zoom, dpr * (W / 2 - cam.x * zoom), dpr * (H / 2 - cam.y * zoom));
+    drawAbyss(t);
+    drawDust(t, cam);
+
+    // the original fullness: unfolds, dims under matter, heals, yields to the final icon
+    let pa = smooth(0.95, 1.6, t) * lerp(1, 0.12, smooth(2.6, 3.8, t));
+    pa = lerp(pa, 0.85, smooth(5.4, 6.2, t)) * (1 - smooth(6.3, 7.0, t));
+    drawPleroma({
+      x: 0, y: 0, s: 1, a: pa, rot: t * 0.05, prog: smooth(1.0, 2.05, t),
+      col: C.paleGold, col2: mix(C.paleGold, C.violet, 0.35),
+      jit: matterAmt(t) * 0.012,
+      gapAng: S_ANG, gapW: 0.32 * smooth(2.0, 2.45, t) * (1 - smooth(5.5, 6.3, t)) // the wound, later healed
+    }, t);
+
+    drawMatter(t);
+    drawCracks(t);
+
+    // the transformed geometry, carried upward by the remembering spark
+    const sp = sparkPos(t);
+    drawPleroma({
+      x: sp.x * R, y: sp.y * R, s: lerp(0.45, 1, easeInOutCubic(smooth(5.3, 6.6, t))),
+      a: env(t, 5.05, 5.4, 6.15, 6.9), rot: -t * 0.12 + Math.PI / 12, prog: smooth(5.0, 5.9, t),
+      col: C.cyan, col2: C.gold, jit: 0, gapAng: 0, gapW: 0, star: true
+    }, t);
+
+    drawShed(t);
+    drawAscent(t);
+    drawFinal(t);
+    drawSophia(t);
+
+    // screen-space finishing
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    drawBloom(t, cam);
+    drawGlitch(t);
+    drawGrain(t);
+
+    // typography of silence
+    const w = smooth(6.3, 7.0, t);
+    word.style.opacity = (w * 0.82).toFixed(3);
+    word.style.letterSpacing = lerp(1.3, 0.9, easeOutCubic(w)).toFixed(3) + 'em';
+    word.style.filter = w < 1 ? `blur(${((1 - w) * 6).toFixed(2)}px)` : 'none';
+
+    const ph = phaseAt(t).name;
+    if (ph !== lastPhase) { document.body.dataset.phase = ph; lastPhase = ph; }
+  }
+
+  /* =====================================================================
+     LOOP
+     ===================================================================== */
+  let currentT = 0, last = null, running = false;
+
+  function frame(now) {
+    if (last === null) last = now;
+    const dt = Math.min((now - last) / 1000, 1 / 20); // never leap if the tab stalls
+    last = now;
+    currentT = Math.min(DURATION, currentT + dt);
+    render(currentT);
+    if (currentT < DURATION) requestAnimationFrame(frame);
+    else {
+      running = false;                                // rest in the final frame
+      window.dispatchEvent(new CustomEvent('gnosis:complete'));
+    }
+  }
+  function play() {
+    currentT = 0; last = null; running = true;
+    requestAnimationFrame(frame);
+  }
+
+  window.addEventListener('resize', resize, { passive: true });
+  resize();
+
+  const freeze = parseFloat(new URLSearchParams(location.search).get('t'));
+  if (!isNaN(freeze)) {                               // debug still: ?t=4.3
+    currentT = clamp(freeze, 0, DURATION); render(currentT);
+  } else if (reduced) {                               // reduced motion: arrive directly at stillness
+    currentT = DURATION;
+    canvas.style.opacity = 0;
+    render(DURATION);
+    requestAnimationFrame(() => { canvas.style.opacity = 1; });
+    window.dispatchEvent(new CustomEvent('gnosis:complete'));
+  } else {
+    play();
+    const replay = e => {
+      if (running) return;
+      if (e.type === 'keydown' && e.code !== 'Space' && e.code !== 'Enter') return;
+      play();
+    };
+    window.addEventListener('pointerdown', replay);
+    window.addEventListener('keydown', replay);
+  }
+})();
+</script>
+</body>
+</html>

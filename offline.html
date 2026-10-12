@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<HEAD>
+<meta charset="UTF-8">
+<TITLE>Офлайн-чтение — Русская Апокрифическая Студия</TITLE>
+<meta name="Description" content="Сохранение собрания текстов для чтения без подключения к интернету.">
+<META NAME="viewport" CONTENT="width=device-width, initial-scale=1.0">
+<LINK REL=STYLESHEET HREF="/src/styles/main.css" TYPE="text/css">
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/favicon.svg">
+<link rel="canonical" href="https://ixoye.space/offline.html">
+<meta name="robots" content="noindex">
+<script src="/src/scripts/offline-core.js" defer></script>
+<script src="/src/scripts/nav.js" defer></script>
+<script src="/src/scripts/offline.js" defer></script>
+<script>(function(){try{var v=parseFloat(localStorage.getItem("ixoye-text-size"));if(isFinite(v)&&v>=0.8&&v<=1.6)document.documentElement.style.setProperty("--text-scale",String(v));}catch(e){}})();</script>
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#E7EBCB">
+</head>
+
+<BODY>
+
+<div class="site-shell">
+
+<header class="site-header">
+  <p class="site-title"><a href="/">Русская апокрифическая студия</a></p>
+  <nav class="site-nav" aria-label="Разделы сайта">
+    <ul class="site-nav-list">
+        <li><a href="/" aria-current="page">Главная</a></li>
+        <li><a href="/nag-hammadi/index.html">Библиотека Наг-Хаммади</a></li>
+        <li><a href="/apocrypha-new/index.html">Новозаветные апокрифы</a></li>
+        <li><a href="/apocrypha-old/index.html">Ветхозаветные апокрифы</a></li>
+        <li><a href="/hermetic/index.html">Герметизм</a></li>
+        <li><a href="/gnostic/index.html">Гностицизм</a></li>
+        <li><a href="/kumran/index.html">Свитки Иудейской пустыни</a></li>
+        <li><a href="/study/index.html">Исследования</a></li>
+        <li><a href="/links/index.html">Ссылки</a></li>
+        <li><a href="/contacts/index.html">Контакты</a></li>
+        <li><a href="/poisk.html">Поиск</a></li>
+    </ul>
+
+    <div class="nav-bar" role="group" aria-label="Навигация">
+      <button type="button" class="nav-ico nav-back" aria-label="Назад" title="Назад"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+
+      <details class="nav-drop nav-menu">
+        <summary class="nav-ico" aria-label="Разделы сайта" title="Разделы"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary>
+        <ul class="nav-drop-list">
+        <li><a href="/" aria-current="page">Главная</a></li>
+        <li><a href="/nag-hammadi/index.html">Библиотека Наг-Хаммади</a></li>
+        <li><a href="/apocrypha-new/index.html">Новозаветные апокрифы</a></li>
+        <li><a href="/apocrypha-old/index.html">Ветхозаветные апокрифы</a></li>
+        <li><a href="/hermetic/index.html">Герметизм</a></li>
+        <li><a href="/gnostic/index.html">Гностицизм</a></li>
+        <li><a href="/kumran/index.html">Свитки Иудейской пустыни</a></li>
+        <li><a href="/study/index.html">Исследования</a></li>
+        <li><a href="/links/index.html">Ссылки</a></li>
+        <li><a href="/contacts/index.html">Контакты</a></li>
+        <li><a href="/poisk.html">Поиск</a></li>
+        <li><a href="/offline.html">Офлайн-чтение</a></li>
+        <li class="nav-text-size">
+          <span class="nav-text-size-label">Размер текста</span>
+          <span class="nav-text-size-controls">
+            <button type="button" class="nav-text-size-btn nav-text-size-dec" data-text-size="-1" aria-label="Уменьшить размер текста" title="Уменьшить текст"><span class="nav-text-size-a nav-text-size-a-sm" aria-hidden="true">A</span><span class="nav-text-size-sign" aria-hidden="true">&minus;</span></button>
+            <button type="button" class="nav-text-size-btn nav-text-size-inc" data-text-size="1" aria-label="Увеличить размер текста" title="Увеличить текст"><span class="nav-text-size-a nav-text-size-a-lg" aria-hidden="true">A</span><span class="nav-text-size-sign" aria-hidden="true">+</span></button>
+          </span>
+        </li>
+        </ul>
+      </details>
+
+      <select class="nav-text" aria-label="Текущий текст" title="Выбор текста">
+          <option value="/offline.html" selected>Офлайн-чтение</option>
+          <option value="/index.html">Русская Апокрифическая Студия</option>
+          <option value="/about.html">О студии</option>
+          <option value="/animation.html">Pleroma — An Opening in Seven Breaths</option>
+          <option value="/poisk.html">Поиск по сайту</option>
+      </select>
+
+      <details class="nav-drop nav-search">
+        <summary class="nav-ico" aria-label="Поиск" title="Поиск"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></summary>
+        <form class="nav-search-form" action="/poisk.html" method="get" role="search">
+          <input type="search" name="q" placeholder="Поиск по сайту…" aria-label="Поиск по сайту" enterkeyhint="search" autocomplete="off">
+        </form>
+      </details>
+
+      <button type="button" class="nav-ico nav-forward" aria-label="Вперёд" title="Вперёд"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <article class="content-block">
+    <h1>Офлайн-чтение</h1>
+
+    <p>Здесь можно сохранить собрание текстов в память устройства и читать его без
+    подключения к интернету. Сохранённые тексты открываются из приложения так же,
+    как обычные страницы.</p>
+
+    <p id="offline-unsupported" class="offline-unsupported" hidden>
+      Этот браузер не поддерживает офлайн-хранилище (либо страница открыта не по
+      защищённому протоколу HTTPS). Офлайн-чтение доступно в современных браузерах
+      и в приложении, добавленном на главный экран.
+    </p>
+
+    <section class="offline-section" id="offline-storage-section">
+      <h2>Память устройства</h2>
+      <p id="offline-storage" class="offline-muted">Определяем доступное место…</p>
+    </section>
+
+    <section class="offline-section" id="offline-whole-section">
+      <h2>Всё собрание</h2>
+      <p id="offline-whole-info" class="offline-muted">Считаем размер…</p>
+      <p>
+        <button type="button" id="offline-whole-btn" class="offline-btn offline-btn-primary" disabled>
+          Сохранить весь сайт
+        </button>
+      </p>
+      <div id="offline-progress" class="offline-progress" hidden>
+        <div class="offline-progress-track"><div id="offline-progress-bar" class="offline-progress-bar"></div></div>
+        <p id="offline-progress-text" class="offline-progress-text"></p>
+      </div>
+      <p id="offline-status" class="offline-status" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="offline-section" id="offline-sections-section">
+      <h2>Отдельные разделы</h2>
+      <p class="offline-muted">Если целиком не помещается — сохраните только нужные разделы.
+      Сохранённый раздел отмечен кнопкой «✓ Сохранено» — нажмите её, чтобы удалить раздел.</p>
+      <ul id="offline-sections-list" class="offline-list"></ul>
+      <p id="offline-clear-block" hidden>
+        <button type="button" id="offline-clear-btn" class="offline-btn">Удалить всё сохранённое</button>
+      </p>
+    </section>
+
+    <section class="offline-section" id="offline-doc-section">
+      <h2>Отдельные тексты</h2>
+      <p class="offline-muted">Любой текст можно сохранить со своей страницы — кнопкой
+      «Скачать для офлайн-чтения» под текстом.</p>
+    </section>
+
+    <p class="offline-muted offline-note">Сохранение продолжается в фоне, даже если
+    закрыть эту страницу. Откройте эту страницу один раз при подключении после
+    добавления приложения на главный экран: у приложения отдельное хранилище от
+    Safari. Браузер может освободить сохранённое при нехватке памяти —
+    тогда его нужно будет скачать заново.</p>
+  </article>
+</main>
+
+<footer>
+  <p>© 2001-2026 · <a href="mailto:idixx@yandex.ru">Русская апокрифическая студия</a> · <a href="/about.html">О студии</a></p>
+</footer>
+
+</div>
+
+</BODY>
+
+</HTML>

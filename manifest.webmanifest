@@ -1,0 +1,19 @@
+{
+  "name": "Русская Апокрифическая Студия",
+  "short_name": "Иксойе",
+  "description": "Раннехристианские и апокрифические тексты на русском языке — чтение онлайн и офлайн.",
+  "lang": "ru",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#E7EBCB",
+  "theme_color": "#E7EBCB",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
