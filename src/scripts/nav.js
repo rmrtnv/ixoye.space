@@ -75,14 +75,41 @@
   }
 
   function syncSizeButtons(v) {
-    var btns = document.querySelectorAll(".nav-text-size-btn");
+    var btns = document.querySelectorAll(".nav-text-size-btn[data-text-size]");
     for (var i = 0; i < btns.length; i++) {
       var dir = parseInt(btns[i].getAttribute("data-text-size"), 10) || 1;
       btns[i].disabled = stepSize(v, dir) < SIZE_MIN || stepSize(v, dir) > SIZE_MAX;
     }
   }
 
-  // Pressing a size button must not dismiss the dropdown: the user usually
+  // ---------------------------------------------------------------------------
+  // font family (sans default, serif opt-in)
+  // ---------------------------------------------------------------------------
+
+  // Default is the sans stack (main.css --font-main); `font-serif` on <html>
+  // switches to the serif stack. Persisted per reader like the text size.
+  var FONT_KEY = "ixoye-font-serif";
+
+  function readSerif() {
+    try { return localStorage.getItem(FONT_KEY) === "1"; } catch (e) { return false; }
+  }
+
+  function applySerif(on) {
+    var root = document.documentElement;
+    if (on) root.classList.add("font-serif");
+    else root.classList.remove("font-serif");
+    var toggles = document.querySelectorAll(".nav-font-toggle");
+    for (var i = 0; i < toggles.length; i++) {
+      toggles[i].setAttribute("aria-pressed", on ? "true" : "false");
+    }
+  }
+
+  function writeSerif(on) {
+    try { localStorage.setItem(FONT_KEY, on ? "1" : "0"); } catch (e) { /* unavailable */ }
+    applySerif(on);
+  }
+
+  // Pressing a text control must not dismiss the dropdown: the user usually
   // taps +/− several times in a row to land on a comfortable size.
   document.addEventListener("click", function (e) {
     var btn = e.target && e.target.closest
@@ -90,6 +117,10 @@
       : null;
     if (btn) {
       e.preventDefault();
+      if (btn.hasAttribute("data-font-toggle")) {
+        writeSerif(!readSerif());
+        return; // keep the menu open; stop the outside-click handler
+      }
       var dir = parseInt(btn.getAttribute("data-text-size"), 10) || 1;
       var next = stepSize(readSize(), dir);
       if (next >= SIZE_MIN && next <= SIZE_MAX) writeSize(next);
@@ -108,13 +139,17 @@
   var currentSize = readSize();
   document.documentElement.style.setProperty("--text-scale", String(currentSize));
   syncSizeButtons(currentSize);
+  applySerif(readSerif());
 
-  // Another tab changed the setting — stay in sync.
+  // Another tab changed a setting — stay in sync.
   window.addEventListener("storage", function (e) {
-    if (e.key !== SIZE_KEY) return;
-    var v = readSize();
-    document.documentElement.style.setProperty("--text-scale", String(v));
-    syncSizeButtons(v);
+    if (e.key === SIZE_KEY) {
+      var v = readSize();
+      document.documentElement.style.setProperty("--text-scale", String(v));
+      syncSizeButtons(v);
+    } else if (e.key === FONT_KEY) {
+      applySerif(readSerif());
+    }
   });
 
   // ---------------------------------------------------------------------------
@@ -133,11 +168,37 @@
   // Autofocus the search field when its dropdown opens.
   document.addEventListener("toggle", function (e) {
     var d = e.target;
-    if (!d.matches || !d.matches("details.nav-search")) return;
-    if (!d.open) return;
-    var input = d.querySelector("input[type='search']");
-    if (input) setTimeout(function () { input.focus(); }, 0);
+    if (!d.matches) return;
+    if (d.matches("details.nav-search")) {
+      if (!d.open) return;
+      var input = d.querySelector("input[type='search']");
+      if (input) setTimeout(function () { input.focus(); }, 0);
+      return;
+    }
+    // Menu dropdown: when its content does not fit the viewport height,
+    // flow it into two columns instead of clipping (see .cols-2).
+    if (d.matches("details.nav-menu") && d.open) {
+      setTimeout(function () { fitMenuColumns(d); }, 0);
+    }
   }, true);
+
+  // Re-evaluate columns when the viewport changes while the menu is open.
+  window.addEventListener("resize", function () {
+    var menus = document.querySelectorAll("details.nav-menu[open]");
+    for (var i = 0; i < menus.length; i++) fitMenuColumns(menus[i]);
+  });
+
+  function fitMenuColumns(menu) {
+    var list = menu.querySelector(".nav-drop-list");
+    if (!list) return;
+    list.classList.remove("cols-2");
+    try {
+      var limit = window.innerHeight * 0.9;
+      if (list.scrollHeight > limit && window.innerHeight > 0) {
+        list.classList.add("cols-2");
+      }
+    } catch (e) { /* measuring unavailable */ }
+  }
 
   // Keep Escape / outside-click from leaving a stale box open on back-forward.
   window.addEventListener("pageshow", closeAll);
@@ -438,6 +499,34 @@
 
   // Re-apply once layout is settled (images etc.) — same position, no jump.
   window.addEventListener("load", restoreIfCurrent);
+
+  // ---------------------------------------------------------------------------
+  // hide the bar on scroll down, show on scroll up
+  // ---------------------------------------------------------------------------
+  // The sticky header slides out of view while reading down and returns on
+  // the first upward motion. Skipped while a dropdown is open (it would hide
+  // the open menu) and while a scroll restore is mid-flight.
+  (function hideOnScroll() {
+    var header = document.querySelector(".site-header");
+    if (!header) return;
+    var lastY = scrollTop();
+    var HIDE_AFTER = 140;
+    var DELTA = 5;
+    var ticking = false;
+    function update() {
+      ticking = false;
+      if (restoring) { lastY = scrollTop(); return; }
+      var y = scrollTop();
+      var dy = y - lastY;
+      lastY = y;
+      if (document.querySelector(OPEN)) { header.classList.remove("nav-hidden"); return; }
+      if (dy > DELTA && y > HIDE_AFTER) header.classList.add("nav-hidden");
+      else if (dy < -DELTA || y <= HIDE_AFTER) header.classList.remove("nav-hidden");
+    }
+    window.addEventListener("scroll", function () {
+      if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
+    }, { passive: true });
+  })();
 
   // ---------------------------------------------------------------------------
   // offline reading

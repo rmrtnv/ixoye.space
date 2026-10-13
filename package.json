@@ -13,7 +13,8 @@
     "sitemap": "node scripts/generate-sitemap.mjs --write",
     "search-index": "node scripts/generate-search-index.mjs --write",
     "offline-manifest": "node scripts/generate-offline-manifest.mjs --write",
-    "maintenance": "npm run check-links && npm run nav && npm run sitemap && npm run search-index && npm run offline-manifest"
+    "version-assets": "node scripts/version-assets.mjs --write",
+    "maintenance": "npm run check-links && npm run nav && npm run version-assets && npm run sitemap && npm run search-index && npm run offline-manifest"
   },
   "keywords": [
     "apocrypha",

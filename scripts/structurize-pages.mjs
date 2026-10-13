@@ -69,15 +69,14 @@ const SIZE_MIN = 0.8;
 const SIZE_MAX = 1.6;
 const SIZE_BOOTSTRAP = `<script>(function(){try{var v=parseFloat(localStorage.getItem("${SIZE_KEY}"));if(isFinite(v)&&v>=${SIZE_MIN}&&v<=${SIZE_MAX})document.documentElement.style.setProperty("--text-scale",String(v));}catch(e){}})();</script>`;
 
-// Text-size control — the last item of the mobile hamburger dropdown.
-// The label makes the purpose explicit ("Размер текста") and the two buttons
-// form a single-decrease / single-increase pair: minus on the left, plus on the
-// right. Real <button> elements with aria-labels, so they are keyboard- and
-// screen-reader reachable. nav.js keeps the menu open when either is pressed.
+// Text controls — the last item of the mobile hamburger dropdown: decrease,
+// font-family toggle, increase in one row (no label, so it fits one line).
+// Real <button> elements with aria-labels, so they are keyboard- and
+// screen-reader reachable. nav.js keeps the menu open when any is pressed.
 const TEXT_SIZE_ITEM = `        <li class="nav-text-size">
-          <span class="nav-text-size-label">Размер текста</span>
           <span class="nav-text-size-controls">
             <button type="button" class="nav-text-size-btn nav-text-size-dec" data-text-size="-1" aria-label="Уменьшить размер текста" title="Уменьшить текст"><span class="nav-text-size-a nav-text-size-a-sm" aria-hidden="true">A</span><span class="nav-text-size-sign" aria-hidden="true">&minus;</span></button>
+            <button type="button" class="nav-text-size-btn nav-font-toggle" data-font-toggle="1" aria-label="Переключить шрифт: с засечками / без засечек" title="Переключить шрифт" aria-pressed="false"><span class="font-toggle-glyph" aria-hidden="true">Аа</span></button>
             <button type="button" class="nav-text-size-btn nav-text-size-inc" data-text-size="1" aria-label="Увеличить размер текста" title="Увеличить текст"><span class="nav-text-size-a nav-text-size-a-lg" aria-hidden="true">A</span><span class="nav-text-size-sign" aria-hidden="true">+</span></button>
           </span>
         </li>`;
@@ -111,7 +110,6 @@ function renderHeader({ activeDir = "", currentHref = "", currentTitle = "", doc
     .join("\n");
 
   return `<header class="site-header">
-  <p class="site-title"><a href="/">Русская апокрифическая студия</a></p>
   <nav class="site-nav" aria-label="Разделы сайта">
     <ul class="site-nav-list">
 ${sectionItems}

@@ -199,6 +199,16 @@ function matchAny(req) {
     return Promise.resolve(null);
   }
   var candidates = aliasUrls(href);
+  // Versioned asset URLs (main.css?v=<hash>) share one canonical entry so
+  // cache-busting queries neither fragment the cache nor miss the precache.
+  try {
+    var u = new URL(href);
+    if (u.search && SHELL_PATHS[u.pathname]) {
+      var canon = new URL(u.href);
+      canon.search = "";
+      if (canon.href !== href) candidates.push(canon.href);
+    }
+  } catch (e) { /* keep aliases only */ }
   return caches.keys().then(function (keys) {
     var names = keys.filter(isOurs).sort(function (a, b) {
       return cachePriority(a) - cachePriority(b);
@@ -335,8 +345,11 @@ self.addEventListener("fetch", function (event) {
           if (keep) {
             // Shell files heal the shell cache (repairs failed precaches and
             // evictions); everything else goes to the opportunistic cache.
+            // Versioned shell URLs are stored under the canonical (queryless)
+            // key so ?v= hashes never fragment the cache.
             var target = SHELL_PATHS[url.pathname] ? SHELL_CACHE : DATA_CACHE;
-            caches.open(target).then(function (c) { return c.put(req, copy).catch(function () {}); }).catch(function () {});
+            var putKey = (url.search && SHELL_PATHS[url.pathname]) ? (url.origin + url.pathname) : req;
+            caches.open(target).then(function (c) { return c.put(putKey, copy).catch(function () {}); }).catch(function () {});
           }
           return res;
         }
