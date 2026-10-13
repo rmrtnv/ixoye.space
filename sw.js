@@ -36,7 +36,7 @@
  */
 "use strict";
 
-var VERSION = "6";
+var VERSION = "7";
 var SHELL_CACHE = "ixoye-shell-v" + VERSION;
 var DATA_CACHE = "ixoye-offline-data-v" + VERSION;
 // The group registry lives in its own stable cache (not the versioned shell
@@ -199,16 +199,11 @@ function matchAny(req) {
     return Promise.resolve(null);
   }
   var candidates = aliasUrls(href);
-  // Versioned asset URLs (main.css?v=<hash>) share one canonical entry so
-  // cache-busting queries neither fragment the cache nor miss the precache.
-  try {
-    var u = new URL(href);
-    if (u.search && SHELL_PATHS[u.pathname]) {
-      var canon = new URL(u.href);
-      canon.search = "";
-      if (canon.href !== href) candidates.push(canon.href);
-    }
-  } catch (e) { /* keep aliases only */ }
+  // NOTE: no query-stripping here. Versioned asset URLs (main.css?v=<hash>)
+  // must miss when the hash is new — mapping them to a canonical queryless
+  // key served stale CSS forever and defeated cache-busting (iOS PWA kept
+  // the old look across updates). Stale canonical entries are only a last
+  // resort when offline (see fetchStaleFallback below).
   return caches.keys().then(function (keys) {
     var names = keys.filter(isOurs).sort(function (a, b) {
       return cachePriority(a) - cachePriority(b);
@@ -345,11 +340,10 @@ self.addEventListener("fetch", function (event) {
           if (keep) {
             // Shell files heal the shell cache (repairs failed precaches and
             // evictions); everything else goes to the opportunistic cache.
-            // Versioned shell URLs are stored under the canonical (queryless)
-            // key so ?v= hashes never fragment the cache.
+            // Stored under the exact key (?v= included): a new hash must miss
+            // and hit the network, otherwise updates never refresh styling.
             var target = SHELL_PATHS[url.pathname] ? SHELL_CACHE : DATA_CACHE;
-            var putKey = (url.search && SHELL_PATHS[url.pathname]) ? (url.origin + url.pathname) : req;
-            caches.open(target).then(function (c) { return c.put(putKey, copy).catch(function () {}); }).catch(function () {});
+            caches.open(target).then(function (c) { return c.put(req, copy).catch(function () {}); }).catch(function () {});
           }
           return res;
         }
@@ -358,11 +352,35 @@ self.addEventListener("fetch", function (event) {
         return res;
       }).catch(function () {
         if (req.mode === "navigate") return offlineFallback();
-        return new Response("", { status: 504, statusText: "Offline" });
+        // Offline and the exact (possibly ?v=) URL was never cached: serve a
+        // stale same-path entry if there is one (better than unstyled),
+        // else a bare offline status.
+        return fetchStaleFallback(req).then(function (stale) {
+          if (stale) return stale;
+          return new Response("", { status: 504, statusText: "Offline" });
+        });
       });
     })
   );
 });
+
+/** Last-resort offline: same-path cache entry ignoring the query string. */
+function fetchStaleFallback(req) {
+  var href;
+  try { href = req instanceof Request ? req.url : String(req.url || req); } catch (e) {
+    return Promise.resolve(null);
+  }
+  try {
+    var u = new URL(href);
+    if (!u.search || !SHELL_PATHS[u.pathname]) return Promise.resolve(null);
+    var canon = new URL(u.href);
+    canon.search = "";
+    if (canon.href === href) return Promise.resolve(null);
+    return matchAny(canon.href);
+  } catch (e) {
+    return Promise.resolve(null);
+  }
+}
 
 /** The offline landing page, or a plain notice if it was never cached. */
 function offlineFallback() {
