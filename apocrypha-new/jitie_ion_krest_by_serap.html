@@ -7,7 +7,7 @@
 <TITLE> Житие Иоанна Крестителя, написанное Серапионом - Новозаветные апокрифы - Русская Апокрифическая Студия</TITLE>
 <meta name="Description" content="Житие Иоанна Крестителя, написанное Серапионом">
 <meta name="Keywords" content="Житие Иоанна Крестителя, написанное Серапионом">
-<LINK REL=STYLESHEET HREF="/src/styles/main.css?v=b13c63bd" TYPE="text/css">
+<LINK REL=STYLESHEET HREF="/src/styles/main.css?v=3de8bfb9" TYPE="text/css">
 
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/favicon.svg">
@@ -20,7 +20,7 @@
 <meta property="og:url" content="https://ixoye.space/apocrypha-new/jitie_ion_krest_by_serap.html">
 <meta name="twitter:card" content="summary">
 <script src="/src/scripts/offline-core.js?v=85a0ae59" defer></script>
-<script src="/src/scripts/nav.js?v=3344cc75" defer></script>
+<script src="/src/scripts/nav.js?v=e9bc284c" defer></script>
 <script>(function(){try{var v=parseFloat(localStorage.getItem("ixoye-text-size"));if(isFinite(v)&&v>=0.8&&v<=1.6)document.documentElement.style.setProperty("--text-scale",String(v));}catch(e){}})();</script>
 <link rel="manifest" href="/manifest.webmanifest">
 <meta name="mobile-web-app-capable" content="yes">
@@ -51,7 +51,14 @@
     </ul>
 
     <div class="nav-bar" role="group" aria-label="Навигация">
-      <button type="button" class="nav-ico nav-back" aria-label="Назад" title="Назад"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <details class="nav-drop nav-search">
+        <summary class="nav-ico" aria-label="Поиск" title="Поиск"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></summary>
+        <form class="nav-search-form" action="/poisk.html" method="get" role="search">
+          <input type="search" name="q" placeholder="Поиск по сайту…" aria-label="Поиск по сайту" enterkeyhint="search" autocomplete="off">
+        </form>
+      </details>
+
+      <button type="button" class="nav-ico nav-back" aria-label="На уровень выше" title="На уровень выше" data-up="/apocrypha-new/index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
 
       <details class="nav-drop nav-menu">
         <summary class="nav-ico" aria-label="Разделы сайта" title="Разделы"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary>
@@ -78,151 +85,9 @@
         </ul>
       </details>
 
-      <select class="nav-text" aria-label="Текущий текст" title="Выбор текста">
-          <option value="/apocrypha-new/index.html">Новозаветные апокрифы</option>
-          <option value="/apocrypha-new/agrapha.html">Аграфы</option>
-          <option value="/apocrypha-new/ev-evion.html">Евангелие от евионитов</option>
-          <option value="/apocrypha-new/ev-evr.html">Евангелие от евреев</option>
-          <option value="/apocrypha-new/ev-eva.html">Евангелие Евы</option>
-          <option value="/apocrypha-new/ev-egipt.html">Евангелие от Египтян (уцелевшие цитаты)</option>
-          <option value="/apocrypha-new/ev-mar.html">Евангелие от Марии</option>
-          <option value="/apocrypha-new/ev-nikodim.html">Евангелие от Никодима</option>
-          <option value="/apocrypha-new/ev-petr.html">Евангелие от Петра</option>
-          <option value="/apocrypha-new/ev-phil.html">Евангелие от Филиппа</option>
-          <option value="/apocrypha-new/papirus1.html">Папирус из Оксиринха</option>
-          <option value="/apocrypha-new/papirus2.html">Папирус Эджертона</option>
-          <option value="/apocrypha-new/ev_secret_mark.html">Послание Климента Александрийского Феодору</option>
-          <option value="/apocrypha-new/berlin_strasb_ap.html">Берлинско-Страсбургкий апокриф</option>
-          <option value="/apocrypha-new/gostepriim_dismas.html">Гостеприимство Дисмаса</option>
-          <option value="/apocrypha-new/jizn_ioanna_krest.html">Жизнь и мученичество Иоанна Крестителя</option>
-          <option value="/apocrypha-new/jitie_ion_krest_by_serap.html" selected>Житие Иоанна Крестителя, написанное Серапионом</option>
-          <option value="/apocrypha-new/otkrov_volhvov.html">Откровение волхвов</option>
-          <option value="/apocrypha-new/papir_iz_oksir_5072.html">Папирус из Оксиринха 5072</option>
-          <option value="/apocrypha-new/pohvala_ioannu.html">Похвала Иоанну Крестителю</option>
-          <option value="/apocrypha-new/pohval_marii_magdal.html">Похвальное слово Марии Магдалине</option>
-          <option value="/apocrypha-new/rech_spasitelya_i_tanec.shtml">Речь Спасителя и танец Спасителя</option>
-          <option value="/apocrypha-new/skaz_o_30_serebr.shtml">Сказание о тридцати серебряниках- Новозаветные апокрифы</option>
-          <option value="/apocrypha-new/smert_iudi.html">Смерть Иуды по Папию</option>
-          <option value="/apocrypha-new/jitie_iudi.shtml">Житие Иуды</option>
-          <option value="/apocrypha-new/jitie_Marii_Magdalini.html">Житие Марии Магдалины</option>
-          <option value="/apocrypha-new/istoriya_Iosifa_Arimafeiskogo.html">История Иосифа Аримафейского</option>
-          <option value="/apocrypha-new/iscelenie_Tiberiya.html">Исцеление Тиберия</option>
-          <option value="/apocrypha-new/kniga_Varfolomeya.html">Книга Варфоломея</option>
-          <option value="/apocrypha-new/nepodchinenie_Dimasa.html">Неподчинение Димаса</option>
-          <option value="/apocrypha-new/poklonenie_volhvov.html">Поклонение волхвов</option>
-          <option value="/apocrypha-new/propoved_o_jizni_Iisusa_i_ego_lubvi_k_aposto.html">Проповедь о жизни Иисуса и его любви к апостолам</option>
-          <option value="/apocrypha-new/skazanie_o_svyachshennom_krestnom_dreve.html">Сказание о священном крестном древе</option>
-          <option value="/apocrypha-new/ev-arab.html">Арабское евангелие детства Спасителя</option>
-          <option value="/apocrypha-new/ev-fom.html">Евангелие детства от Фомы</option>
-          <option value="/apocrypha-new/ev-iakov.html">Протоевангелие от Иакова</option>
-          <option value="/apocrypha-new/ev-psmatf.html">Евангелие от псевдо-Матфея</option>
-          <option value="/apocrypha-new/arm_varfol.html">Армянское сказание об апостоле Ворфоломее</option>
-          <option value="/apocrypha-new/acts_andrey-and-matafia.html">Деяния Андрея и Матафии</option>
-          <option value="/apocrypha-new/act_bartolomey.html">Страсти апостола Ворфоломея</option>
-          <option value="/apocrypha-new/acts_petr-andrey.html">Деяния апостолов Петра и Андрея</option>
-          <option value="/apocrypha-new/act_john.html">Деяния Иоанна</option>
-          <option value="/apocrypha-new/act_joann_prohor.html">Деяния святого апостола и евангелиста Иоанна Богослова, написанные Прохором, учеником его</option>
-          <option value="/apocrypha-new/act_matafia.html">Деяния и мученичество апостола Матафии</option>
-          <option value="/apocrypha-new/act_pavel.html">Деяния Павла</option>
-          <option value="/apocrypha-new/fekla.html">Деяния Павла и Феклы</option>
-          <option value="/apocrypha-new/acts_faddey2.html">Деяния святого апостола Фаддея, одного из двенадцати</option>
-          <option value="/apocrypha-new/act_philip.html">Деяния Филиппа</option>
-          <option value="/apocrypha-new/acts_foma.html">Деяния Иуды Фомы апостола</option>
-          <option value="/apocrypha-new/gimn.html">Песнь о Жемчужине</option>
-          <option value="/apocrypha-new/gimn2.html">Песнь о Невесте</option>
-          <option value="/apocrypha-new/foma-6.html">Деяние шестое</option>
-          <option value="/apocrypha-new/m_pavel.html">Мученичество св. апостола Павла</option>
-          <option value="/apocrypha-new/acts_andrey1.html">Мученичество святого и преславного первоапостола Андрея</option>
-          <option value="/apocrypha-new/acts_faddey1.html">Отрывок из &quot;Церковной истории&quot; Евсевия Кесарийского о деяниях Фаддея</option>
-          <option value="/apocrypha-new/petropavel1.html">Страсти апостолов Петра и Павла (малые)</option>
-          <option value="/apocrypha-new/petropavel2.html">Страсти апостолов Петра и Павла (большие)</option>
-          <option value="/apocrypha-new/kifa.html">Учение Симона Кифы в Риме городе</option>
-          <option value="/apocrypha-new/iohan.html">О кончине святого Иоханнана, апостола и евангелиста</option>
-          <option value="/apocrypha-new/fragm-arhel.html">Фрагмент &quot;Деяния Архелая&quot;</option>
-          <option value="/apocrypha-new/acts_varnava.html">Деяния Варнавы</option>
-          <option value="/apocrypha-new/acts_cornilii_sot.html">Деяния Корнилия сотника</option>
-          <option value="/apocrypha-new/acts_timofei.html">Деяния Тимофея</option>
-          <option value="/apocrypha-new/acts_tit.html">Деяния Тита</option>
-          <option value="/apocrypha-new/jitie_svyat_jen.html">Житие святых жён Ксантиппы, Поликсены и Ревекки</option>
-          <option value="/apocrypha-new/iohan_i_razb.html">Иоанн и разбойник</option>
-          <option value="/apocrypha-new/ist_sim_kif.html">История Симона Кифы, первоверховного апостола</option>
-          <option value="/apocrypha-new/deyaniya_petra_v_ashdode.html">Деяния Петра в Ашдоде</option>
-          <option value="/apocrypha-new/deyaniya_fomi_i_ego_chudotvornaya_koja.html">Деяния Фомы и его чудотворная кожа</option>
-          <option value="/apocrypha-new/nastavlenie_petra.html">Наставление Петра</option>
-          <option value="/apocrypha-new/stranstviya_petra.shtml">Странствия Петра</option>
-          <option value="/apocrypha-new/kliment-to-devstv1.html">Первое послание Климента Епископа римского к девственникам</option>
-          <option value="/apocrypha-new/kliment-to-devstv2.html">Второе послание Климента Епископа римского к девственникам</option>
-          <option value="/apocrypha-new/kliment-to-korinf1.html">Первое послание Климента Епископа римского к Коринфянам</option>
-          <option value="/apocrypha-new/kliment-to-korinf2.html">Второе послание Климента Епископа римского к Коринфянам</option>
-          <option value="/apocrypha-new/let_varnav.html">Послание апостола Варнавы</option>
-          <option value="/apocrypha-new/petr-to-iakov.html">Послание апостола Петра к апостолу Иакову</option>
-          <option value="/apocrypha-new/posl_12_apost.html">Послание двенадцати Апостолов</option>
-          <option value="/apocrypha-new/let-laod.html">Послание к Лаодикийцам</option>
-          <option value="/apocrypha-new/kliment-to-iakov.html">Послание Климента Епископа римского к апостолу Иакову</option>
-          <option value="/apocrypha-new/pavel-to-corinf3.html">Третье послание апостола Павла к Коринфянам</option>
-          <option value="/apocrypha-new/dionisii-to-dorofei.html">Послание Дионисия Ареопагита к Дорофею</option>
-          <option value="/apocrypha-new/dionisii-to-ioann.html">Послание Дионисия Ареопагита к Иоанну Богослову</option>
-          <option value="/apocrypha-new/dionisii-to-polikarp.html">Послание Дионисия Ареопагита к Поликарпу</option>
-          <option value="/apocrypha-new/dionisii-to-sosipatr.html">Послание Дионисия Ареопагита к Сосипатру</option>
-          <option value="/apocrypha-new/dionisii-to-timofei.html">Послание Дионисия Ареопагита к Тимофею</option>
-          <option value="/apocrypha-new/dionisii-to-tit.html">Послание Дионисия Ареопагита к Титу</option>
-          <option value="/apocrypha-new/dionisii-to-ferapevt.html">Послания Дионисия Ареопагита к Гаю Ферапевту</option>
-          <option value="/apocrypha-new/poslan_psevdo_di.html">Послание псевдо-Дионисия Ареопагита к Тимофею о смерти апостолов Петра и Павла</option>
-          <option value="/apocrypha-new/ap-petr.html">Апокалипсис от Петра</option>
-          <option value="/apocrypha-new/ap-petr2.html">Апокалипсис Петра (эфиопская версия)</option>
-          <option value="/apocrypha-new/ap_pavel.html">Откровение Павла</option>
-          <option value="/apocrypha-new/ap-ioann.html">Откровение Иоанна Богослова [апокрифическое]</option>
-          <option value="/apocrypha-new/hozden.html">Откровение пресвятой Богородицы (Хождение Богородицы по мукам)</option>
-          <option value="/apocrypha-new/otkrov_ioanna_ob_antichriste.html">Откровение Иоанна Богослова об Антихристе</option>
-          <option value="/apocrypha-new/tiburt_sivil.html">Тибуртинская Сивилла</option>
-          <option value="/apocrypha-new/apost-postanovl.html">Апостольские постановления</option>
-          <option value="/apocrypha-new/didache.html">Дидахе (Учение двенадцати апостолов)</option>
-          <option value="/apocrypha-new/germa.html">Пастырь Гермы</option>
-          <option value="/apocrypha-new/pravila_apost.html">Церковные правила святых апостолов</option>
-          <option value="/apocrypha-new/in_patn_lasar.html">В пятницу цветной недели слово святых апостолов от Адама в аду к Лазарю</option>
-          <option value="/apocrypha-new/slovo_zlatoust.html">В субботу цветную слово святого Иоанна Златоуста о воскресении друга христова Лазаря</option>
-          <option value="/apocrypha-new/galeno_hipp.html">Галеново на Гиппократа</option>
-          <option value="/apocrypha-new/gomilia_michail.html">Гомилия об архангеле Михаиле</option>
-          <option value="/apocrypha-new/grigor_magistr_otvet.html">Григория Магистра ответ на послание сирийского католикоса</option>
-          <option value="/apocrypha-new/ev_matf2.html">Евангелие от Матфея искреннего</option>
-          <option value="/apocrypha-new/tri_svatitel.html">Из &quot;Беседы трех святителей&quot;</option>
-          <option value="/apocrypha-new/iosif-plotnik.html">Книга Иосифа Плотника</option>
-          <option value="/apocrypha-new/priest-ih.html">О священстве Иисуса Христа</option>
-          <option value="/apocrypha-new/soshestv.html">О сошествии Иоанна Предтечи во ад</option>
-          <option value="/apocrypha-new/pilat1.html">Обращение Пилата</option>
-          <option value="/apocrypha-new/pavel_seneka.html">Переписка апостола Павла с Сенекой</option>
-          <option value="/apocrypha-new/prokula-to-silvii.html">Письмо Клавдии Прокулы к Фульвии</option>
-          <option value="/apocrypha-new/lentul-to-senat.html">Письмо Лентула сенату и Римскому народу</option>
-          <option value="/apocrypha-new/posl_pilata.html">Послание Пилата к Тиверию Кесарю</option>
-          <option value="/apocrypha-new/prenie.html">Прение Господне с диаволом</option>
-          <option value="/apocrypha-new/otvet_tiveriy_pilatu.html">Ответ Тиверия Кесаря Пилату Понтийскому и в ответ воеводе Рахааву и с ним воинам числом две тысячи</option>
-          <option value="/apocrypha-new/12_patnic.html">Сказание о двенадцати пятницах</option>
-          <option value="/apocrypha-new/krestnoe_derevo.html">Слово о крестном древе</option>
-          <option value="/apocrypha-new/krestitel_vo_ad.html">Слово о сошествии Иоанна Крестителя во Ад</option>
-          <option value="/apocrypha-new/osud_marfa_pilat.html">Слово о том, как осудила Марфа Пилата перед Кесарем царем</option>
-          <option value="/apocrypha-new/pilat2.html">Смерть Пилата</option>
-          <option value="/apocrypha-new/afroditian.html">Сказание Афродитиана о чуде, бывшем в персидской земле</option>
-          <option value="/apocrypha-new/bogomil.html">Тайная книга Богомилов</option>
-          <option value="/apocrypha-new/andr_yurodiv.html">Житие Андрея Юродивого</option>
-          <option value="/apocrypha-new/agapi1.html">Житие и подвиги преподобного отца нашего Агапия Чудотворца</option>
-          <option value="/apocrypha-new/nikita.html">Житие святого мученика Никиты</option>
-          <option value="/apocrypha-new/fedor_tiron.html">Житие святого Федора Тирона</option>
-          <option value="/apocrypha-new/isrechen_egip.html">Изречения Египетских отцов</option>
-          <option value="/apocrypha-new/kliment_orhid.html">Краткое житие Климента Охридского</option>
-          <option value="/apocrypha-new/skazan_makarii.html">Сказание о Макарии Римском</option>
-          <option value="/apocrypha-new/kanon_muratory.html">Канон Мypатоpи</option>
-          <option value="/apocrypha-new/iisus_avgar.html">Папирусы и эпиграфии о переписке Христа с царем Авгаром</option>
-          <option value="/apocrypha-new/edes_chronika.html">Эдесская хроника</option>
-      </select>
+      <button type="button" class="nav-ico nav-forward" aria-label="Вперёд" title="Вперёд" data-next="/apocrypha-new/otkrov_volhvov.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
 
-      <details class="nav-drop nav-search">
-        <summary class="nav-ico" aria-label="Поиск" title="Поиск"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></summary>
-        <form class="nav-search-form" action="/poisk.html" method="get" role="search">
-          <input type="search" name="q" placeholder="Поиск по сайту…" aria-label="Поиск по сайту" enterkeyhint="search" autocomplete="off">
-        </form>
-      </details>
-
-      <button type="button" class="nav-ico nav-forward" aria-label="Вперёд" title="Вперёд"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+      <a class="nav-ico nav-fav" href="/fav.html" aria-label="Избранное" title="Избранное"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5C7 16.5 3.5 13.3 3.5 9.6 3.5 7 5.5 5 8 5c1.6 0 3.1.8 4 2.1C12.9 5.8 14.4 5 16 5c2.5 0 4.5 2 4.5 4.6 0 3.7-3.5 6.9-8.5 10.9z"/></svg></a>
     </div>
   </nav>
 </header>
@@ -330,7 +195,8 @@
   </article>
 </main>
 <nav class="next-text" aria-label="Читать далее">
-  <a href="/apocrypha-new/otkrov_volhvov.html">Далее: Откровение волхвов →</a>
+  <a class="next-text-prev" href="/apocrypha-new/jizn_ioanna_krest.html">← Жизнь и мученичество Иоанна Крестителя</a>
+  <a class="next-text-next" href="/apocrypha-new/otkrov_volhvov.html">Далее: Откровение волхвов →</a>
 </nav>
 <footer>
   <p>© 2001-2026 · <a href="mailto:idixx@yandex.ru">Русская апокрифическая студия</a> · <a href="/about.html">О студии</a></p>

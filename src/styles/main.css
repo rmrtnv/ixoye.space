@@ -263,12 +263,19 @@ hr {
   margin: var(--spacing-lg) 0;
 }
 
-/* "next text" link at the bottom of a text page, outside the searchable <main> */
+/* "previous / next text" links at the bottom of a text page, outside the searchable <main> */
 .next-text {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 var(--spacing-md) var(--spacing-lg);
-  text-align: right;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+}
+
+/* a lone next link stays on the right */
+.next-text-next:last-child {
+  margin-left: auto;
 }
 
 .next-text a {
@@ -450,7 +457,7 @@ hr {
 /* ==========================================================================
    Mobile top navigation
    Desktop shows the inline section list (.site-nav-list); phones swap in a
-   compact bar: back · menu · current-text picker · search · forward.
+   compact bar: search · back · menu · forward · favorites.
    ========================================================================== */
 
 .nav-ico svg {
@@ -473,15 +480,16 @@ hr {
 }
 
 /* ==========================================================================
-   Top navigation — one compact bar on every viewport:
-   back · menu · current-text picker · search · forward.
+   Top navigation — one compact, centered bar on every viewport:
+   search · back · menu · forward · favorites.
    ========================================================================== */
 
 .site-nav {
-  margin: var(--spacing-sm);
+  margin: var(--spacing-sm) auto;
   padding: 0;
+  width: fit-content;
   border-radius: 8px;
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 1);
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
   border-bottom: 1px solid var(--color-border);
@@ -519,31 +527,24 @@ hr {
   background-color: rgba(0, 0, 0, 0.07);
 }
 
-/* middle: current text picker */
-.nav-text {
-  flex: 1 1 auto;
-  min-width: 0;
-  height: 42px;
-  margin: 0 2px;
-  padding: 0 28px 0 10px;
-  font-family: var(--font-ui);
-  font-size: 0.95rem;
-  color: var(--color-text);
-  background-color: rgba(0, 0, 0, 0.04);
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  -webkit-appearance: none;
-  appearance: none;
-  text-overflow: ellipsis;
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 7px center;
-  background-size: 14px;
+/* grey, inert arrows: back with empty history, forward with no trail and no
+   next-text link (nav.js toggles the disabled attribute) */
+.nav-ico:disabled,
+.nav-ico:disabled:hover,
+.nav-ico:disabled:active {
+  opacity: 0.35;
+  cursor: default;
+  background: none;
 }
 
-/* dropdown panels */
+/* the favorites entry is a link styled as an icon button */
+a.nav-ico {
+  text-decoration: none;
+}
+
+/* dropdown panels: anchored to the bar and centered under it */
 .nav-drop {
-  position: relative;
+  position: static;
   flex: 0 0 auto;
 }
 
@@ -561,9 +562,11 @@ hr {
 .nav-search-form {
   position: absolute;
   top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 50;
   margin: 0;
-  background-color: var(--color-bg);
+  background-color: rgba(255, 255, 255, 1);
   border: 1px solid var(--color-border);
   border-radius: 10px;
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.22);
@@ -590,12 +593,7 @@ hr {
   break-inside: avoid;
 }
 
-.nav-menu > .nav-drop-list {
-  left: 0;
-}
-
 .nav-search > .nav-search-form {
-  right: 0;
   padding: 10px;
 }
 
@@ -729,11 +727,11 @@ hr {
 }
 
 /* ---------------------------------------------------------------------------
-   Offline reading
-   - .offline-save is the per-text control nav.js adds inside <article>;
-   - the rest styles the /offline.html management page.
+   Favorites
+   - .fav-save is the per-text control nav.js adds inside <article>;
+   - the rest styles the /offline.html management page and the /fav.html list.
    --------------------------------------------------------------------------- */
-.offline-save {
+.fav-save {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -745,7 +743,7 @@ hr {
   font-size: 0.95rem;
 }
 
-.offline-save-btn,
+.fav-save-btn,
 .offline-btn {
   font-family: var(--font-ui);
   font-size: 0.95rem;
@@ -758,15 +756,25 @@ hr {
   cursor: pointer;
 }
 
-.offline-save-btn:hover,
+.fav-save-btn:hover,
 .offline-btn:hover {
   background-color: rgba(0, 0, 0, 0.07);
 }
 
-.offline-save-btn:disabled,
+.fav-save-btn:disabled,
 .offline-btn:disabled {
   opacity: 0.45;
   cursor: default;
+}
+
+.fav-save-btn.fav-on {
+  background-color: rgba(63, 114, 68, 0.12);
+  border-color: rgba(63, 114, 68, 0.55);
+  color: #3a6a3f;
+}
+
+.fav-save-btn.fav-on:hover {
+  background-color: rgba(63, 114, 68, 0.2);
 }
 
 .offline-btn-primary {
@@ -797,7 +805,7 @@ hr {
   background-color: rgba(63, 114, 68, 0.12);
 }
 
-.offline-save-status {
+.fav-save-status {
   color: var(--color-text);
   opacity: 0.85;
 }

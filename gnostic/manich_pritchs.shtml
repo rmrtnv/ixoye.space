@@ -1,29 +1,34 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Манихейские притчи — в восстановлении — Русская Апокрифическая Студия</title>
-<meta name="robots" content="noindex">
-<link rel="stylesheet" href="/src/styles/main.css?v=b13c63bd">
+<HTML>
+<HEAD>
+<TITLE>Манихейские притчи - Гностицизм - Русская Апокрифическая Студия</TITLE>
+<meta name="Description" content="Манихейские притчи">
+<meta name="Keywords" content="Манихеи притчи">
+<LINK REL=STYLESHEET HREF="/src/styles/main.css?v=3de8bfb9" TYPE="text/css">
+
+
+
+
+
+<script>(function(){try{var v=parseFloat(localStorage.getItem("ixoye-text-size"));if(isFinite(v)&&v>=0.8&&v<=1.6)document.documentElement.style.setProperty("--text-scale",String(v));}catch(e){}})();</script>
+<script src="/src/scripts/offline-core.js?v=85a0ae59" defer></script>
+<script src="/src/scripts/nav.js?v=e9bc284c" defer></script>
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#E7EBCB">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/favicon.svg">
 <link rel="canonical" href="https://ixoye.space/gnostic/manich_pritchs.shtml">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Русская Апокрифическая Студия">
 <meta property="og:locale" content="ru_RU">
-<meta property="og:title" content="Манихейские притчи — в восстановлении — Русская Апокрифическая Студия">
-<meta property="og:description" content="Раннехристианские и апокрифические тексты на русском языке — Русская Апокрифическая Студия.">
+<meta property="og:title" content="Манихейские притчи - Гностицизм - Русская Апокрифическая Студия">
+<meta property="og:description" content="Манихейские притчи">
 <meta property="og:url" content="https://ixoye.space/gnostic/manich_pritchs.shtml">
 <meta name="twitter:card" content="summary">
-<script src="/src/scripts/offline-core.js?v=85a0ae59" defer></script>
-<script src="/src/scripts/nav.js?v=3344cc75" defer></script>
-<script>(function(){try{var v=parseFloat(localStorage.getItem("ixoye-text-size"));if(isFinite(v)&&v>=0.8&&v<=1.6)document.documentElement.style.setProperty("--text-scale",String(v));}catch(e){}})();</script>
-<link rel="manifest" href="/manifest.webmanifest">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="theme-color" content="#E7EBCB">
 </head>
 
 
@@ -48,7 +53,14 @@
     </ul>
 
     <div class="nav-bar" role="group" aria-label="Навигация">
-      <button type="button" class="nav-ico nav-back" aria-label="Назад" title="Назад"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <details class="nav-drop nav-search">
+        <summary class="nav-ico" aria-label="Поиск" title="Поиск"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></summary>
+        <form class="nav-search-form" action="/poisk.html" method="get" role="search">
+          <input type="search" name="q" placeholder="Поиск по сайту…" aria-label="Поиск по сайту" enterkeyhint="search" autocomplete="off">
+        </form>
+      </details>
+
+      <button type="button" class="nav-ico nav-back" aria-label="На уровень выше" title="На уровень выше" data-up="/gnostic/index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
 
       <details class="nav-drop nav-menu">
         <summary class="nav-ico" aria-label="Разделы сайта" title="Разделы"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary>
@@ -75,48 +87,9 @@
         </ul>
       </details>
 
-      <select class="nav-text" aria-label="Текущий текст" title="Выбор текста">
-          <option value="/gnostic/manich_pritchs.shtml" selected>Манихейские притчи</option>
-          <option value="/gnostic/index.html">Гностицизм</option>
-          <option value="/gnostic/gnost_lit.html">Гностическая литература</option>
-          <option value="/gnostic/mand_lit.html">Мандейские тексты</option>
-          <option value="/gnostic/manich_lit.html">Манихейские тексты</option>
-          <option value="/gnostic/about_pistis.html">Немного о Пистис Софии</option>
-          <option value="/gnostic/about-ev-iuda.shtml">О Евангелии Иуды (Искариота)</option>
-          <option value="/gnostic/b_petr1.html">Деяние Петра</option>
-          <option value="/gnostic/beseda_iisus.html">Беседа Иисуса с учениками</option>
-          <option value="/gnostic/cb_text1.html">Текст без названия</option>
-          <option value="/gnostic/comment_pistis.html">Примечания к Пистис Софии</option>
-          <option value="/gnostic/ev_maria_gnost.html">Евангелие от Марии</option>
-          <option value="/gnostic/ev-iuda.shtml">Евангелие Иуды (Искариота)</option>
-          <option value="/gnostic/gnost_molitva2.html">Вторая гностическая молитва без названия</option>
-          <option value="/gnostic/kniga-ieu1.html">Первая Книга Иеу</option>
-          <option value="/gnostic/kniga-ieu2.html">Вторая Книга Иеу</option>
-          <option value="/gnostic/komments-ieu1.html">Примечания к Первой Книге Иеу</option>
-          <option value="/gnostic/komments-ieu2.html">Примечания ко Второй Книге Иеу</option>
-          <option value="/gnostic/mol_iosif.html">Молитва Иосифа</option>
-          <option value="/gnostic/oda_solomon_c.html">Оды Соломона (полный вариант)</option>
-          <option value="/gnostic/oda_solomon.html">Оды Соломона</option>
-          <option value="/gnostic/pistis_book1.html">Первая Книга ПИСТИС СОФИИ</option>
-          <option value="/gnostic/pistis_book2.html">Вторая Книга ПИСТИС СОФИИ</option>
-          <option value="/gnostic/pistis_book3.html">Третья Книга ПИСТИС СОФИИ</option>
-          <option value="/gnostic/pistis_book4.html">Четвертая Книга ПИСТИС СОФИИ</option>
-          <option value="/gnostic/pistis1.html">Пистис Софии - главы 1-38</option>
-          <option value="/gnostic/pistis2.html">Пистис Софии - главы 60-63</option>
-          <option value="/gnostic/pistis3.html">Пистис Софии - глава 100</option>
-          <option value="/gnostic/pistis4.html">Пистис Софии - главы 111-113</option>
-          <option value="/gnostic/pistis5.html">Пистис Софии - выдержки из глав 131-133</option>
-          <option value="/gnostic/put_d.html">Фрагмент о путешествии души</option>
-      </select>
+      <button type="button" class="nav-ico nav-forward" aria-label="Вперёд" title="Вперёд" data-next="/gnostic/manich_psalom.shtml"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
 
-      <details class="nav-drop nav-search">
-        <summary class="nav-ico" aria-label="Поиск" title="Поиск"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></summary>
-        <form class="nav-search-form" action="/poisk.html" method="get" role="search">
-          <input type="search" name="q" placeholder="Поиск по сайту…" aria-label="Поиск по сайту" enterkeyhint="search" autocomplete="off">
-        </form>
-      </details>
-
-      <button type="button" class="nav-ico nav-forward" aria-label="Вперёд" title="Вперёд"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+      <a class="nav-ico nav-fav" href="/fav.html" aria-label="Избранное" title="Избранное"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5C7 16.5 3.5 13.3 3.5 9.6 3.5 7 5.5 5 8 5c1.6 0 3.1.8 4 2.1C12.9 5.8 14.4 5 16 5c2.5 0 4.5 2 4.5 4.6 0 3.7-3.5 6.9-8.5 10.9z"/></svg></a>
     </div>
   </nav>
 </header>
@@ -125,10 +98,144 @@
   <article class="content-block">
     <h1>Манихейские притчи</h1>
 
-<p>Текст «Манихейские притчи» входил в раздел, но его файл был утерян при архивации и пока недоступен. Мы работаем над восстановлением. Приносим извинения за неудобства.</p>
+<p>
+
+<hr>
+<p><h2>Притча о слушателях</h2>
+
+<p><TT>Манихейский текст на парфянском языке. Под "слушателями" подразумеваются
+последователи Мани, живущие в миру.</TT>
+
+<p>... И подобно разбойнику с дороги, который убил тех сыновей, так же
+и вы все, кто простирает свои руки против земли ... и вредят ей каждым
+способом... И всем вашим телом вы растаптываете и повреждаете землю...
+И вы предаете мученической смерти и плохо обращаетесь с этой живой Душой,
+из которой вы были рождены, и постоянно молитесь и плачьте из-за ваших
+рук, которые плохо обращаются с ней.
+
+<p>Вы слушатели, которые стоят обременённые большим количеством грехов
+и вины, вы нуждаетесь в прощении и благоволении от многих ваших грехов
+раз и навсегда. Поэтому выбирайте день за днем для соглашений (?) и прощений
+так, чтобы они ... могли принести благоволение на Вас.
+
+<p><TT>[отсутствует восемь строк]</TT>
+
+<p>Они (совершенные слушатели) походят на человека, который есть ... здоровый
+во всем своём теле и свободный от боли, и кто не имеет никакой боли или
+ничем не болеет.
+
+<p>Все же он иногда может немного повредить себе некоторые органы, и он
+встает беспокойно и поворачивается к этому (органу) снова и снова, и задается
+вопросом, когда же эта рана исцелится, так, чтобы его целое тело было хорошим
+и освободилось от боли.
+
+<p>И снова, они сопоставимы богатому человеку, который ... ничего ни у
+кого не заимствует. И однажды приходит необходимость, и он заимствует драхму
+у кого - то еще. После того, он постоянно думает, "Когда же я заплачу драхму
+моему кредитору согласно..." Подобно этому...
+<p><h2>Притча о земледельце</h2>
+
+<p>Манихейский текст на парфянском языке.
+
+
+<p>1. ... он собирает эту пшеницу, и он засыпает ее в сосуд, который
+<BR>2. забирает с собой. И он идет в свой дом, из которого прибыл,
+<BR>3. поскольку он выполнил задачу, для которой прибыл на поле, и
+<BR>4. потому что он прибыл все выжинать и собирать,
+<BR>5. и потому, что то, что он собирал уже сохранено в его сосуде...
+
+<p>1. "... Мы хотим получить ..., благословляем и сопровождаем его в благополучный
+путь".
+<BR>2. И это свидетельствует о том, что он говорил верно.
+
+<p>1. Кроме того, он сказал, "Поймите, что никто не уведет Вас,
+<BR>2. поскольку многие возьмут мое имя, говоря, "Мы - Иисус (ученики?),
+<BR>3. и это его время прибыло". И многие обольстят их.
+<p><h2>Притча о монахе и девушке</h2>
+
+<p><TT>Манихейский текст на парфянском языке.</TT>
+
+<p>1. "... Я хочу поместить милостыню туда (в горшок или сосуд)".
+
+<p>1. Тогда женщина дала ему девушку, и монах поместил девушку
+<BR>2. туда. И он ушел. И эту женщину посет[ил] ... a[…]
+<BR>3. .... охотник. Он поймал волка и принес его к ... Он хотел
+<BR>4. положить его в этот сосуд. Когда он открыл его, он увидел девушку,
+и она
+<BR>5. была очень красива. Немедленно он спросил женщину,
+<BR>6. "Что находится в сосуде? " И она ответила, "Монах положил в него
+<BR>7. свою милостыню". Сразу же охотник вынул девушку, а туда поместил
+<BR>8. волка в...
+
+<p>1. В ночное время прибыл монах, размышляя, "Я хочу взять девушку
+<BR>2. .... "Когда он засунул свою руку в сосуд .., волк выпрыгнул
+<BR>3. и съел монаха.
+
+<p>1. Эта притча касается грешников, которые, постоянно копят багатства
+<BR>2. ... думают что ... Но они идут в темный Ад. Также, как монах искал
+<BR>3. девушку, (а) нашел волка...
+<p><h2>Притча о двух змеях</h2>
+
+<p><TT>Манихейский текст на согдийском языке .</TT>
+
+<p>1. Здесь начинается история о змеях "Тяжело-нести " и "Легко-нести ".
+<BR>Как рассказывают, были однажды две змеи, и первую из них звали "Тяжело-нести".
+Их тела были одинаково большими, и их хвосты были очень длинны. Будучи
+одинаково умными, они любили друг друга так, что нельзя было заметить их
+отделено друг от друга. И однажды они вместе двинулись в путь. И когда
+они проползли много земель, одна змея упала в уныние, а другая змея поползла
+по пути дальше.
+
+<p>На одной стороне пути была очень крутая гора, а с другой стороны очень
+глубокая морская бездна. И на их пути ловец установил ловушку для змей.
+В этой ловушке было полно горящих углей, и во все стороны взлетали искры
+в воздух. Ловец же скрывался поблизости. И когда змеи подползли в то место,
+то сильно удивились, увидев в воздухе пламенные искры. Но не было возможности
+избежать ловушки, поскольку, надо было идти вперед по этому пути, и не
+было пути назад. И тогда, немного подождав, она бросилась вперед, думая:
+"Я перепрыгну через ловушку всем своим телом". Но ловушка была очень широка,
+а тело змеи длинное и очень тонкое, и хвост ее был очень длинен, она не
+смогла перескочить ловушку. Ее голова перескочила, но хвост остался позади,
+и расположился поперек ямы, и змея не смогла подтянуть хвост к шее. Так
+змея горела так умерла. И вскоре ловец подошёл к яме, протянул руку и камнем
+разбил голову змее, поднял камень, и ушел очень счастливым.
+
+<p>Вторая змея приползла и нашла своего мертвого друга с разбитой головой.
+Взмолилась в глубине своей души, "Увы! Ты был очень дорог для меня" И плакала
+и глубоко переживала, горько оплакивая она жалобно и сказала, "O прекрасный
+брат, как же ты в позоре умер, и твой брат ничем тебе не помог?" Когда
+же закончила глубоко переживать, про себя подумала: "Мой брат умер, потому
+что он думал о всем своем теле. Если же я также, не найду выход, то я должна
+буду умереть" И эту задачу она должна была решить. И змея сказала, "Поскольку
+он был мужчиной, он не мог перенести разделение со своим дорогим хвостом;
+он не мог вынести тление и перенести боль в теле. Если же я вынесу разделение
+от моего дорогого хвоста и вынесу небольшую (физическую) боль в моем теле
+ради души, то я смогу перепрыгнуть через ловушку". Тогда она перестала
+унывать нашла оставленный пастырями огонь. И так она сожгла длинный кусок
+своего хвоста, который был бесполезен для тела. И, когда она стала меньше,
+то бесхвостое тело очень легко подскочило вверх и пересекло ловушку благополучно.
+
+<p>Из этих двух змий, каждый – человек, который любит свое тело, и для
+которого отношение [к телу ....] является главным, тот неспособен позаботится
+о душе. И его [....] длинен. Вторая змея - человек, для которого душа более
+дорогая чем тело. И небольшое количество яда (вреда) в нем не мешает души
+скинуть тонкие оковы, связывающие его душу. И ловушки для души все эти
+три испытания,&nbsp; и высокие горы и глубокая бездна воды, и канава с
+огнём. Ловец - Агриман, и камень душа.
+
+<p>В конце концов Старик, без добрых дел, является тем, кто не может перепрыгнуть
+через эти три канавы с длинным хвостом (грехов). Но избранный Новый Человек
+пройдет очищение тремя ядами в теле и если перенесет в своем теле боль,
+которою требует соблюдения Закона, и если он сможет вынести разлуку со
+своей дорогой женой и детьми и&nbsp; богатством, то в Судный (букв. Последний)
+День его душа будет результатом тела и достигнет мира и Рая ...
+
   </article>
 </main>
-
+<nav class="next-text" aria-label="Читать далее">
+  <a class="next-text-prev" href="/gnostic/manich_pritcha2.shtml">← Из притчи об обманчивости чувств</a>
+  <a class="next-text-next" href="/gnostic/manich_psalom.shtml">Далее: Манихейский псалом →</a>
+</nav>
 <footer>
   <p>© 2001-2026 · <a href="mailto:idixx@yandex.ru">Русская апокрифическая студия</a> · <a href="/about.html">О студии</a></p>
 </footer>

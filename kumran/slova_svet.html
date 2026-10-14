@@ -7,7 +7,7 @@
 <TITLE>Слова светильные - Кумранские рукописи - Русская Апокрифическая Студия</TITLE>
 <meta name="Description" content="Слова светильные">
 
-<LINK REL=STYLESHEET HREF="/src/styles/main.css?v=b13c63bd" TYPE="text/css">
+<LINK REL=STYLESHEET HREF="/src/styles/main.css?v=3de8bfb9" TYPE="text/css">
 
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/favicon.svg">
@@ -20,7 +20,7 @@
 <meta property="og:url" content="https://ixoye.space/kumran/slova_svet.html">
 <meta name="twitter:card" content="summary">
 <script src="/src/scripts/offline-core.js?v=85a0ae59" defer></script>
-<script src="/src/scripts/nav.js?v=3344cc75" defer></script>
+<script src="/src/scripts/nav.js?v=e9bc284c" defer></script>
 <script>(function(){try{var v=parseFloat(localStorage.getItem("ixoye-text-size"));if(isFinite(v)&&v>=0.8&&v<=1.6)document.documentElement.style.setProperty("--text-scale",String(v));}catch(e){}})();</script>
 <link rel="manifest" href="/manifest.webmanifest">
 <meta name="mobile-web-app-capable" content="yes">
@@ -51,7 +51,14 @@
     </ul>
 
     <div class="nav-bar" role="group" aria-label="Навигация">
-      <button type="button" class="nav-ico nav-back" aria-label="Назад" title="Назад"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <details class="nav-drop nav-search">
+        <summary class="nav-ico" aria-label="Поиск" title="Поиск"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></summary>
+        <form class="nav-search-form" action="/poisk.html" method="get" role="search">
+          <input type="search" name="q" placeholder="Поиск по сайту…" aria-label="Поиск по сайту" enterkeyhint="search" autocomplete="off">
+        </form>
+      </details>
+
+      <button type="button" class="nav-ico nav-back" aria-label="На уровень выше" title="На уровень выше" data-up="/kumran/index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
 
       <details class="nav-drop nav-menu">
         <summary class="nav-ico" aria-label="Разделы сайта" title="Разделы"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary>
@@ -78,72 +85,9 @@
         </ul>
       </details>
 
-      <select class="nav-text" aria-label="Текущий текст" title="Выбор текста">
-          <option value="/kumran/index.html">Свитки Иудейской пустыни</option>
-          <option value="/kumran/all.html">Находки в Иудейской пустыне</option>
-          <option value="/kumran/psalom_king_ionafan.html">Апокрифический псалом и молитва короля Ионафана (4Q 448)</option>
-          <option value="/kumran/bytie.html">Апокриф книги Бытия</option>
-          <option value="/kumran/astron_enoch.html">Астрономическая книга Еноха (4 Q En astr)</option>
-          <option value="/kumran/gymns.html">Благодарственные гимны</option>
-          <option value="/kumran/blagosl_patr.html">Благословения патриархов</option>
-          <option value="/kumran/suns_of_light.html">Война сынов света против сынов тьмы</option>
-          <option value="/kumran/voshvalen1.html">Восхваления (4Q 427- 433a)</option>
-          <option value="/kumran/galah_pismo.html">Галахическое письмо а, с (4Q 394, 396 (4QMMT а, с) 4QHalakhic Letter а, с)</option>
-          <option value="/kumran/d_doc.html">Дамасский документ</option>
-          <option value="/kumran/2ways.html">Два пути (4Q 473)</option>
-          <option value="/kumran/2fragm.html">Два небольших свитка списка (4Q 339 и 4Q 340)</option>
-          <option value="/kumran/deti_spas_1.html">Дети Спасения и тайна бытия [фрагменты 1 и 410 (4Q 416, 418)]</option>
-          <option value="/kumran/bar-hoba_docs.html">Документы периода восстания Бар-Кохбы</option>
-          <option value="/kumran/calendarn_docum.html">Календарный документ (4Q Сalendrical Document (4Q 327))</option>
-          <option value="/kumran/book_ispolin.html">&quot;Книга исполинов&quot; (1Q 23, 2Q 26, 4Q 203, 4Q 530-532, 6Q 8)</option>
-          <option value="/kumran/book_tain.html">Книга Тайн (1Q 27, 4Q 299-301)</option>
-          <option value="/kumran/comm_mihei.html">Комментарий на книгу Михея</option>
-          <option value="/kumran/komment_a1.html">Комментарии на Книгу пророка Авакума (1Q pHab)</option>
-          <option value="/kumran/naum1.html">Коментарий на Книгу пророка Наума (4Q pNahum)</option>
-          <option value="/kumran/comm_osaii.html">Комментарии на Книгу пророка Осаии (4Q pHos b)</option>
-          <option value="/kumran/comm_psalom37.html">Комментарий на псалом 37 (4Q pPs (4Q 171))</option>
-          <option value="/kumran/nabonid.html">Курманский фрагмент молитвы вавилонского царя Набонида (4Q Or Nab)</option>
-          <option value="/kumran/levit_a.html">Левит а 11Q1 (11QpaleoLev a) 11QLeviticus a</option>
-          <option value="/kumran/medn_svitok.html">Медный свиток (3Q 15)</option>
-          <option value="/kumran/mess_lider.html">Мессианский лидер (4Q 285)</option>
-          <option value="/kumran/mess_sbornik.html">Мессианский сборник или Антология мессианских пророчеств (4Q Test)</option>
-          <option value="/kumran/midrash_melch.html">Мидраш Мельхиседека (11Q Melchisedek)</option>
-          <option value="/kumran/mol-enoch.html">Молитва Еноха [4Q 369]</option>
-          <option value="/kumran/book_enoh1.html">Первая книга Еноха [семь экземпляров]</option>
-          <option value="/kumran/fragm_pyatikn.html">Переработанный фрагмент Пятикнижия (4Q158 (4QRPa) 4QReworked Pentateucha)</option>
-          <option value="/kumran/pesn_subb_prin.html">Песни субботнего жертвоприношения 4Q403 (4QShirShabbd)</option>
-          <option value="/kumran/psevdo_yubil.html">«Псевдо-«Книга юбилеев» (4Q Pseudo-Jubilees)</option>
-          <option value="/kumran/obiln_derevo.html">Притча Обильного Дерева (4Q 302a)</option>
-          <option value="/kumran/rasputn.html">Проделки распутной женщины (4Q 184)</option>
-          <option value="/kumran/rit_zak_chist.html">Ритуальные законы чистоты (4Q Tohorot a=4Q 274)</option>
-          <option value="/kumran/words_michail.html">Слова архангела Михаила (4Q mich=4Q 529, 6Q unidar=6 Q23)</option>
-          <option value="/kumran/slova_moisea.html">Слова Моисея (1Q DM)</option>
-          <option value="/kumran/slova_svet.html" selected>Слова светильные</option>
-          <option value="/kumran/sobr_posl.html">Собрание пословиц (4Q Wisd=4Q 424)</option>
-          <option value="/kumran/targum_iova.html">Таргум Иова (4QtgJob=4Q 157, 11QtgJob=11Q 10)</option>
-          <option value="/kumran/ustav.html">Устав общины</option>
-          <option value="/kumran/dopoln1.html">Первое дополнение к «Уставу общины» под названием «Две колонки» (1Q Sa)</option>
-          <option value="/kumran/dopoln2.html">Второе дополнение к «Уставу общины» (1Q S) под названием «Благословение отцов и князя» (1Q Sb)</option>
-          <option value="/kumran/hram_svitok.html">&quot;Храмовый свиток&quot; (11Q Temple Scroll)</option>
-          <option value="/kumran/fis_gor.html">Физиогномические гороскопы (4Q Physiogn= 4Q 561)</option>
-          <option value="/kumran/filakterii_teffilin.html">Филактерии Тефиллин (Mur4 Phylactery)</option>
-          <option value="/kumran/florilegium.html">Флорилегиум (4Q Florilegium=174)</option>
-          <option value="/kumran/bookyub-a_b.html">Фрагменты а и b «Книги Юбилеев» (1Q Jub a.b.)</option>
-          <option value="/kumran/gymns_fragm1.html">Фрагменты Благодарственных гимнов</option>
-          <option value="/kumran/d_doc2.html">Фрагменты Дамасского документа (6Q СD (6Q 15) и 4Q Da)</option>
-          <option value="/kumran/o_messii.html">Фрагменты кумранских текстов о Мессии</option>
-          <option value="/kumran/shifr_doc.html">Шифрованные астрологические документы (4Q Crypt)</option>
-          <option value="/kumran/plameni.html">Языки пламени (1Q 29, 4Q 376)</option>
-      </select>
+      <button type="button" class="nav-ico nav-forward" aria-label="Вперёд" title="Вперёд" data-next="/kumran/sobr_posl.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
 
-      <details class="nav-drop nav-search">
-        <summary class="nav-ico" aria-label="Поиск" title="Поиск"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></summary>
-        <form class="nav-search-form" action="/poisk.html" method="get" role="search">
-          <input type="search" name="q" placeholder="Поиск по сайту…" aria-label="Поиск по сайту" enterkeyhint="search" autocomplete="off">
-        </form>
-      </details>
-
-      <button type="button" class="nav-ico nav-forward" aria-label="Вперёд" title="Вперёд"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+      <a class="nav-ico nav-fav" href="/fav.html" aria-label="Избранное" title="Избранное"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5C7 16.5 3.5 13.3 3.5 9.6 3.5 7 5.5 5 8 5c1.6 0 3.1.8 4 2.1C12.9 5.8 14.4 5 16 5c2.5 0 4.5 2 4.5 4.6 0 3.7-3.5 6.9-8.5 10.9z"/></svg></a>
     </div>
   </nav>
 </header>
@@ -332,7 +276,8 @@
   </article>
 </main>
 <nav class="next-text" aria-label="Читать далее">
-  <a href="/kumran/sobr_posl.html">Далее: Собрание пословиц (4Q Wisd=4Q 424) →</a>
+  <a class="next-text-prev" href="/kumran/slova_moisea.html">← Слова Моисея (1Q DM)</a>
+  <a class="next-text-next" href="/kumran/sobr_posl.html">Далее: Собрание пословиц (4Q Wisd=4Q 424) →</a>
 </nav>
 <footer>
   <p>© 2001-2026 · <a href="mailto:idixx@yandex.ru">Русская апокрифическая студия</a> · <a href="/about.html">О студии</a></p>

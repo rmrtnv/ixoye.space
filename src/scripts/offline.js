@@ -2,15 +2,17 @@
  * offline.js — management UI for /offline.html.
  *
  * Reads offline-manifest.json (generated at maintenance time) for the size of
- * the whole site and of each section, checks navigator.storage.estimate() to
- * decide whether the whole thing fits, and drives the service worker through
+ * the whole site, checks navigator.storage.estimate() to decide whether the
+ * whole thing fits, and drives the service worker through
  * window.IxoyeOffline.
  *
- * There is no separate "saved list": each download button doubles as the
- * status + delete control. A section (or the whole site) that is saved shows
- * a "✓ Сохранено" button; pressing it removes that bundle. "Удалить всё
- * сохранённое" clears every explicit bundle (whole site, sections and single
- * texts) but preserves the opportunistic cache of visited pages.
+ * There is no separate "saved list": the whole-site button doubles as the
+ * status + delete control. A saved site shows an "Удалить весь сайт" button;
+ * pressing it removes that bundle. "Удалить всё сохранённое" clears every
+ * explicit bundle (the whole site) but preserves the opportunistic cache of
+ * visited pages and all favorites bundles (see sw.js clearAll): the favorites
+ * list is never deleted from here. Per-text offline copies are made
+ * automatically by favoriting (the "☆ В избранное" control on each text).
  */
 (function () {
   "use strict";
@@ -21,7 +23,7 @@
   if (!OFF || !OFF.supported || !OFF.cachesAvailable) {
     var note = $("offline-unsupported");
     if (note) note.hidden = false;
-    ["offline-storage-section", "offline-whole-section", "offline-sections-section"].forEach(function (id) {
+    ["offline-storage-section", "offline-whole-section", "offline-doc-section", "offline-clear-section"].forEach(function (id) {
       var el = $(id);
       if (el) el.hidden = true;
     });
@@ -36,34 +38,14 @@
 
   function setText(el, text) { if (el) el.textContent = text; }
 
-  function shellUrls() {
-    if (!manifest || !manifest.shell || !manifest.shell.items) return [];
-    return manifest.shell.items.map(function (it) { return it.u; });
-  }
-
-  /** Section bundle: shell files (self-contained CSS/JS) + pages + images, deduped. */
-  function urlListOf(group) {
-    var seen = {};
-    var out = [];
-    shellUrls().concat(
-      (group.items || []).map(function (it) { return it.u; }),
-      (group.images || []).map(function (it) { return it.u; })
-    ).forEach(function (u) {
-      if (!seen[u]) { seen[u] = 1; out.push(u); }
-    });
-    return out;
-  }
-
-  function el(tag, cls, text) {
-    var node = document.createElement(tag);
-    if (cls) node.className = cls;
-    if (text != null) node.textContent = text;
-    return node;
-  }
-
   function setButtonsDisabled(disabled) {
-    var nodes = document.querySelectorAll("#offline-whole-btn, .offline-section-btn, #offline-clear-btn");
+    var nodes = document.querySelectorAll("#offline-whole-btn, #offline-clear-btn");
     for (var i = 0; i < nodes.length; i++) nodes[i].disabled = disabled;
+  }
+
+  /** Favorites auto-save bundles never count as deletable "saved" content. */
+  function isFavGroup(id) {
+    return String(id || "").indexOf("fav:") === 0;
   }
 
   function findGroup(id) {
@@ -109,12 +91,10 @@
       registry = res[1] || { groups: [] };
       renderStorage(lastEstimate);
       renderWhole(lastEstimate);
-      renderSections();
       renderClear();
     }).catch(function () {
       renderStorage(lastEstimate);
       renderWhole(lastEstimate);
-      renderSections();
       renderClear();
     });
   }
@@ -164,95 +144,19 @@
       fits = total + (est.usage || 0) <= est.quota * 0.95;
     }
     var label = "Размер всего собрания: " + OFF.fmtSize(total) + " · " + (manifest.allUrls ? manifest.allUrls.length : (manifest.count || 0)) + " " + plural(manifest.allUrls ? manifest.allUrls.length : 0, "файл", "файла", "файлов") + " (" + (manifest.count || 0) + " стр.).";
-    if (!fits) label += " Свободной памяти меньше — сохраните отдельные разделы или тексты.";
+    if (!fits) label += " Свободной памяти меньше — добавьте нужные тексты в избранное: они сохраняются для офлайн-чтения автоматически.";
     setText(info, label);
     btn.textContent = "Сохранить весь сайт";
     btn.title = fits ? "" : "Не хватает памяти устройства";
     btn.disabled = !fits;
   }
 
-  function renderSections() {
-    var list = $("offline-sections-list");
-    if (!list) return;
-    list.textContent = "";
-    var siteSaved = !!findGroup("site");
-    var groups = [];
-    if (manifest) {
-      groups = (manifest.sections || [])
-        .concat(manifest.search ? [manifest.search] : [])
-        .concat(manifest.root ? [manifest.root] : []);
-    }
-    if (!groups.length) {
-      // Offline with no manifest: fall back to showing what is actually saved.
-      var savedGroups = registry.groups || [];
-      if (!savedGroups.length) {
-        var empty = el("li", "offline-empty", "Нет данных о разделах. Подключитесь к сети и обновите страницу.");
-        list.appendChild(empty);
-        return;
-      }
-      savedGroups.forEach(function (g) {
-        var li = el("li", "offline-row");
-        var info = el("span", "offline-row-info");
-        info.appendChild(el("strong", null, g.label || g.id));
-        info.appendChild(document.createTextNode(" — " + OFF.fmtSize(g.bytes || 0)));
-        li.appendChild(info);
-        var del = el("button", "offline-btn offline-section-btn offline-btn-saved", "✓ Сохранено");
-        del.type = "button";
-        del.title = "Нажмите, чтобы удалить с устройства";
-        (function (id, label) {
-          del.addEventListener("click", function () { removeGroup(id, label); });
-        })(g.id, g.label || g.id);
-        li.appendChild(del);
-        list.appendChild(li);
-      });
-      return;
-    }
-    groups.forEach(function (g) {
-      var own = findGroup(g.id);
-      // A fully-failed whole-site run leaves no "site" record (worker drops
-      // it), so sections stay individually retryable by construction.
-      var saved = !!(own || siteSaved);
-      var li = el("li", "offline-row");
-      var info = el("span", "offline-row-info");
-      var strong = el("strong", null, g.label);
-      info.appendChild(strong);
-      info.appendChild(document.createTextNode(
-        " — " + (g.count || (g.items || []).length) + " стр., " + OFF.fmtSize(g.bytes)));
-      li.appendChild(info);
-
-      if (saved && siteSaved && !own) {
-        // Этот раздел сохранён в составе «Весь сайт» — отдельного пакета нет,
-        // поэтому удалять его можно только вместе со всем сайтом.
-        li.appendChild(el("span", "offline-muted", "входит в «Весь сайт»"));
-        var blocked = el("button", "offline-btn offline-section-btn offline-btn-saved", "✓ Сохранено");
-        blocked.type = "button";
-        blocked.disabled = true;
-        blocked.title = "Раздел входит в сохранённое «Весь сайт». Удалите весь сайт, если он больше не нужен.";
-        li.appendChild(blocked);
-      } else if (saved) {
-        var del = el("button", "offline-btn offline-section-btn offline-btn-saved", "✓ Сохранено");
-        del.type = "button";
-        del.title = "Нажмите, чтобы удалить раздел с устройства";
-        (function (id, label) {
-          del.addEventListener("click", function () { removeGroup(id, label); });
-        })(g.id, g.label);
-        li.appendChild(del);
-      } else {
-        var dl = el("button", "offline-btn offline-btn-primary offline-section-btn", "Скачать");
-        dl.type = "button";
-        (function (id, label, grp) {
-          dl.addEventListener("click", function () { downloadGroup(id, label, urlListOf(grp)); });
-        })(g.id, g.label, g);
-        li.appendChild(dl);
-      }
-      list.appendChild(li);
-    });
-  }
 
   function renderClear() {
     var block = $("offline-clear-block");
     if (!block) return;
-    block.hidden = (registry.groups || []).length === 0;
+    var saved = (registry.groups || []).filter(function (g) { return g && !isFavGroup(g.id); });
+    block.hidden = saved.length === 0;
   }
 
   function downloadGroup(group, label, urls) {
@@ -364,7 +268,6 @@
       manifest = res[2];
       renderStorage(lastEstimate);
       renderWhole(lastEstimate);
-      renderSections();
       renderClear();
       // Self-heal the app shell in the background: if this install landed
       // with an incomplete shell (failed precache / eviction — the iOS PWA
@@ -380,7 +283,6 @@
     }).catch(function () {
       renderStorage(lastEstimate);
       renderWhole(lastEstimate);
-      renderSections();
       renderClear();
     });
   }

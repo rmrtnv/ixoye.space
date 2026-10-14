@@ -29,6 +29,7 @@ const ASSETS = {
   "/src/scripts/nav.js": "src/scripts/nav.js",
   "/src/scripts/offline-core.js": "src/scripts/offline-core.js",
   "/src/scripts/offline.js": "src/scripts/offline.js",
+  "/src/scripts/fav.js": "src/scripts/fav.js",
 };
 
 function escRe(s) {

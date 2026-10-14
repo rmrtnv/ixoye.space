@@ -7,7 +7,7 @@
 <TITLE>Гностическая литература - Русская Апокрифическая Студия</TITLE>
 <meta name="Description" content="Гностическая литература">
 <meta name="Keywords" content="литература">
-<LINK REL=STYLESHEET HREF="/src/styles/main.css?v=b13c63bd" TYPE="text/css">
+<LINK REL=STYLESHEET HREF="/src/styles/main.css?v=3de8bfb9" TYPE="text/css">
 
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/favicon.svg">
@@ -20,7 +20,7 @@
 <meta property="og:url" content="https://ixoye.space/gnostic/gnost_lit.html">
 <meta name="twitter:card" content="summary">
 <script src="/src/scripts/offline-core.js?v=85a0ae59" defer></script>
-<script src="/src/scripts/nav.js?v=3344cc75" defer></script>
+<script src="/src/scripts/nav.js?v=e9bc284c" defer></script>
 <script>(function(){try{var v=parseFloat(localStorage.getItem("ixoye-text-size"));if(isFinite(v)&&v>=0.8&&v<=1.6)document.documentElement.style.setProperty("--text-scale",String(v));}catch(e){}})();</script>
 <link rel="manifest" href="/manifest.webmanifest">
 <meta name="mobile-web-app-capable" content="yes">
@@ -51,7 +51,14 @@
     </ul>
 
     <div class="nav-bar" role="group" aria-label="Навигация">
-      <button type="button" class="nav-ico nav-back" aria-label="Назад" title="Назад"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <details class="nav-drop nav-search">
+        <summary class="nav-ico" aria-label="Поиск" title="Поиск"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></summary>
+        <form class="nav-search-form" action="/poisk.html" method="get" role="search">
+          <input type="search" name="q" placeholder="Поиск по сайту…" aria-label="Поиск по сайту" enterkeyhint="search" autocomplete="off">
+        </form>
+      </details>
+
+      <button type="button" class="nav-ico nav-back" aria-label="На уровень выше" title="На уровень выше" data-up="/gnostic/index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
 
       <details class="nav-drop nav-menu">
         <summary class="nav-ico" aria-label="Разделы сайта" title="Разделы"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary>
@@ -78,47 +85,9 @@
         </ul>
       </details>
 
-      <select class="nav-text" aria-label="Текущий текст" title="Выбор текста">
-          <option value="/gnostic/index.html">Гностицизм</option>
-          <option value="/gnostic/gnost_lit.html" selected>Гностическая литература</option>
-          <option value="/gnostic/mand_lit.html">Мандейские тексты</option>
-          <option value="/gnostic/manich_lit.html">Манихейские тексты</option>
-          <option value="/gnostic/about_pistis.html">Немного о Пистис Софии</option>
-          <option value="/gnostic/about-ev-iuda.shtml">О Евангелии Иуды (Искариота)</option>
-          <option value="/gnostic/b_petr1.html">Деяние Петра</option>
-          <option value="/gnostic/beseda_iisus.html">Беседа Иисуса с учениками</option>
-          <option value="/gnostic/cb_text1.html">Текст без названия</option>
-          <option value="/gnostic/comment_pistis.html">Примечания к Пистис Софии</option>
-          <option value="/gnostic/ev_maria_gnost.html">Евангелие от Марии</option>
-          <option value="/gnostic/ev-iuda.shtml">Евангелие Иуды (Искариота)</option>
-          <option value="/gnostic/gnost_molitva2.html">Вторая гностическая молитва без названия</option>
-          <option value="/gnostic/kniga-ieu1.html">Первая Книга Иеу</option>
-          <option value="/gnostic/kniga-ieu2.html">Вторая Книга Иеу</option>
-          <option value="/gnostic/komments-ieu1.html">Примечания к Первой Книге Иеу</option>
-          <option value="/gnostic/komments-ieu2.html">Примечания ко Второй Книге Иеу</option>
-          <option value="/gnostic/mol_iosif.html">Молитва Иосифа</option>
-          <option value="/gnostic/oda_solomon_c.html">Оды Соломона (полный вариант)</option>
-          <option value="/gnostic/oda_solomon.html">Оды Соломона</option>
-          <option value="/gnostic/pistis_book1.html">Первая Книга ПИСТИС СОФИИ</option>
-          <option value="/gnostic/pistis_book2.html">Вторая Книга ПИСТИС СОФИИ</option>
-          <option value="/gnostic/pistis_book3.html">Третья Книга ПИСТИС СОФИИ</option>
-          <option value="/gnostic/pistis_book4.html">Четвертая Книга ПИСТИС СОФИИ</option>
-          <option value="/gnostic/pistis1.html">Пистис Софии - главы 1-38</option>
-          <option value="/gnostic/pistis2.html">Пистис Софии - главы 60-63</option>
-          <option value="/gnostic/pistis3.html">Пистис Софии - глава 100</option>
-          <option value="/gnostic/pistis4.html">Пистис Софии - главы 111-113</option>
-          <option value="/gnostic/pistis5.html">Пистис Софии - выдержки из глав 131-133</option>
-          <option value="/gnostic/put_d.html">Фрагмент о путешествии души</option>
-      </select>
+      <button type="button" class="nav-ico nav-forward" aria-label="Вперёд" title="Вперёд" data-next="/gnostic/mand_lit.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
 
-      <details class="nav-drop nav-search">
-        <summary class="nav-ico" aria-label="Поиск" title="Поиск"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></summary>
-        <form class="nav-search-form" action="/poisk.html" method="get" role="search">
-          <input type="search" name="q" placeholder="Поиск по сайту…" aria-label="Поиск по сайту" enterkeyhint="search" autocomplete="off">
-        </form>
-      </details>
-
-      <button type="button" class="nav-ico nav-forward" aria-label="Вперёд" title="Вперёд"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+      <a class="nav-ico nav-fav" href="/fav.html" aria-label="Избранное" title="Избранное"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5C7 16.5 3.5 13.3 3.5 9.6 3.5 7 5.5 5 8 5c1.6 0 3.1.8 4 2.1C12.9 5.8 14.4 5 16 5c2.5 0 4.5 2 4.5 4.6 0 3.7-3.5 6.9-8.5 10.9z"/></svg></a>
     </div>
   </nav>
 </header>
@@ -168,7 +137,8 @@
   </article>
 </main>
 <nav class="next-text" aria-label="Читать далее">
-  <a href="/gnostic/mand_lit.html">Далее: Мандейские тексты →</a>
+  <a class="next-text-prev" href="/gnostic/index.html">← Гностицизм</a>
+  <a class="next-text-next" href="/gnostic/mand_lit.html">Далее: Мандейские тексты →</a>
 </nav>
 <footer>
   <p>© 2001-2026 · <a href="mailto:idixx@yandex.ru">Русская апокрифическая студия</a> · <a href="/about.html">О студии</a></p>

@@ -7,7 +7,7 @@
 <TITLE>Книга тайн Еноха - Ветхозаветные апокрифы - Русская Апокрифическая Студия</TITLE>
 <meta name="Description" content="Книга тайн Еноха">
 <meta name="Keywords" content="Книга тайны Енох">
-<LINK REL=STYLESHEET HREF="/src/styles/main.css?v=b13c63bd" TYPE="text/css">
+<LINK REL=STYLESHEET HREF="/src/styles/main.css?v=3de8bfb9" TYPE="text/css">
 
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/favicon.svg">
@@ -20,7 +20,7 @@
 <meta property="og:url" content="https://ixoye.space/apocrypha-old/enoh.html">
 <meta name="twitter:card" content="summary">
 <script src="/src/scripts/offline-core.js?v=85a0ae59" defer></script>
-<script src="/src/scripts/nav.js?v=3344cc75" defer></script>
+<script src="/src/scripts/nav.js?v=e9bc284c" defer></script>
 <script>(function(){try{var v=parseFloat(localStorage.getItem("ixoye-text-size"));if(isFinite(v)&&v>=0.8&&v<=1.6)document.documentElement.style.setProperty("--text-scale",String(v));}catch(e){}})();</script>
 <link rel="manifest" href="/manifest.webmanifest">
 <meta name="mobile-web-app-capable" content="yes">
@@ -51,7 +51,14 @@
     </ul>
 
     <div class="nav-bar" role="group" aria-label="Навигация">
-      <button type="button" class="nav-ico nav-back" aria-label="Назад" title="Назад"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <details class="nav-drop nav-search">
+        <summary class="nav-ico" aria-label="Поиск" title="Поиск"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></summary>
+        <form class="nav-search-form" action="/poisk.html" method="get" role="search">
+          <input type="search" name="q" placeholder="Поиск по сайту…" aria-label="Поиск по сайту" enterkeyhint="search" autocomplete="off">
+        </form>
+      </details>
+
+      <button type="button" class="nav-ico nav-back" aria-label="На уровень выше" title="На уровень выше" data-up="/apocrypha-old/index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
 
       <details class="nav-drop nav-menu">
         <summary class="nav-ico" aria-label="Разделы сайта" title="Разделы"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary>
@@ -78,52 +85,9 @@
         </ul>
       </details>
 
-      <select class="nav-text" aria-label="Текущий текст" title="Выбор текста">
-          <option value="/apocrypha-old/index.html">Ветхозаветные апокрифы</option>
-          <option value="/apocrypha-old/ap-bar.html">Откровение Варуха</option>
-          <option value="/apocrypha-old/baruh2.html">Откровение Варуха, сына Нерии</option>
-          <option value="/apocrypha-old/ap_sedrax.html">Откровение Седраха</option>
-          <option value="/apocrypha-old/ap-ezd.html">Откровение Ездры</option>
-          <option value="/apocrypha-old/enoh.html" selected>Книга тайн Еноха</option>
-          <option value="/apocrypha-old/ap_ilia.html">Апокалипсис Илии</option>
-          <option value="/apocrypha-old/ap-mos2.html">Апокалипсис Моисея</option>
-          <option value="/apocrypha-old/agada_solomon.html">Агада о Соломоне</option>
-          <option value="/apocrypha-old/apokrif_ieremii.html">Апокриф пророка Иеремии</option>
-          <option value="/apocrypha-old/vozn_enoch.html">Вознесение Еноха</option>
-          <option value="/apocrypha-old/ap-mos.html">Вознесение Моисея</option>
-          <option value="/apocrypha-old/vozn_is.html">Вознесение Исайи (Видение Исайи)</option>
-          <option value="/apocrypha-old/adam_eva_lat.html">Житие Адама и Евы [Латинская версия]</option>
-          <option value="/apocrypha-old/adam_eva_slav.html">Житие Адама и Евы [Славянская версия]</option>
-          <option value="/apocrypha-old/moisey.html">Житие пророка Моисея</option>
-          <option value="/apocrypha-old/ts-abr.html">Завещание Авраама</option>
-          <option value="/apocrypha-old/zav-12.html">Завещания двенадцати патриархов, сыновей Иакова</option>
-          <option value="/apocrypha-old/zav-moisey.html">Завещание Моисея</option>
-          <option value="/apocrypha-old/book_ahiahars.html">Книга Ахиахара Премудрого</option>
-          <option value="/apocrypha-old/jubilees.html">Книга Юбилеев</option>
-          <option value="/apocrypha-old/much_isaii.html">Мученичество Исайи</option>
-          <option value="/apocrypha-old/arist_to_filokrat.html">Письмо Аристея к Филократу</option>
-          <option value="/apocrypha-old/adameva.html">Об Адаме и Еве</option>
-          <option value="/apocrypha-old/potop.html">О потопе</option>
-          <option value="/apocrypha-old/iosif_asenefa.html">Повесть об Иосифе и Асенефе</option>
-          <option value="/apocrypha-old/asenef_sir_vers.html">Отрывок из Сирийской версии &quot;Повести об Асенефе&quot;</option>
-          <option value="/apocrypha-old/solomon1.html">Псалмы Соломона</option>
-          <option value="/apocrypha-old/melchis1.html">Сказание о Мелхиседеке</option>
-          <option value="/apocrypha-old/adam.html">Сказание о сотворении Богом Адама</option>
-          <option value="/apocrypha-old/david1.html">Сказания о царе Давиде</option>
-          <option value="/apocrypha-old/zorov.html">Слово блаженного Зоровавеля</option>
-          <option value="/apocrypha-old/solomon2.html">Суды Соломона</option>
-          <option value="/apocrypha-old/lachish_pism.html">Лахишские письма</option>
-          <option value="/apocrypha-old/bilam.html">Пророчество Бильама сына Беора</option>
-      </select>
+      <button type="button" class="nav-ico nav-forward" aria-label="Вперёд" title="Вперёд" data-next="/apocrypha-old/ap_ilia.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
 
-      <details class="nav-drop nav-search">
-        <summary class="nav-ico" aria-label="Поиск" title="Поиск"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></summary>
-        <form class="nav-search-form" action="/poisk.html" method="get" role="search">
-          <input type="search" name="q" placeholder="Поиск по сайту…" aria-label="Поиск по сайту" enterkeyhint="search" autocomplete="off">
-        </form>
-      </details>
-
-      <button type="button" class="nav-ico nav-forward" aria-label="Вперёд" title="Вперёд"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+      <a class="nav-ico nav-fav" href="/fav.html" aria-label="Избранное" title="Избранное"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5C7 16.5 3.5 13.3 3.5 9.6 3.5 7 5.5 5 8 5c1.6 0 3.1.8 4 2.1C12.9 5.8 14.4 5 16 5c2.5 0 4.5 2 4.5 4.6 0 3.7-3.5 6.9-8.5 10.9z"/></svg></a>
     </div>
   </nav>
 </header>
@@ -402,7 +366,8 @@
   </article>
 </main>
 <nav class="next-text" aria-label="Читать далее">
-  <a href="/apocrypha-old/ap_ilia.html">Далее: Апокалипсис Илии →</a>
+  <a class="next-text-prev" href="/apocrypha-old/ap-ezd.html">← Откровение Ездры</a>
+  <a class="next-text-next" href="/apocrypha-old/ap_ilia.html">Далее: Апокалипсис Илии →</a>
 </nav>
 <footer>
   <p>© 2001-2026 · <a href="mailto:idixx@yandex.ru">Русская апокрифическая студия</a> · <a href="/about.html">О студии</a></p>

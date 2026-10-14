@@ -5,12 +5,13 @@
  * The legacy→semantic migration already wrote a <header class="site-header">
  * into each page. This script rebuilds that header from the single source of
  * truth (renderHeader in structurize-pages.mjs) so every page gains the compact
- * mobile bar (back · menu · current-text picker · search · forward) and the
+ * bar (search · back · menu · forward · favorites) and the
  * desktop section list stays consistent.
  *
- * The middle picker mirrors the section's table of contents: same-directory
- * links on the section's index page, in document order; the current page is
- * preselected. Root-level pages fall back to the section links.
+ * Each section's table of contents (same-directory links on the section's
+ * index page, in document order) drives the "next text" footer link and the
+ * forward arrow's data-next target. Root-level pages fall back to the section
+ * links.
  *
  * Pages that only carry a `<main class="container content-block">` (the
  * restoration stubs) are refitted into the shell so they get the nav too.
@@ -21,7 +22,7 @@
  */
 import fs from "node:fs";
 import path from "node:path";
-import { renderHeader, buildShell, SECTIONS, SIZE_BOOTSTRAP } from "./structurize-pages.mjs";
+import { renderHeader, buildShell, parentHref, SECTIONS, SIZE_BOOTSTRAP } from "./structurize-pages.mjs";
 import { collectPages, rel } from "./site-utils.mjs";
 
 const ROOT = process.cwd();
@@ -58,17 +59,33 @@ function cleanBrs(html) {
   return out;
 }
 
-/** Render the "next text" block, or "" for pages without a successor. */
-function nextTextBlock(docs, currentHref) {
+/** The section's next text after currentHref, or null when there is none. */
+function nextEntry(docs, currentHref) {
   const i = docs.findIndex((d) => d.href === currentHref);
-  if (i < 0 || i >= docs.length - 1) return "";
-  const next = docs[i + 1];
-  const label = next.label
+  if (i < 0 || i >= docs.length - 1) return null;
+  return docs[i + 1];
+}
+
+/** The section's previous text before currentHref, or null when there is none. */
+function prevEntry(docs, currentHref) {
+  const i = docs.findIndex((d) => d.href === currentHref);
+  if (i <= 0) return null;
+  return docs[i - 1];
+}
+
+/** Render the "previous / next text" block, or "" for pages without neighbours. */
+function nextTextBlock(docs, currentHref) {
+  const prev = prevEntry(docs, currentHref);
+  const next = nextEntry(docs, currentHref);
+  if (!prev && !next) return "";
+  const label = (entry) => entry.label
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
-  return `<nav class="next-text" aria-label="Читать далее">\n  <a href="${next.href}">Далее: ${label} →</a>\n</nav>`;
+  const prevLink = prev ? `<a class="next-text-prev" href="${prev.href}">← ${label(prev)}</a>` : "";
+  const nextLink = next ? `<a class="next-text-next" href="${next.href}">Далее: ${label(next)} →</a>` : "";
+  return `<nav class="next-text" aria-label="Читать далее">\n  ${prevLink}${prev && next ? "\n  " : ""}${nextLink}\n</nav>`;
 }
 
 function stripTags(s) {
@@ -141,8 +158,8 @@ function dirKey(rel) {
 
 const files = collectPages().map((p) => rel(p)).sort();
 
-// The middle text picker mirrors the section's "table of contents": the order
-// of the links on the section's index page, not alphabetical order.
+// The section "table of contents": the order of the links on the section's
+// index page, not alphabetical order.
 // noindex restoration stubs are skipped.
 const docsByDir = new Map(); // key -> [{ rel, href, label }]
 const titles = new Map();
@@ -160,7 +177,7 @@ for (const relPath of files) {
 
 // Walk each index page and collect same-directory links in document order;
 // pages not linked there are appended in filename order. A section's own
-// index page is kept as the first option (the "up" / contents entry).
+// index page is kept as the first entry (the "up" / contents entry).
 for (const [key, pages] of pagesByDir) {
   const ordered = [];
   const seen = new Set();
@@ -211,12 +228,21 @@ for (const rel of files) {
   const docs = docsByDir.get(key) || [];
   const currentHref = "/" + rel.replace(/\\/g, "/");
   const activeDir = path.basename(rel) === "poisk.html" ? "poisk" : SECTIONS.some((s) => s.dir === key) ? key : "__home__";
+  // data-next (like the footer prev/next block) exists on text pages only:
+  // section pages that are not the section index.
+  const isTextPage = SECTIONS.some((s) => s.dir === key) &&
+    path.basename(rel) !== "index.html" &&
+    rel !== "poisk.html" &&
+    rel !== "about.html";
+  const next = isTextPage ? nextEntry(docs, currentHref) : null;
+  const nextHref = next ? next.href : "";
+  const upHref = parentHref(rel);
 
   let out = null;
   if (HEADER_RE.test(html)) {
     out = html.replace(
       HEADER_RE,
-      renderHeader({ activeDir, currentHref, currentTitle: titles.get(rel), docs })
+      renderHeader({ activeDir, currentHref, nextHref, upHref })
     );
   } else if (STUB_RE.test(html)) {
     // restoration stub → full shell
@@ -227,23 +253,19 @@ for (const rel of files) {
       .trim();
     const head = html.slice(0, html.search(/<body\b/i));
     const mail = (html.match(/mailto:([^"'<>\s]+)/i) || [])[1] || DEFAULT_MAILTO;
-    out = buildShell({ relPath: rel, h1: titles.get(rel), content: inner, mailto: mail, head, docs });
+    out = buildShell({ relPath: rel, h1: titles.get(rel), content: inner, mailto: mail, head });
   } else {
     missing.push(rel);
     continue;
   }
 
-  // "next text" link at the bottom of each real text page (section pages that
-  // have a successor in the table of contents; not indexes/root/meta pages).
+  // "previous / next text" links at the bottom of each real text page
+  // (section pages that have neighbours in the table of contents; not
+  // indexes/root/meta pages).
   // It is generated outside <main> so the search index (scoped to <main>)
   // never picks up a neighbouring page's title from this page.
   out = out.replace(/<nav class="next-text"[^>]*>[\s\S]*?<\/nav>\s*/g, "");
-  if (
-    SECTIONS.some((s) => s.dir === key) &&
-    path.basename(rel) !== "index.html" &&
-    rel !== "poisk.html" &&
-    rel !== "about.html"
-  ) {
+  if (isTextPage) {
     const nxt = nextTextBlock(docs, currentHref);
     if (nxt) out = out.replace(/<\/main>/i, `</main>\n${nxt}`);
   }

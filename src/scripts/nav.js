@@ -6,11 +6,9 @@
  * alone cannot:
  *   - close an open dropdown when the user taps outside it or presses Escape;
  *   - focus the search field when its dropdown opens;
- *   - navigate to the selected text from the middle picker;
- *   - back / forward arrows. The back arrow walks the browser history; the
- *     forward arrow advances through the middle picker (the section's table
- *     of contents) when there is nothing left to pop from the navigation
- *     trail, so readers can page through a section in order;
+ *   - back / forward arrows. The back arrow goes up one level (data-up);
+ *     the forward arrow follows the page's next-text link (data-next).
+ *     Both arrows render grey (disabled) when they have nowhere to go;
  *   - a text-size control in the menu dropdown: two buttons (smaller / larger)
  *     that scale the root --text-scale custom property. The dropdown stays
  *     open across presses so the size can be dialled in;
@@ -18,14 +16,13 @@
  *     installed app is opened again, including reopening the app at the site
  *     root and resuming the text that was being read;
  *   - offline reading: register the service worker so the site keeps working
- *     without a connection, and offer a "download for offline" control on each
- *     text (the management page is /offline.html).
+ *     without a connection, and offer an "add to favorites" control on each
+ *     text (the favorites list lives at /fav.html).
  */
 (function () {
   "use strict";
 
   var OPEN = "details.nav-drop[open]";
-  var FWD_KEY = "ixoye-nav-fwd";
   var READ_KEY = "ixoye-read-state";
   // Marks an in-progress browsing session. Empty on a cold launch / bookmark
   // open, present across in-session navigations (links, Back/Forward), which is
@@ -203,75 +200,47 @@
   // Keep Escape / outside-click from leaving a stale box open on back-forward.
   window.addEventListener("pageshow", closeAll);
 
-  // The middle picker: navigate to the selected text.
-  document.addEventListener("change", function (e) {
-    var t = e.target;
-    if (t && t.classList && t.classList.contains("nav-text") && t.value) {
-      window.location.assign(t.value);
-    }
-  });
-
   // ---------------------------------------------------------------------------
   // back / forward arrows
   // ---------------------------------------------------------------------------
 
-  // Our own forward trail, kept in sessionStorage so it survives page loads.
-  // The back arrow records the page it leaves; the forward arrow pops the
-  // trail back into the browser, or — when the trail is empty — advances to
-  // the next option of the middle picker (the section's table of contents).
-  var fwd = [];
-  try { fwd = JSON.parse(sessionStorage.getItem(FWD_KEY) || "[]"); } catch (e) { fwd = []; }
-
-  function saveFwd() {
-    try {
-      sessionStorage.setItem(FWD_KEY, JSON.stringify(fwd.slice(-50)));
-    } catch (e) { /* storage unavailable */ }
-  }
-
-  // A fresh navigation (new link, reload, or app restart) dismisses the trail;
-  // a back/forward navigation keeps it.
-  if (navType !== "back_forward") {
-    fwd = [];
-    saveFwd();
-  }
-
+  // The back arrow goes up one level (data-up on the arrow); the forward
+  // arrow follows the page's next-text link (data-next on the arrow).
   function navigator(url) {
     if (url) window.location.assign(url);
-  }
-
-  function pickerAdvance() {
-    var sel = document.querySelector("select.nav-text");
-    if (!sel || sel.selectedIndex < 0 || sel.selectedIndex >= sel.options.length - 1) {
-      return false;
-    }
-    navigator(sel.options[sel.selectedIndex + 1].value);
-    return true;
   }
 
   var backBtn = document.querySelector(".nav-back");
   var fwdBtn = document.querySelector(".nav-forward");
 
+  // Grey out an arrow when it has nowhere to go: back needs a parent level
+  // (data-up), forward needs a next-text link (data-next). Recomputed on
+  // every show — back-forward cache restores the DOM as it was.
+  function updateArrows() {
+    if (backBtn) {
+      var up = backBtn.getAttribute("data-up");
+      backBtn.disabled = !(up && up.length > 0);
+    }
+    if (fwdBtn) {
+      var next = fwdBtn.getAttribute("data-next");
+      fwdBtn.disabled = !(next && next.length > 0);
+    }
+  }
+
   if (backBtn) {
     backBtn.addEventListener("click", function () {
-      fwd.push(location.href);
-      saveFwd();
-      history.back();
+      navigator(backBtn.getAttribute("data-up")); // up one level
     });
   }
 
   if (fwdBtn) {
     fwdBtn.addEventListener("click", function () {
-      var url;
-      // skip stale entries that point at the page we are already on
-      while ((url = fwd.pop()) && url === location.href) { /* noop */ }
-      if (url) {
-        saveFwd();
-        navigator(url);
-        return;
-      }
-      pickerAdvance(); // continue reading the section in order
+      navigator(fwdBtn.getAttribute("data-next")); // next text in the section
     });
   }
+
+  updateArrows();
+  window.addEventListener("pageshow", updateArrows);
 
   // ---------------------------------------------------------------------------
   // reading state
@@ -529,41 +498,56 @@
   })();
 
   // ---------------------------------------------------------------------------
-  // offline reading
+  // favorites
   // ---------------------------------------------------------------------------
-  // The worker is registered on every page so the site becomes available
-  // offline after the first visit. A "download for offline" control is added to
-  // each text (not to indexes / utility pages) and delegates to the worker via
-  // window.IxoyeOffline (see offline-core.js).
+  // The worker is registered on every page so the site keeps working
+  // without a connection. Each text (not indexes / utility pages) also gets
+  // an "add to favorites" control: the favorites list itself lives in
+  // localStorage (shown at /fav.html), and a favorited page is automatically
+  // downloaded for offline reading through window.IxoyeOffline
+  // (see offline-core.js). Favorites and saved offline bundles are separate
+  // things: deleting saved bundles never deletes the favorites list.
   if (window.IxoyeOffline) {
     var OFF = window.IxoyeOffline;
     OFF.register();
 
-    var SKIP_OFFLINE = { "/": 1, "/offline.html": 1, "/poisk.html": 1, "/about.html": 1, "/animation.html": 1, "/pleroma.html": 1 };
+    var SKIP_FAV = { "/": 1, "/index.html": 1, "/offline.html": 1, "/poisk.html": 1, "/about.html": 1, "/animation.html": 1, "/pleroma.html": 1, "/fav.html": 1 };
 
-    (function addOfflineControl() {
-      if (!OFF.supported || !OFF.cachesAvailable) return;
+    var FAV_KEY = "ixoye-fav-list";
+
+    function readFav() {
+      try {
+        var list = JSON.parse(localStorage.getItem(FAV_KEY) || "[]");
+        return Array.isArray(list) ? list : [];
+      } catch (e) { return []; }
+    }
+
+    function writeFav(list) {
+      try { localStorage.setItem(FAV_KEY, JSON.stringify(list)); }
+      catch (e) { /* storage unavailable */ }
+    }
+
+    (function addFavControl() {
       var rawPath = location.pathname;
       // Normalise "/x/index.html" -> "/x/" so doc ids match the manifest
       // canonical form and duplicate links don't create duplicate bundles.
       var p = rawPath.replace(/\/index\.html$/i, "/");
-      // Section landing pages ("/", "/<dir>/") are saved as whole sections
-      // from /offline.html — a single-page button here would be misleading.
-      if (SKIP_OFFLINE[p] || SKIP_OFFLINE[rawPath] || /\/$/.test(p)) return;
+      // Section landing pages ("/", "/<dir>/") and utility pages get no
+      // per-text favorites button.
+      if (SKIP_FAV[p] || SKIP_FAV[rawPath] || /\/$/.test(p)) return;
       var article = document.querySelector("article.content-block");
       if (!article || !article.querySelector("h1")) return;
 
-      var group = "doc:" + p;
+      var group = "fav:" + p;
       var busy = false;
 
       var box = document.createElement("div");
-      box.className = "offline-save";
+      box.className = "fav-save";
       var btn = document.createElement("button");
       btn.type = "button";
-      btn.className = "offline-save-btn";
-      btn.textContent = "Скачать для офлайн-чтения";
+      btn.className = "fav-save-btn";
       var status = document.createElement("span");
-      status.className = "offline-save-status";
+      status.className = "fav-save-status";
       box.appendChild(btn);
       box.appendChild(status);
       article.appendChild(box);
@@ -596,45 +580,69 @@
         return urls;
       }
 
+      function isFav() {
+        var list = readFav();
+        for (var i = 0; i < list.length; i++) {
+          if (list[i] && list[i].u === p) return true;
+        }
+        return false;
+      }
+
+      function pageTitle() {
+        var h1 = article.querySelector("h1");
+        return ((h1 && h1.textContent) || document.title || p).replace(/\s+/g, " ").trim();
+      }
+
       function sync() {
-        return OFF.list().then(function (meta) {
-          var saved = (meta.groups || []).filter(function (g) { return g.id === group; })[0];
-          if (saved) {
-            btn.textContent = "Удалить из офлайна";
-            status.textContent = "✓ Сохранено (" + OFF.fmtSize(saved.bytes) + ")";
-          } else {
-            btn.textContent = "Скачать для офлайн-чтения";
-            status.textContent = "";
-          }
-        });
+        if (isFav()) {
+          btn.textContent = "★ В избранном";
+          btn.classList.add("fav-on");
+          if (!status.textContent) status.textContent = "✓ В избранном";
+        } else {
+          btn.textContent = "☆ В избранное";
+          btn.classList.remove("fav-on");
+          status.textContent = "";
+        }
       }
 
       btn.addEventListener("click", function () {
         if (busy) return;
         busy = true;
         btn.disabled = true;
-        OFF.list().then(function (meta) {
-          var saved = (meta.groups || []).filter(function (g) { return g.id === group; })[0];
-          if (saved) {
-            status.textContent = "Удаляем…";
-            return OFF.remove(group).then(function () {
-              busy = false; btn.disabled = false; return sync();
-            });
+        if (isFav()) {
+          // Explicit unfavorite: drop the list entry and its auto-saved
+          // offline copy. (The favorites list itself is never touched by the
+          // /offline.html "delete all" control — see sw.js clearAll.)
+          status.textContent = "Убираем…";
+          writeFav(readFav().filter(function (it) { return !it || it.u !== p; }));
+          busy = false; btn.disabled = false; sync();
+          if (OFF.supported && OFF.cachesAvailable) {
+            OFF.remove(group).catch(function () {});
           }
-          status.textContent = "Сохранение…";
-          var h1 = article.querySelector("h1");
-          return OFF.download(group, (h1 && h1.textContent) || document.title, pageUrls()).then(function (res) {
-            busy = false; btn.disabled = false;
+          return;
+        }
+        var list = readFav();
+        var title = pageTitle();
+        list.push({ u: p, t: title, at: Date.now() });
+        writeFav(list);
+        busy = false; btn.disabled = false; sync();
+        // Favorite pages are saved for offline reading automatically.
+        if (OFF.supported && OFF.cachesAvailable) {
+          status.textContent = "Сохраняем для офлайн-чтения…";
+          OFF.download(group, title, pageUrls()).then(function (res) {
             res = res || {};
-            if (res.error && !res.total) status.textContent = "Не удалось сохранить: " + res.error;
-            else if (res.timeout) status.textContent = "Сохранение продолжается в фоне…";
-            else if (res.failed) status.textContent = "Не всё сохранилось (ошибок: " + res.failed + ")";
-            return sync();
+            if (res.error && !res.total) status.textContent = "В избранном · не удалось сохранить офлайн-копию: " + res.error;
+            else if (res.timeout) status.textContent = "В избранном · сохранение копии продолжается в фоне…";
+            else if (res.failed) status.textContent = "В избранном · копия сохранена частично (ошибок: " + res.failed + ")";
+            else status.textContent = "✓ В избранном";
+            sync();
+          }).catch(function () {
+            status.textContent = "В избранном · не удалось сохранить офлайн-копию.";
+            sync();
           });
-        }).catch(function () {
-          busy = false; btn.disabled = false;
-          status.textContent = "Не удалось сохранить.";
-        });
+        } else {
+          status.textContent = "✓ В избранном";
+        }
       });
 
       sync();

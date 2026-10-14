@@ -6,21 +6,28 @@
 <TITLE>Офлайн-чтение — Русская Апокрифическая Студия</TITLE>
 <meta name="Description" content="Сохранение собрания текстов для чтения без подключения к интернету.">
 <META NAME="viewport" CONTENT="width=device-width, initial-scale=1.0">
-<LINK REL=STYLESHEET HREF="/src/styles/main.css?v=b13c63bd" TYPE="text/css">
+<LINK REL=STYLESHEET HREF="/src/styles/main.css?v=3de8bfb9" TYPE="text/css">
 
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/favicon.svg">
 <link rel="canonical" href="https://ixoye.space/offline.html">
 <meta name="robots" content="noindex">
 <script src="/src/scripts/offline-core.js?v=85a0ae59" defer></script>
-<script src="/src/scripts/nav.js?v=3344cc75" defer></script>
-<script src="/src/scripts/offline.js?v=89f52e40" defer></script>
+<script src="/src/scripts/nav.js?v=e9bc284c" defer></script>
+<script src="/src/scripts/offline.js?v=a83abfc2" defer></script>
 <script>(function(){try{var v=parseFloat(localStorage.getItem("ixoye-text-size"));if(isFinite(v)&&v>=0.8&&v<=1.6)document.documentElement.style.setProperty("--text-scale",String(v));}catch(e){}})();</script>
 <link rel="manifest" href="/manifest.webmanifest">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="theme-color" content="#E7EBCB">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Русская Апокрифическая Студия">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="Офлайн-чтение — Русская Апокрифическая Студия">
+<meta property="og:description" content="Сохранение собрания текстов для чтения без подключения к интернету.">
+<meta property="og:url" content="https://ixoye.space/offline.html">
+<meta name="twitter:card" content="summary">
 </head>
 
 <BODY>
@@ -44,7 +51,14 @@
     </ul>
 
     <div class="nav-bar" role="group" aria-label="Навигация">
-      <button type="button" class="nav-ico nav-back" aria-label="Назад" title="Назад"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <details class="nav-drop nav-search">
+        <summary class="nav-ico" aria-label="Поиск" title="Поиск"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></summary>
+        <form class="nav-search-form" action="/poisk.html" method="get" role="search">
+          <input type="search" name="q" placeholder="Поиск по сайту…" aria-label="Поиск по сайту" enterkeyhint="search" autocomplete="off">
+        </form>
+      </details>
+
+      <button type="button" class="nav-ico nav-back" aria-label="На уровень выше" title="На уровень выше" data-up="/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
 
       <details class="nav-drop nav-menu">
         <summary class="nav-ico" aria-label="Разделы сайта" title="Разделы"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary>
@@ -71,22 +85,9 @@
         </ul>
       </details>
 
-      <select class="nav-text" aria-label="Текущий текст" title="Выбор текста">
-          <option value="/offline.html" selected>Офлайн-чтение</option>
-          <option value="/index.html">Русская Апокрифическая Студия</option>
-          <option value="/about.html">О студии</option>
-          <option value="/animation.html">Pleroma — An Opening in Seven Breaths</option>
-          <option value="/poisk.html">Поиск по сайту</option>
-      </select>
-
-      <details class="nav-drop nav-search">
-        <summary class="nav-ico" aria-label="Поиск" title="Поиск"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></summary>
-        <form class="nav-search-form" action="/poisk.html" method="get" role="search">
-          <input type="search" name="q" placeholder="Поиск по сайту…" aria-label="Поиск по сайту" enterkeyhint="search" autocomplete="off">
-        </form>
-      </details>
-
       <button type="button" class="nav-ico nav-forward" aria-label="Вперёд" title="Вперёд"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+
+      <a class="nav-ico nav-fav" href="/fav.html" aria-label="Избранное" title="Избранное"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5C7 16.5 3.5 13.3 3.5 9.6 3.5 7 5.5 5 8 5c1.6 0 3.1.8 4 2.1C12.9 5.8 14.4 5 16 5c2.5 0 4.5 2 4.5 4.6 0 3.7-3.5 6.9-8.5 10.9z"/></svg></a>
     </div>
   </nav>
 </header>
@@ -125,20 +126,20 @@
       <p id="offline-status" class="offline-status" role="status" aria-live="polite"></p>
     </section>
 
-    <section class="offline-section" id="offline-sections-section">
-      <h2>Отдельные разделы</h2>
-      <p class="offline-muted">Если целиком не помещается — сохраните только нужные разделы.
-      Сохранённый раздел отмечен кнопкой «✓ Сохранено» — нажмите её, чтобы удалить раздел.</p>
-      <ul id="offline-sections-list" class="offline-list"></ul>
+    <section class="offline-section" id="offline-doc-section">
+      <h2>Избранное</h2>
+      <p class="offline-muted">Любой текст можно добавить в <a href="/fav.html">избранное</a>
+      кнопкой «☆ В избранное» под текстом — избранные страницы автоматически
+      сохраняются для офлайн-чтения. Избранное не удаляется кнопкой «Удалить
+      всё сохранённое» ниже.</p>
+    </section>
+
+    <section class="offline-section" id="offline-clear-section">
+      <h2>Удаление</h2>
       <p id="offline-clear-block" hidden>
         <button type="button" id="offline-clear-btn" class="offline-btn">Удалить всё сохранённое</button>
       </p>
-    </section>
-
-    <section class="offline-section" id="offline-doc-section">
-      <h2>Отдельные тексты</h2>
-      <p class="offline-muted">Любой текст можно сохранить со своей страницы — кнопкой
-      «Скачать для офлайн-чтения» под текстом.</p>
+      <p class="offline-muted">Удаляет сохранённое собрание, но не трогает избранное.</p>
     </section>
 
     <p class="offline-muted offline-note">Сохранение продолжается в фоне, даже если

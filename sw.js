@@ -7,10 +7,11 @@
  *   ixoye-offline-data-v<ver>  opportunistic cache: anything fetched while
  *                           online (visited pages, css, images) so recently
  *                           looked-at content is available offline by itself
- *   ixoye-offline-<group>   explicit offline bundles requested from
- *                           /offline.html ("site", "section:<dir>") or from a
- *                           text's own "download for offline" button
- *                           ("doc:<path>")
+ *   ixoye-offline-<group>   explicit offline bundles: the whole site
+ *                           ("site", from /offline.html) and favorites
+ *                           auto-saves ("fav:<path>", from a text's own
+ *                           favorites button). Favorites bundles are exempt
+ *                           from the "delete all" control.
  *
  * Serving is cache-first for every same-origin GET. Navigations that are
  * neither cached nor reachable offline fall back to /offline.html.
@@ -36,7 +37,7 @@
  */
 "use strict";
 
-var VERSION = "7";
+var VERSION = "8";
 var SHELL_CACHE = "ixoye-shell-v" + VERSION;
 var DATA_CACHE = "ixoye-offline-data-v" + VERSION;
 // The group registry lives in its own stable cache (not the versioned shell
@@ -101,6 +102,18 @@ function isDataCache(name) {
 /** Explicit per-group bundle caches only (never shell / data / meta). */
 function isGroupCache(name) {
   return name.indexOf("ixoye-offline-") === 0 && !isDataCache(name);
+}
+
+/**
+ * Favorites auto-save bundles ("fav:<path>"). They are exempt from the
+ * /offline.html "delete all" control: the favorites list must survive it.
+ */
+function isFavCache(name) {
+  return name.indexOf("ixoye-offline-fav:") === 0;
+}
+
+function isFavGroup(id) {
+  return String(id || "").indexOf("fav:") === 0;
 }
 
 function isOurs(name) {
@@ -507,16 +520,17 @@ function remove(group) {
   });
 }
 
-/** Delete explicit bundles only; the opportunistic data cache is preserved. */
+/** Delete explicit bundles only; the opportunistic data cache is preserved,
+ *  and so are favorites bundles (the favorites list survives "delete all"). */
 function clearAll() {
   return caches.keys().then(function (keys) {
     return Promise.all(
-      keys.filter(isGroupCache)
+      keys.filter(function (k) { return isGroupCache(k) && !isFavCache(k); })
         .map(function (k) { return caches.delete(k); })
     );
   }).then(function () {
     return readMeta().then(function (meta) {
-      meta.groups = [];
+      meta.groups = (meta.groups || []).filter(function (g) { return g && isFavGroup(g.id); });
       return writeMeta(meta).then(function () { return {}; });
     });
   });

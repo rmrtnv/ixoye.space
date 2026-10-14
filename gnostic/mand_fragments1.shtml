@@ -1,29 +1,34 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Фрагменты священных писаний мандеев — в восстановлении — Русская Апокрифическая Студия</title>
-<meta name="robots" content="noindex">
-<link rel="stylesheet" href="/src/styles/main.css?v=b13c63bd">
+<HTML>
+<HEAD>
+<TITLE>Фрагменты священных писаний мандеев - Мандейские тексты - Гностицизм - Русская Апокрифическая Студия</TITLE>
+<meta name="Description" content="Фрагменты священных писаний мандеев">
+
+<LINK REL=STYLESHEET HREF="/src/styles/main.css?v=3de8bfb9" TYPE="text/css">
+
+
+
+
+
+<script>(function(){try{var v=parseFloat(localStorage.getItem("ixoye-text-size"));if(isFinite(v)&&v>=0.8&&v<=1.6)document.documentElement.style.setProperty("--text-scale",String(v));}catch(e){}})();</script>
+<script src="/src/scripts/offline-core.js?v=85a0ae59" defer></script>
+<script src="/src/scripts/nav.js?v=e9bc284c" defer></script>
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#E7EBCB">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/favicon.svg">
 <link rel="canonical" href="https://ixoye.space/gnostic/mand_fragments1.shtml">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Русская Апокрифическая Студия">
 <meta property="og:locale" content="ru_RU">
-<meta property="og:title" content="Фрагменты священных писаний мандеев — в восстановлении — Русская Апокрифическая Студия">
-<meta property="og:description" content="Раннехристианские и апокрифические тексты на русском языке — Русская Апокрифическая Студия.">
+<meta property="og:title" content="Фрагменты священных писаний мандеев - Мандейские тексты - Гностицизм - Русская Апокрифическая Студия">
+<meta property="og:description" content="Фрагменты священных писаний мандеев">
 <meta property="og:url" content="https://ixoye.space/gnostic/mand_fragments1.shtml">
 <meta name="twitter:card" content="summary">
-<script src="/src/scripts/offline-core.js?v=85a0ae59" defer></script>
-<script src="/src/scripts/nav.js?v=3344cc75" defer></script>
-<script>(function(){try{var v=parseFloat(localStorage.getItem("ixoye-text-size"));if(isFinite(v)&&v>=0.8&&v<=1.6)document.documentElement.style.setProperty("--text-scale",String(v));}catch(e){}})();</script>
-<link rel="manifest" href="/manifest.webmanifest">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="theme-color" content="#E7EBCB">
 </head>
 
 
@@ -48,7 +53,14 @@
     </ul>
 
     <div class="nav-bar" role="group" aria-label="Навигация">
-      <button type="button" class="nav-ico nav-back" aria-label="Назад" title="Назад"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <details class="nav-drop nav-search">
+        <summary class="nav-ico" aria-label="Поиск" title="Поиск"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></summary>
+        <form class="nav-search-form" action="/poisk.html" method="get" role="search">
+          <input type="search" name="q" placeholder="Поиск по сайту…" aria-label="Поиск по сайту" enterkeyhint="search" autocomplete="off">
+        </form>
+      </details>
+
+      <button type="button" class="nav-ico nav-back" aria-label="На уровень выше" title="На уровень выше" data-up="/gnostic/index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
 
       <details class="nav-drop nav-menu">
         <summary class="nav-ico" aria-label="Разделы сайта" title="Разделы"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary>
@@ -75,48 +87,9 @@
         </ul>
       </details>
 
-      <select class="nav-text" aria-label="Текущий текст" title="Выбор текста">
-          <option value="/gnostic/mand_fragments1.shtml" selected>Фрагменты священных писаний мандеев</option>
-          <option value="/gnostic/index.html">Гностицизм</option>
-          <option value="/gnostic/gnost_lit.html">Гностическая литература</option>
-          <option value="/gnostic/mand_lit.html">Мандейские тексты</option>
-          <option value="/gnostic/manich_lit.html">Манихейские тексты</option>
-          <option value="/gnostic/about_pistis.html">Немного о Пистис Софии</option>
-          <option value="/gnostic/about-ev-iuda.shtml">О Евангелии Иуды (Искариота)</option>
-          <option value="/gnostic/b_petr1.html">Деяние Петра</option>
-          <option value="/gnostic/beseda_iisus.html">Беседа Иисуса с учениками</option>
-          <option value="/gnostic/cb_text1.html">Текст без названия</option>
-          <option value="/gnostic/comment_pistis.html">Примечания к Пистис Софии</option>
-          <option value="/gnostic/ev_maria_gnost.html">Евангелие от Марии</option>
-          <option value="/gnostic/ev-iuda.shtml">Евангелие Иуды (Искариота)</option>
-          <option value="/gnostic/gnost_molitva2.html">Вторая гностическая молитва без названия</option>
-          <option value="/gnostic/kniga-ieu1.html">Первая Книга Иеу</option>
-          <option value="/gnostic/kniga-ieu2.html">Вторая Книга Иеу</option>
-          <option value="/gnostic/komments-ieu1.html">Примечания к Первой Книге Иеу</option>
-          <option value="/gnostic/komments-ieu2.html">Примечания ко Второй Книге Иеу</option>
-          <option value="/gnostic/mol_iosif.html">Молитва Иосифа</option>
-          <option value="/gnostic/oda_solomon_c.html">Оды Соломона (полный вариант)</option>
-          <option value="/gnostic/oda_solomon.html">Оды Соломона</option>
-          <option value="/gnostic/pistis_book1.html">Первая Книга ПИСТИС СОФИИ</option>
-          <option value="/gnostic/pistis_book2.html">Вторая Книга ПИСТИС СОФИИ</option>
-          <option value="/gnostic/pistis_book3.html">Третья Книга ПИСТИС СОФИИ</option>
-          <option value="/gnostic/pistis_book4.html">Четвертая Книга ПИСТИС СОФИИ</option>
-          <option value="/gnostic/pistis1.html">Пистис Софии - главы 1-38</option>
-          <option value="/gnostic/pistis2.html">Пистис Софии - главы 60-63</option>
-          <option value="/gnostic/pistis3.html">Пистис Софии - глава 100</option>
-          <option value="/gnostic/pistis4.html">Пистис Софии - главы 111-113</option>
-          <option value="/gnostic/pistis5.html">Пистис Софии - выдержки из глав 131-133</option>
-          <option value="/gnostic/put_d.html">Фрагмент о путешествии души</option>
-      </select>
+      <button type="button" class="nav-ico nav-forward" aria-label="Вперёд" title="Вперёд" data-next="/gnostic/mand_ginza_fragment.shtml"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
 
-      <details class="nav-drop nav-search">
-        <summary class="nav-ico" aria-label="Поиск" title="Поиск"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></summary>
-        <form class="nav-search-form" action="/poisk.html" method="get" role="search">
-          <input type="search" name="q" placeholder="Поиск по сайту…" aria-label="Поиск по сайту" enterkeyhint="search" autocomplete="off">
-        </form>
-      </details>
-
-      <button type="button" class="nav-ico nav-forward" aria-label="Вперёд" title="Вперёд"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+      <a class="nav-ico nav-fav" href="/fav.html" aria-label="Избранное" title="Избранное"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5C7 16.5 3.5 13.3 3.5 9.6 3.5 7 5.5 5 8 5c1.6 0 3.1.8 4 2.1C12.9 5.8 14.4 5 16 5c2.5 0 4.5 2 4.5 4.6 0 3.7-3.5 6.9-8.5 10.9z"/></svg></a>
     </div>
   </nav>
 </header>
@@ -125,10 +98,532 @@
   <article class="content-block">
     <h1>Фрагменты священных писаний мандеев</h1>
 
-<p>Текст «Фрагменты священных писаний мандеев» входил в раздел, но его файл был утерян при архивации и пока недоступен. Мы работаем над восстановлением. Приносим извинения за неудобства.</p>
+<p>
+
+<hr><TT>Фрагменты священных писаний мандеев</TT>
+<BR><TT>Мандейская традиция представляет живой поток гностической традиции,
+выжившей с древних времен до настоящего времени в Ираке и Иране. В эту
+подборку вошли следующие фрагменты:</TT><TT></TT>
+
+<p><TT>Посланник света.</TT>
+<BR><TT>Избавление Адама.</TT>
+<BR><TT>Крещение Адама.</TT>
+<BR><TT>Избавление души.</TT>
+<BR><TT>Счастье и Мир.</TT>
+<BR><TT>Душа в своей оболочке во всех цветах.</TT>
+<BR><TT>Объятый сном.</TT>
+<BR><TT>Песня возвышения.</TT>
+<BR><TT>Наставления Адаму от Утры<B><SUP><A HREF="#1">1</A></SUP></B></TT>
+<p>
+<div class="text-center"><h2>Посланник света указывает путь для спасения</h2></div>
+
+<div class="text-center">Я подготовил путь для добрых людей</div>
+
+<div class="text-center">и создал врата для всего мира.</div>
+
+<div class="text-center">Ворота для мира я создал</div>
+
+<div class="text-center">и установил трон на них.</div>
+
+<div class="text-center">Трон для добрых я установил</div>
+
+<div class="text-center">и усеял свет около него.</div>
+
+<div class="text-center">Свет я усеял около него,</div>
+
+<div class="text-center">который полностью совершенным.</div>
+
+<div class="text-center">И сторожевую башню для сыновей совершенства я установил,</div>
+
+<div class="text-center">в месте, где они живут, и нет там недостатка.</div>
+
+<div class="text-center">Я установил троны для них</div>
+
+<div class="text-center">и украсил их великолепной мантией.</div>
+
+<div class="text-center">Я наделил Иордан Большой Жизнью</div>
+
+<div class="text-center">и назначил хранителей его,</div>
+
+<div class="text-center">тех, кто был богат и без изъянов.</div>
+
+<div class="text-center">Я установил трон для господа сияющего ярко</div>
+
+<div class="text-center">и усеял свет перед ним.</div>
+
+<div class="text-center">Свет, который я усеял,</div>
+
+<div class="text-center">был полностью совершенен.</div>
+
+<div class="text-center">С освещением и похвалой,</div>
+
+<div class="text-center">с тем, что Жизнь предоставила мне услышать,</div>
+
+<div class="text-center">с освещением и похвалой</div>
+
+<div class="text-center">Я воскрес и пошел в Дом Могущественной Жизни.</div>
+
+<div class="text-center">С радостью, которую я чувствовал,</div>
+
+<div class="text-center">Я обратился к Могущественной Жизни.</div>
+
+<div class="text-center">Могущественная Жизнь радовалась и была довольна,</div>
+
+<div class="text-center">она была чрезмерно рада мне.</div>
+
+<div class="text-center">Жизнь благодарила меня</div>
+
+<div class="text-center">и дала мне больше славы, чем я имел прежде.</div>
+
+<div class="text-center">Она сказала мне:</div>
+
+<div class="text-center">Куста (Kusta) охраняет Тебя, добрый человек,</div>
+
+<div class="text-center">и сохрани те слова, что Ты говорил.</div>
+
+<div class="text-center">Жизнь, которая говорила в радости</div>
+
+<div class="text-center">через Утру сказала:</div>
+
+<div class="text-center">Хвалите сильного человека,</div>
+
+<div class="text-center">кто исцелил воду через огонь.</div>
+
+<div class="text-center">Хвалите сильного человека,</div>
+
+<div class="text-center">против которого огонь бессилен.</div>
+
+<div class="text-center">Огонь против которого бессилен;</div>
+
+<div class="text-center">Утра сиял всей своей яркостью.</div>
+
+<div class="text-center">Всей своей яркостью сиял Утра</div>
+
+<div class="text-center">и готов был&nbsp; путь для совершенных.</div>
+
+<div class="text-center">Для совершенных он подготовил путь</div>
+
+<div class="text-center">и предоставил спасение совершенным.</div>
+
+<div class="text-center">Спасение он предоставил совершенным</div>
+
+<div class="text-center">и помнил их имена в доме Могущественной Жизни.</div>
+
+<div class="text-center">* * *</div>
+
+<div class="text-center">&nbsp;</div>
+
+<div class="text-center">&nbsp;</div>
+
+<div class="text-center">&nbsp;</div>
+
+<div class="text-center"></div>
+
+<div class="text-center"><h2>Избавление Адама – мандейский гимн</h2></div>
+
+<div class="text-center">От имени Большой Жизни</div>
+
+<div class="text-center">возвышенный Свет будет прославлен.</div>
+
+<div class="text-center">Из Места Света я прибыл в грядущее,</div>
+
+<div class="text-center">из твоего вечного места пребывания,</div>
+
+<div class="text-center">Из Места Света я прибыл в грядущее,</div>
+
+<div class="text-center">и Утра из Дома Жизни сопровождал меня.</div>
+
+<div class="text-center">Утра, который сопровождал меня из Дома Большой Жизни</div>
+
+<div class="text-center">поддерживал каплю живительной воды в своей руке.</div>
+
+<div class="text-center">Капля, которую он держался в своей руке</div>
+
+<div class="text-center">была полна отпрысков.</div>
+
+<div class="text-center">Она дала мне свои отпрыски,</div>
+
+<div class="text-center">которыми наполнились ритуальные книги и молитвы.</div>
+
+<div class="text-center">Тогда она дала мне больше их,</div>
+
+<div class="text-center">и затем мое страдальное сердце исцелилось.</div>
+
+<div class="text-center">Мое страдальное сердце исцелилось</div>
+
+<div class="text-center">и моя вселенская душа нашла покой.</div>
+
+<div class="text-center">* * *</div>
+
+<div class="text-center">&nbsp;</div>
+
+<div class="text-center">&nbsp;</div>
+
+<div class="text-center"></div>
+
+<div class="text-center"><h2>Крещение Адама - из «Гинзы»</h2></div>
+
+<div class="text-center">Планеты там стоят,</div>
+
+<div class="text-center">они связаны оковами и говорят:</div>
+
+<div class="text-center">Когда Адам сбежал от нас</div>
+
+<div class="text-center">бег времени был разрушен.</div>
+
+<div class="text-center">Когда Адам поднялся к нам,</div>
+
+<div class="text-center">наше сияние было нам возвращено.</div>
+
+<div class="text-center">Он воскрес и взошел к Дому Жизни;</div>
+
+<div class="text-center">они, Утры, омывали его в Иордане и защищали его.</div>
+
+<div class="text-center">Они омывали его и защищали его в Иордане;</div>
+
+<div class="text-center">они поместили его по&nbsp; правую руку от себя.</div>
+
+<div class="text-center">Они крестили его их крещением</div>
+
+<div class="text-center">и всесильный говорил чистыми словами.</div>
+
+<div class="text-center">* * *</div>
+
+<div class="text-center">&nbsp;</div>
+
+<div class="text-center">&nbsp;</div>
+
+<div class="text-center"></div>
+
+<div class="text-center"><h2>Избавление души</h2></div>
+
+<div class="text-center">Приветствую тебя, приветствую тебя душа,</div>
+
+<div class="text-center">для тебя отбыл из мира.</div>
+
+<div class="text-center">Ты остановила тление</div>
+
+<div class="text-center">и воняющее тело, в котором ты оказались,</div>
+
+<div class="text-center">обитель, обитель беззаконника,</div>
+
+<div class="text-center">место, которое является грехом,</div>
+
+<div class="text-center">Мир Темноты,</div>
+
+<div class="text-center">из ненависти, зависти, и борьбы,</div>
+
+<div class="text-center">обитель, в которой живые планеты,</div>
+
+<div class="text-center">обеспечивают немощь и муки;</div>
+
+<div class="text-center">они приносят муки и отбор,</div>
+
+<div class="text-center">и каждый день они порождают волнение.</div>
+
+<div class="text-center">Воскресни, воскресни, душа,</div>
+
+<div class="text-center">взойди к своей первой земле.</div>
+
+<div class="text-center">К своей первой земле, взойди,</div>
+
+<div class="text-center">к месту, из которого ты была пересажена,</div>
+
+<div class="text-center">к месту, из которого ты была пересажена,</div>
+
+<div class="text-center">в прекрасную обитель Утры.</div>
+
+<div class="text-center">Лучше всего сама надень свое сияющее одеяние</div>
+
+<div class="text-center">и надень свой великолепный венок.</div>
+
+<div class="text-center">Сядь на своем троне, который сияет,</div>
+
+<div class="text-center">который Жизнь, основанная для тебя в месте Света.</div>
+
+<div class="text-center">Воскресни, найди прибежище,</div>
+
+<div class="text-center">среди ангелов (Утры), своих братьев.</div>
+
+<div class="text-center">Поскольку ты все изучила, объяви благословение</div>
+
+<div class="text-center">своему первому отцовскому дому.</div>
+
+<div class="text-center">И прокляни то место,</div>
+
+<div class="text-center">в котором дом твоего земного опекуна.</div>
+
+<div class="text-center">В течение лет, которые ты провела в нем,</div>
+
+<div class="text-center">эти Семь были твоими врагами,</div>
+
+<div class="text-center">эти Семь были твоими врагами.</div>
+
+<div class="text-center">Твои враги были этими Семью,</div>
+
+<div class="text-center">и эти Двенадцать были твоими преследователями.</div>
+
+<div class="text-center">* * *</div>
+
+<div class="text-center">&nbsp;</div>
+
+<div class="text-center">&nbsp;</div>
+
+<div class="text-center"></div>
+
+<div class="text-center"><h2>Счастье и Мир</h2></div>
+
+<div class="text-center">Счастье и мир там должны быть</div>
+
+<div class="text-center">на дороге, которую Адам построил хорошо.</div>
+
+<div class="text-center">Счастье и мир там должны быть</div>
+
+<div class="text-center">на дороге, которую душа оберёт.</div>
+
+<div class="text-center">Иди, душа, к победе</div>
+
+<div class="text-center">к месту, из которого ты была изъята,</div>
+
+<div class="text-center">в место радости,</div>
+
+<div class="text-center">в котором сияет лицо.</div>
+
+<div class="text-center">Лицо сияет в этом,</div>
+
+<div class="text-center">форма освещена и не померкла.</div>
+
+<div class="text-center">Душа ослабила ее цепи</div>
+
+<div class="text-center">и сломала ее оковы.</div>
+
+<div class="text-center">Это теряет его телесную одежду,</div>
+
+<div class="text-center">тогда это обернулось, видел я это, и дрожал.</div>
+
+<div class="text-center">Зов души - зов жизни</div>
+
+<div class="text-center">который отступает от тела безжизненного.</div>
+
+<div class="text-center">* * *</div>
+
+<div class="text-center">&nbsp;</div>
+
+<div class="text-center">&nbsp;</div>
+
+<div class="text-center"></div>
+
+<div class="text-center"><h2>Душа в своей оболочке во всех цветах - из «Гинзы»</h2></div>
+
+<div class="text-center">Душа, душа говорит:</div>
+
+<div class="text-center">Кто бросает меня в Тибил (Tibil), в землю,</div>
+
+<div class="text-center">Кто бросает меня в Тибил (Tibil), в землю,</div>
+
+<div class="text-center">кто приковал меня в стене?</div>
+
+<div class="text-center">Кто бросает меня в темницу,</div>
+
+<div class="text-center">которая соответствует полноте мира?</div>
+
+<div class="text-center">Кто бросил цепь вокруг меня,</div>
+
+<div class="text-center">которая безмерная?</div>
+
+<div class="text-center">Кто одел меня в одежду</div>
+
+<div class="text-center">из всех цветов и оттенков?</div>
+
+<div class="text-center">* * *</div>
+
+<div class="text-center">&nbsp;</div>
+
+<div class="text-center">&nbsp;</div>
+
+<div class="text-center"></div>
+
+<div class="text-center"><h2>Объятый сном</h2></div>
+
+<div class="text-center">Я объят сном и сплю</div>
+
+<div class="text-center">в одеянии, которое без изъяна.</div>
+
+<div class="text-center">В одеянии, которое без изъяна,</div>
+
+<div class="text-center">которое не имеет никаких недостатков и отсутствий.</div>
+
+<div class="text-center">Жизнь знала обо мне,</div>
+
+<div class="text-center">Адам, который спал, пробудился.</div>
+
+<div class="text-center">Он Утешитель взял меня ладонью своей правой руки</div>
+
+<div class="text-center">и дал пальмовую ветвь в руку мою.</div>
+
+<div class="text-center">Свет бросает меня в темноту,</div>
+
+<div class="text-center">и темнота заполнилась светом.</div>
+
+<div class="text-center">В день, когда свет восстанет,</div>
+
+<div class="text-center">темнота возвратится на свое место.</div>
+
+<div class="text-center">Она приблизится к облакам света,</div>
+
+<div class="text-center">и её путь будет установлен на Место Света.</div>
+
+<div class="text-center">* * *</div>
+
+<div class="text-center">&nbsp;</div>
+
+<div class="text-center">&nbsp;</div>
+
+<div class="text-center"></div>
+
+<div class="text-center"><h2>Песня возвышения</h2></div>
+
+<div class="text-center">Я лечу и проникаю туда,</div>
+
+<div class="text-center">пока не достигну сторожевой башни солнца.</div>
+
+<div class="text-center">Я кричу:</div>
+
+<div class="text-center">"Кто будет вести меня мимо сторожевой башни S&atilde;m&iuml;s"</div>
+
+<div class="text-center">"Твоя награда, твоя работа, твоя милостыня, и твоя праведность</div>
+
+<div class="text-center">будет вести тебя мимо сторожевой башни S&atilde;m&iuml;s"</div>
+
+<div class="text-center">Как сильно я возрадовался,</div>
+
+<div class="text-center">как сильно мое сердце радуется.</div>
+
+<div class="text-center">Насколько я ожидаю</div>
+
+<div class="text-center">дня, когда моя борьба закончится,</div>
+
+<div class="text-center">дня, когда моя борьба закончится</div>
+
+<div class="text-center">и мой путь проляжет к Месту Жизни.</div>
+
+<div class="text-center">Я спешу и перехожу туда,</div>
+
+<div class="text-center">пока я не достигну сторожевой башни луны.</div>
+
+<div class="text-center">Когда я достиг водных ручьев,</div>
+
+<div class="text-center">поднялось сияние и встретило меня.</div>
+
+<div class="text-center">Оно взяло меня за ладонью моей правой руки</div>
+
+<div class="text-center">и понесло меня по потокам.</div>
+
+<div class="text-center">Сияние пришло, и я был одет в нем,</div>
+
+<div class="text-center">свет был принесен, и я был объят им.</div>
+
+<div class="text-center">Жизнь поддержала Жизнь....</div>
+
+<div class="text-center">Сын благодати,</div>
+
+<div class="text-center">покажи мне путь к Утре</div>
+
+<div class="text-center">и подними меня туда, где твой отец</div>
+
+<div class="text-center">воскреси до Места Света.</div>
+
+<div class="text-center">* * *</div>
+
+<div class="text-center">&nbsp;</div>
+
+<div class="text-center">&nbsp;</div>
+
+<div class="text-center"></div>
+
+<div class="text-center"><h2>Наставление Адама от Утры</h2></div>
+
+<div class="text-center">Не дремли и спи,</div>
+
+<div class="text-center">и не забудь то, что твой господь приказал тебе.</div>
+
+<div class="text-center">Не будет сын в Доме мира,</div>
+
+<div class="text-center">и не назовут его виновным в Тибиле (Tibil).</div>
+
+<div class="text-center">Не люби ароматные венки,</div>
+
+<div class="text-center">и не поддавайся соблазнительной женщине.</div>
+
+<div class="text-center">Не люби приятные ароматы,</div>
+
+<div class="text-center">и не пренебрегай молитвой на ночь.</div>
+
+<div class="text-center">Не люби предательский дух</div>
+
+<div class="text-center">и соблазнительных блудниц.</div>
+
+<div class="text-center">Не люби вожделение,</div>
+
+<div class="text-center">и ложные вспышки.</div>
+
+<div class="text-center">Не пей и не станешь пьяным,</div>
+
+<div class="text-center">и не забудь господа твоего в мыслях своих.</div>
+
+<div class="text-center">При входе и при выходе</div>
+
+<div class="text-center">будь осторожен, чтобы не забыть господа своего.</div>
+
+<div class="text-center">Когда входишь и когда выходишь</div>
+
+<div class="text-center">будь осторожен, чтобы не забыть господа своего.</div>
+
+<div class="text-center">Когда стоишь и когда сидишь</div>
+
+<div class="text-center">будьте осторожен, чтобы не забыть господа своего.</div>
+
+<div class="text-center">Когда отдыхаешь и когда лежишь</div>
+
+<div class="text-center">будь осторожен, чтобы не забыть господа своего.</div>
+
+<div class="text-center">Не говори; я - первородный сын,</div>
+
+<div class="text-center">ибо во всех своих делах я доказательство против безумия.</div>
+
+<div class="text-center">Адам, присмотрись к миру</div>
+
+<div class="text-center">который полностью нереален.</div>
+
+<div class="text-center">И в эту нереальную вещь,</div>
+
+<div class="text-center">ты не можешь не поверить.</div>
+
+<div class="text-center">* * *</div>
+
+<div class="text-center">&nbsp;</div>
+
+<div class="text-center"></div>
+<B>Примечания</B>
+
+<p><A NAME="1"></A>1.&nbsp; Утра (Uthra) - самые низкие ангелы, эфирные
+существа, духи света и жизни. Эти существа были созданы, когда возник эфирный
+мир. Они не имеют свободной воли и индивидуальности. Все Утры имеют "ограниченный
+строк гарантии" приблизительно около 500 -1000 лет, потом они обычно гибнут
+и заменяются другим Утрами. Эти ангелы не имеют физической формы, хотя
+некоторые могут иметь видимые формы. Согласно египетской мифологии Утры
+используются богами чтобы связываться с "миром смертных". Это название
+происходит от изменённого мандейского слова - "ангел". После «у» следует
+глухой межзубный фрикативный, или придыхательный звук, который в английской
+транскрипции передается как th, а в немецкой – как &#355;. Русифицируя это написание,
+можно писать как Утры, или как Утхры. И то, и другое – чистая условность.
+
   </article>
 </main>
-
+<nav class="next-text" aria-label="Читать далее">
+  <a class="next-text-prev" href="/gnostic/mand_about.shtml">← О мандеях</a>
+  <a class="next-text-next" href="/gnostic/mand_ginza_fragment.shtml">Далее: Отрывок из Гинзы →</a>
+</nav>
 <footer>
   <p>© 2001-2026 · <a href="mailto:idixx@yandex.ru">Русская апокрифическая студия</a> · <a href="/about.html">О студии</a></p>
 </footer>

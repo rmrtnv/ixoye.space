@@ -1,29 +1,34 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Книга исполинов — в восстановлении — Русская Апокрифическая Студия</title>
-<meta name="robots" content="noindex">
-<link rel="stylesheet" href="/src/styles/main.css?v=b13c63bd">
+<HTML>
+<HEAD>
+<TITLE>Книга исполинов - Гностицизм - Русская Апокрифическая Студия</TITLE>
+<meta name="Description" content="Книга исполинов">
+<meta name="Keywords" content="Книга исполины">
+<LINK REL=STYLESHEET HREF="/src/styles/main.css?v=3de8bfb9" TYPE="text/css">
+
+
+
+
+
+<script>(function(){try{var v=parseFloat(localStorage.getItem("ixoye-text-size"));if(isFinite(v)&&v>=0.8&&v<=1.6)document.documentElement.style.setProperty("--text-scale",String(v));}catch(e){}})();</script>
+<script src="/src/scripts/offline-core.js?v=85a0ae59" defer></script>
+<script src="/src/scripts/nav.js?v=e9bc284c" defer></script>
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#E7EBCB">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/favicon.svg">
 <link rel="canonical" href="https://ixoye.space/gnostic/manich_book_of_ispolin.shtml">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Русская Апокрифическая Студия">
 <meta property="og:locale" content="ru_RU">
-<meta property="og:title" content="Книга исполинов — в восстановлении — Русская Апокрифическая Студия">
-<meta property="og:description" content="Раннехристианские и апокрифические тексты на русском языке — Русская Апокрифическая Студия.">
+<meta property="og:title" content="Книга исполинов - Гностицизм - Русская Апокрифическая Студия">
+<meta property="og:description" content="Книга исполинов">
 <meta property="og:url" content="https://ixoye.space/gnostic/manich_book_of_ispolin.shtml">
 <meta name="twitter:card" content="summary">
-<script src="/src/scripts/offline-core.js?v=85a0ae59" defer></script>
-<script src="/src/scripts/nav.js?v=3344cc75" defer></script>
-<script>(function(){try{var v=parseFloat(localStorage.getItem("ixoye-text-size"));if(isFinite(v)&&v>=0.8&&v<=1.6)document.documentElement.style.setProperty("--text-scale",String(v));}catch(e){}})();</script>
-<link rel="manifest" href="/manifest.webmanifest">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="theme-color" content="#E7EBCB">
 </head>
 
 
@@ -48,7 +53,14 @@
     </ul>
 
     <div class="nav-bar" role="group" aria-label="Навигация">
-      <button type="button" class="nav-ico nav-back" aria-label="Назад" title="Назад"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <details class="nav-drop nav-search">
+        <summary class="nav-ico" aria-label="Поиск" title="Поиск"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></summary>
+        <form class="nav-search-form" action="/poisk.html" method="get" role="search">
+          <input type="search" name="q" placeholder="Поиск по сайту…" aria-label="Поиск по сайту" enterkeyhint="search" autocomplete="off">
+        </form>
+      </details>
+
+      <button type="button" class="nav-ico nav-back" aria-label="На уровень выше" title="На уровень выше" data-up="/gnostic/index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
 
       <details class="nav-drop nav-menu">
         <summary class="nav-ico" aria-label="Разделы сайта" title="Разделы"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary>
@@ -75,48 +87,9 @@
         </ul>
       </details>
 
-      <select class="nav-text" aria-label="Текущий текст" title="Выбор текста">
-          <option value="/gnostic/manich_book_of_ispolin.shtml" selected>Книга исполинов</option>
-          <option value="/gnostic/index.html">Гностицизм</option>
-          <option value="/gnostic/gnost_lit.html">Гностическая литература</option>
-          <option value="/gnostic/mand_lit.html">Мандейские тексты</option>
-          <option value="/gnostic/manich_lit.html">Манихейские тексты</option>
-          <option value="/gnostic/about_pistis.html">Немного о Пистис Софии</option>
-          <option value="/gnostic/about-ev-iuda.shtml">О Евангелии Иуды (Искариота)</option>
-          <option value="/gnostic/b_petr1.html">Деяние Петра</option>
-          <option value="/gnostic/beseda_iisus.html">Беседа Иисуса с учениками</option>
-          <option value="/gnostic/cb_text1.html">Текст без названия</option>
-          <option value="/gnostic/comment_pistis.html">Примечания к Пистис Софии</option>
-          <option value="/gnostic/ev_maria_gnost.html">Евангелие от Марии</option>
-          <option value="/gnostic/ev-iuda.shtml">Евангелие Иуды (Искариота)</option>
-          <option value="/gnostic/gnost_molitva2.html">Вторая гностическая молитва без названия</option>
-          <option value="/gnostic/kniga-ieu1.html">Первая Книга Иеу</option>
-          <option value="/gnostic/kniga-ieu2.html">Вторая Книга Иеу</option>
-          <option value="/gnostic/komments-ieu1.html">Примечания к Первой Книге Иеу</option>
-          <option value="/gnostic/komments-ieu2.html">Примечания ко Второй Книге Иеу</option>
-          <option value="/gnostic/mol_iosif.html">Молитва Иосифа</option>
-          <option value="/gnostic/oda_solomon_c.html">Оды Соломона (полный вариант)</option>
-          <option value="/gnostic/oda_solomon.html">Оды Соломона</option>
-          <option value="/gnostic/pistis_book1.html">Первая Книга ПИСТИС СОФИИ</option>
-          <option value="/gnostic/pistis_book2.html">Вторая Книга ПИСТИС СОФИИ</option>
-          <option value="/gnostic/pistis_book3.html">Третья Книга ПИСТИС СОФИИ</option>
-          <option value="/gnostic/pistis_book4.html">Четвертая Книга ПИСТИС СОФИИ</option>
-          <option value="/gnostic/pistis1.html">Пистис Софии - главы 1-38</option>
-          <option value="/gnostic/pistis2.html">Пистис Софии - главы 60-63</option>
-          <option value="/gnostic/pistis3.html">Пистис Софии - глава 100</option>
-          <option value="/gnostic/pistis4.html">Пистис Софии - главы 111-113</option>
-          <option value="/gnostic/pistis5.html">Пистис Софии - выдержки из глав 131-133</option>
-          <option value="/gnostic/put_d.html">Фрагмент о путешествии души</option>
-      </select>
+      <button type="button" class="nav-ico nav-forward" aria-label="Вперёд" title="Вперёд" data-next="/gnostic/manich_citata_biruni.shtml"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
 
-      <details class="nav-drop nav-search">
-        <summary class="nav-ico" aria-label="Поиск" title="Поиск"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></summary>
-        <form class="nav-search-form" action="/poisk.html" method="get" role="search">
-          <input type="search" name="q" placeholder="Поиск по сайту…" aria-label="Поиск по сайту" enterkeyhint="search" autocomplete="off">
-        </form>
-      </details>
-
-      <button type="button" class="nav-ico nav-forward" aria-label="Вперёд" title="Вперёд"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+      <a class="nav-ico nav-fav" href="/fav.html" aria-label="Избранное" title="Избранное"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5C7 16.5 3.5 13.3 3.5 9.6 3.5 7 5.5 5 8 5c1.6 0 3.1.8 4 2.1C12.9 5.8 14.4 5 16 5c2.5 0 4.5 2 4.5 4.6 0 3.7-3.5 6.9-8.5 10.9z"/></svg></a>
     </div>
   </nav>
 </header>
@@ -125,10 +98,199 @@
   <article class="content-block">
     <h1>Книга исполинов</h1>
 
-<p>Текст «Книга исполинов» входил в раздел, но его файл был утерян при архивации и пока недоступен. Мы работаем над восстановлением. Приносим извинения за неудобства.</p>
+<p><h2>Книга исполинов (Манихнйская версия)</h2>
+
+<hr>
+<p><TT>Советуем прочитать Книгу Наблюдателей (1 Енох 1-36) перед ознакомлением
+с манихейской "Книгой исполинов".</TT>
+<BR><TT>Фрагменты и цитаты из манихейской версии Книги Исполинов были восстановлены
+из разлчных средневековых рукописей на разных языках, включая Среднеперсидский,
+согдианский, югурский, коптский, парфянский, и латынь.</TT>
+<BR><TT>Представленые здесь страниц</TT><B><SUP><span class="small">1</span></SUP></B><TT>
+M1-4 полностью истинные и повествует историю падения ангелов и рождения
+исполинов, M5 и M6 приближаются по содержанию к предыдущим страницам, M8-9
+наверно должны были следовать за ними. M11-12 по сожержанию близки к предыдущим.
+M15 интерпретирует сон в M12. M16 и M18 - противоположные стороны той же
+самой страницы, с неопределенным количеством текста, потерянного между
+ними у основания страницы. M23, 26-27 принадлежат тому же самому последнему
+эпизоду, и M28-29 походят, Корее всего из постдилувианского периода.</TT>
+<BR><TT>Следующие фрагменты вероятные, но сомнительные. M14 приводит эпизод,
+в котором Енох дает наставления бесам, в тот момент, когда он был недосегаем
+исполинами. M16 приналежит (Махоейю?) когда он возвращает послание Еноха
+на каменных скрижалях и M17 представляет собой послание Енох, содержание
+которого соответствует контексту.</TT>
+<BR><TT>Следующие фрагменты предположительно возможны, но очень сомнительны.
+M7 мог также соответствовать эпизодом отображонным в M23, 26-27. Размещение
+M10 здесь базируется на предположении Скджаерва (Skjaerv), что Яим (Yima)
+отождествляется с еврейским Богом Яхве. Непонятно куда относится M13 и
+может быть отнесен к любой из последующих страниц. M19-20, естественно
+продолжают предыдущие страницы, в которых однако Са[х]м и Махоей не упоминаются,
+они идут после M18, но возможны и другие размещения. В M21 упущено наставление
+Еноха которое он сначала послает исполинам, но в проходе оно теряется,
+и поскольку ситуация ухудшается, он прибывает лично, чтобы непосредственно
+им передать. M22 показывает реакцию Еноха на просьбу бесов об милосердии,
+хотя этот эпизод мог также идти с M17 (хотя это сомнительно, что так много
+текста могло сохранится между M16 и M18). M24-25 расположены правильно,
+но могли также идти с M9-12</TT>
+<div class="text-center"></div>
+
+<div class="text-center"><h2>(Манихнйская версия в сохранившихся фрагментах
+и цитатах)</h2></div>
+&nbsp;
+
+<p>M1. Эти двести бесов спустились на землю.
+
+<p>M2. Их сошествие с неба возбудило других небесных существ (обитателей).
+
+<p>M3. Они спустились (на землю) из-за красоты женщин, которых они там
+(на земле) увидели.<B><SUP><span class="small">2</span></SUP></B>
+
+<p>M4. (И) чтобы совратить этих женщин, они обучили (их) запрещенным искусствам
+и небесным тайнам<B><SUP><span class="small">3</span></SUP></B> , и они (исполины)
+принесли руины на землю.<B><SUP><span class="small">4</span></SUP></B>
+
+<p>M5. Кто - то (Енох?) предупреждал, что пришествие этих двухсот бесов
+приведёт только к "потери речи", и "тяжолому труду".
+
+<p>M6. Они поработили человеческий род, убили сотни тысяч праведных в сражении,
+насильственно женились на красивых женщинах, и пленили народы. (Но) ангелы
+"спрятали" Еноха. <B><SUP><span class="small">5</span></SUP></B>
+
+<p>M7. (Когда) праведных сжигали, они вспоминали о мудром Енохе.
+
+<p>M8. Шемихазе<B><SUP><span class="small">6</span></SUP></B>&nbsp; родил двух
+гигантских сыновей, Са[х]ма (=Ohyah) и Патсэма (=Nariman или Ahyah/Hahyah).
+Другие бесы и Яксас родили остальную часть исполинов.
+
+<p>M9. Исполины росли и крушили землю и человеческий род. Плачь рода человеческого
+достигает небес.
+
+<p>M10. Яима<B><SUP><span class="small">7</span></SUP></B>&nbsp; принял преклонениеи
+прошения человечества, поскольку люди умоляли о помощи.
+
+<p>M11. Кто-то хвалился, что Са[х]м и его брат будут жить и управлять всегда
+и у них несравнимая сила и власть.
+
+<p>M12. Исполин Хобабиш (=Humbaba) отнял у кого - то его жену. Исполины
+грешили между собой и начали убивать друг друга, а также других созданий.
+Са[х]м и его брат остепенились. Оказалось, что Са[х]му приснился сон, в
+котором дощечка была брошена в воду. Этот сон имел три значения, предвещая
+горе, падение и разрушение. Nariman имел сон о саде, всем в рядах деревьев.
+И некоторые из тех павших двухсот опомнились.
+
+<p>M13. Кто - то рассказал несколько притч о различии между малым и большим
+или о произхождении большого из малого. Нариман рассказал как он видел
+(во сне?) тех кто плакал и глубоко переживал и многих других, которые были
+падшими правителями.
+
+<p>M14. Исполин Махоей, сын Virogdad (=Baraq'el)<B><SUP><span class="small">8</span></SUP></B>
+, услышал глас предостерегающий его, поскольку он летел вперед к восходу
+солнца, и он подчинился Еноху "апостолу" и небесному гласу, которые предупреждали
+его опустится прежде, чем солнце обосжёт его крылья (как Икара). Он спустился,
+и глас привел его к Еноху.
+
+<p>M15. Енох истолковал сон, указывая, что деревья это как "Наблюдатели"<B><SUP><span class="small">9</span></SUP></B>
+, а исполины, которые были рождены женщинами, будут "сломаны" (повержены)
+некоторыми …(деревьями?)
+
+<p>M16. Кто - то рассказал, что кто - то приказывал ему, чтобы он не бежал,
+но принес послание, написанное на двух каменных скрижалях и отнес это послание
+сначала к Nariman. Он принес ему, чтобы выслушать содержимое одной скрижалии,
+которая имела отношение к демонам и исполинами. Шамизад приказал ему прочитать
+написаное Енохом.
+
+<p>M17. Енох апостол, предсказывает суд над демонами и их порождениями,
+говоря, что не будет им покоя и узрят они гибель своих детей (исполинов)<B><SUP><span class="small">10</span></SUP></B>
+. Он обращался к кому - то (возможно к исполинам), кто правил в течении
+ста двадцати лет<B><SUP><span class="small">11</span></SUP></B> . Потом он предсказал
+грядущую эру земного плодородия, возможно после Потопа<B><SUP><span class="small">12</span></SUP></B>
+, или сам Потоп<B><SUP><span class="small">13</span></SUP></B> .
+
+<p>M18. Са[х]м призывал других исполинов непечалится и попиршовать, но
+они были слишком печальны, чтобы есть и вместо этого уснули. Махоей пошёл
+к Atanbush (=Utnapistim - или другой исполин или другое имя Еноха) и рассказал
+ему обо всем. И когда Махоей возвратился, у Са[х]ма был сон, в котором
+он взошел на небо. Он видел воду на земле обетованной, и демоны выходили
+из воды. Некоторые существа (духи защиты?) были невидимыми, но сами видели
+небесных правителей.
+
+<p>M19. Са[х]м, Шамизад, и Махоей разговаривали. Махоей рассаказал о своем
+отце Вирогдаде. И неясно зачем упомянул об оружие и благословении на того,
+кто видел как избавиться от смерти. Сэм и Махоей искали …(?) …кое-что (?)
+
+<p>M20. Кто - то утверждал что он уверен в Махоей, и что он будет защитником
+Са[х]ма, но однако Са[х]м и Махоей были повержены и начали бороться между
+собой.
+
+<p>M21. Злые дьяволы были довольны видеть "апостола" (Еноха) и робко собрались
+перед ним. Очевидно, они обещали преобразится и ступить на новый путь,
+и они просили о милосердии<B><SUP><span class="small">4</span></SUP></B> .
+
+<p>M22. Кто - то (Енох?) предупреждал группу (бесов?), что они будут преданы
+огню, и наложено на них будет вечное проклятие, несмотря на их веру, что
+они всегда неправильно используют свою силу и потеряют ее. Он также обращался
+к ним "рождённые в грехе сыновья вне брака" (гиганты?)<B><SUP><span class="small">5</span></SUP></B>&nbsp;
+и описывает, как праведные будут лететь над огнем проклятия и в душе злорадствовать
+об этом.
+
+<p>M23. "Они", предположительно демоны, взяли нескольких небесных помощников
+(небожителей?) в плен. Из-за этого ангелы сошли с неба, вселяя ужас в двести
+демонов, которые приняли человеческое обличье и скрылись среди людей. Ангелы
+разделили людей и стали следить за ними, отбирая гигантов от демонов и
+вводя "их" (детей гигантов) в безопасные тридцать два отдаленных города,
+подготовленных для них "Живым Духом" Aryan Wezan (традиционная родина индо-иранцев),
+околосвященной горы Меру и других гор. Эти люди изобрели искусства и ремесла.
+Эти двести демонов ведут великую войну против четырех ангелов.
+
+<p>M24. Atanbush отчаянно сражался, сопровождаемый Наблюдателями и исполинами,
+и трое из исполинов были убиты. И также ангел был убит а с ним и другие.
+
+<p>M25. Ohyah и Ахьях решили сдержать свое обещание принять сражение, и
+они хвалились своим мастерством.
+
+<p>M26. Эти четыре ангела, божественной командой, связали Egregoroi вечными
+цепями и заточили в темную темницу<B><SUP><span class="small">6</span></SUP></B>&nbsp;
+и уничтожили его детей<B><SUP><span class="small">7</span></SUP></B> .
+
+<p>M27. Даже перед бунтом Egregoroi, эта темница была уготована для них
+под горами. Кроме того, тридцать шесть городов были приготовлены для проживания
+злых и долговечных сыновей исполинов еще перед тем как они были рождены.
+
+<p>M28. Ohyah (или Ахьях), исконное чудовище Левиафана, и архангел Рафаил
+участвували в большом сражении "и они исчезли". Согласно одной традиции,
+Охьях пережил потоп и боролся в одном сражением после потопа.
+
+<p>M29. Три тысячи двести восемьдесят лет прошло между временем Еноха и
+времени Короля Виштаспа (который управлял во время пророка Заратустры,
+который наряду с Буддой и Христом, был апостолом, который прибыл перед
+апостолом Мани).
+<p><B>Примечания</B>
+
+<p>1.&nbsp; М - манихейская «Книга исполинов», 1-29 – условные номера страниц
+<BR>2.&nbsp; Сравни Быт. 6:2; 1 Енох 6:1-2; Юб. 5:1)
+<BR>3.&nbsp; Сравни 1 Енох 7-8)
+<BR>4.&nbsp; Сравни Быт 6:5, 11-12; 1 Енох 7; 9:8; Юб. 5:2-3)
+<BR>5.&nbsp; Сравни Быт 5:24; 1 Енох 87:3-4, 70:3; Юб. 4:21, 23).
+<BR>6.&nbsp; Shemihazah, сравни 1 Енох 6:3; 9:7
+<BR>7.&nbsp; Согласно манихейской космологии это перевод имени еврейского
+Бога – Яхве.
+<BR>8.&nbsp; Сравни 1 Енох 6:7
+<BR>9.&nbsp; Сравни 1 Енох 12:4 и дальше
+<BR>10.&nbsp; Сравни 1 Енох 14:6; 16:3; Юб. 4:22
+<BR>11.&nbsp; Сравни Быт. 6:3
+<BR>12.&nbsp; Сравни 1 Енох 10:11-22
+<BR>13.&nbsp; Сравни. Быт 7:8-9
+<BR>14.&nbsp; Сравни 1 Енох 13:4-6, 9
+<BR>15.&nbsp; Сравни Быт. 6:3
+<BR>16.&nbsp; Сравни 1 Енох 10:11-14; Юб. 5:6, 10
+<BR>17.&nbsp; Сравни 1 Енох 10:15; 15:8-12; Юб. 5:7-9, 11
+
   </article>
 </main>
-
+<nav class="next-text" aria-label="Читать далее">
+  <a class="next-text-prev" href="/gnostic/manich_about.shtml">← О маннихеях</a>
+  <a class="next-text-next" href="/gnostic/manich_citata_biruni.shtml">Далее: Несколько цитат Мани, сохраненных Бируни Абу Рейханом →</a>
+</nav>
 <footer>
   <p>© 2001-2026 · <a href="mailto:idixx@yandex.ru">Русская апокрифическая студия</a> · <a href="/about.html">О студии</a></p>
 </footer>

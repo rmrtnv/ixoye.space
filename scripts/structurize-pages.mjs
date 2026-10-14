@@ -51,14 +51,8 @@ const NAV_ICONS = {
   forward: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>',
   menu: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>',
   search: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>',
+  fav: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5C7 16.5 3.5 13.3 3.5 9.6 3.5 7 5.5 5 8 5c1.6 0 3.1.8 4 2.1C12.9 5.8 14.4 5 16 5c2.5 0 4.5 2 4.5 4.6 0 3.7-3.5 6.9-8.5 10.9z"/></svg>',
 };
-
-const escapeHtml = (s) =>
-  String(s)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
 
 // LocalStorage key + inline bootstrap for the reader's text size. The bootstrap
 // runs in <head> (parser-blocking) so a saved size is applied before the first
@@ -86,10 +80,23 @@ const TEXT_SIZE_ITEM = `        <li class="nav-text-size">
 // injected by nav.js.
 const OFFLINE_MENU_ITEM = `        <li><a href="/offline.html">Офлайн-чтение</a></li>`;
 
-// header shared by every page: desktop section list + compact mobile toolbar
-// (back/menu/text-picker/search/forward). `docs` is the list of texts in the
-// current section for the middle picker; falls back to the section links.
-function renderHeader({ activeDir = "", currentHref = "", currentTitle = "", docs = [] } = {}) {
+/** Parent ("up one level") target for a page: section index for texts,
+ *  site root for section indexes and root-level pages, "" for the root. */
+function parentHref(relPath) {
+  const parts = relPath.replace(/\\/g, "/").split("/");
+  if (parts.length <= 1) {
+    return /^index\.html$/i.test(parts[0]) ? "" : "/";
+  }
+  if (/^index\.html$/i.test(parts[parts.length - 1])) return "/";
+  return "/" + parts.slice(0, -1).join("/") + "/index.html";
+}
+
+// header shared by every page: desktop section list + compact toolbar
+// (search · back · menu · forward · favorites). `nextHref` is the section's
+// next text after the current page ("" when there is none) and is stored on
+// the forward arrow as data-next; `upHref` is the parent level ("", only on
+// the site root) and is stored on the back arrow as data-up.
+function renderHeader({ activeDir = "", currentHref = "", nextHref = "", upHref = "" } = {}) {
   const link = (href, label, active) =>
     `<a href="${href}"${active ? ' aria-current="page"' : ""}>${label}</a>`;
   const sections = [{ href: "/", label: "Главная", dir: "__home__" }];
@@ -100,14 +107,8 @@ function renderHeader({ activeDir = "", currentHref = "", currentTitle = "", doc
     .map((s) => `        <li>${link(s.href, s.label, s.dir === activeDir || s.href === currentHref)}</li>`)
     .join("\n");
 
-  let picker = docs.slice();
-  if (!picker.some((d) => d.href === currentHref)) {
-    picker.unshift({ href: currentHref, label: currentTitle });
-  }
-  if (picker.length < 2) picker = [{ href: currentHref, label: currentTitle }, ...sections];
-  const options = picker
-    .map((d) => `          <option value="${d.href}"${d.href === currentHref ? " selected" : ""}>${escapeHtml(d.label)}</option>`)
-    .join("\n");
+  const nextAttr = nextHref ? ` data-next="${nextHref}"` : "";
+  const upAttr = upHref ? ` data-up="${upHref}"` : "";
 
   return `<header class="site-header">
   <nav class="site-nav" aria-label="Разделы сайта">
@@ -116,7 +117,14 @@ ${sectionItems}
     </ul>
 
     <div class="nav-bar" role="group" aria-label="Навигация">
-      <button type="button" class="nav-ico nav-back" aria-label="Назад" title="Назад">${NAV_ICONS.back}</button>
+      <details class="nav-drop nav-search">
+        <summary class="nav-ico" aria-label="Поиск" title="Поиск">${NAV_ICONS.search}</summary>
+        <form class="nav-search-form" action="/poisk.html" method="get" role="search">
+          <input type="search" name="q" placeholder="Поиск по сайту…" aria-label="Поиск по сайту" enterkeyhint="search" autocomplete="off">
+        </form>
+      </details>
+
+      <button type="button" class="nav-ico nav-back" aria-label="На уровень выше" title="На уровень выше"${upAttr}>${NAV_ICONS.back}</button>
 
       <details class="nav-drop nav-menu">
         <summary class="nav-ico" aria-label="Разделы сайта" title="Разделы">${NAV_ICONS.menu}</summary>
@@ -127,18 +135,9 @@ ${TEXT_SIZE_ITEM}
         </ul>
       </details>
 
-      <select class="nav-text" aria-label="Текущий текст" title="Выбор текста">
-${options}
-      </select>
+      <button type="button" class="nav-ico nav-forward" aria-label="Вперёд" title="Вперёд"${nextAttr}>${NAV_ICONS.forward}</button>
 
-      <details class="nav-drop nav-search">
-        <summary class="nav-ico" aria-label="Поиск" title="Поиск">${NAV_ICONS.search}</summary>
-        <form class="nav-search-form" action="/poisk.html" method="get" role="search">
-          <input type="search" name="q" placeholder="Поиск по сайту…" aria-label="Поиск по сайту" enterkeyhint="search" autocomplete="off">
-        </form>
-      </details>
-
-      <button type="button" class="nav-ico nav-forward" aria-label="Вперёд" title="Вперёд">${NAV_ICONS.forward}</button>
+      <a class="nav-ico nav-fav" href="/fav.html" aria-label="Избранное" title="Избранное">${NAV_ICONS.fav}</a>
     </div>
   </nav>
 </header>`;
@@ -441,7 +440,7 @@ function transform(content, h1) {
 // shell building
 // ---------------------------------------------------------------------------
 
-function buildShell({ relPath, h1, content, mailto, head, docs = [] }) {
+function buildShell({ relPath, h1, content, mailto, head }) {
   const dir = path.dirname(relPath);
   const currentHref = "/" + relPath.replace(/\\/g, "/");
   const activeDir = SECTIONS.some((s) => s.dir === dir) ? dir : "__home__";
@@ -454,7 +453,7 @@ function buildShell({ relPath, h1, content, mailto, head, docs = [] }) {
 
 <div class="site-shell">
 
-${renderHeader({ activeDir, currentHref, currentTitle: h1, docs })}
+${renderHeader({ activeDir, currentHref, upHref: parentHref(relPath) })}
 
 <main>
   <article class="content-block">
@@ -611,4 +610,4 @@ if (mismatches.length) {
 }
 } // IS_MAIN
 
-export { extractContent, normText, deriveH1, transform, isLegacy, discover, buildShell, renderHeader, SECTIONS, SIZE_BOOTSTRAP };
+export { extractContent, normText, deriveH1, transform, isLegacy, discover, buildShell, renderHeader, parentHref, SECTIONS, SIZE_BOOTSTRAP };

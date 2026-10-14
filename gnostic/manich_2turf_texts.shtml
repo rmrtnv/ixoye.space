@@ -1,29 +1,34 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Два манихейских текста из Турфанского оазиса — в восстановлении — Русская Апокрифическая Студия</title>
-<meta name="robots" content="noindex">
-<link rel="stylesheet" href="/src/styles/main.css?v=b13c63bd">
+<HTML>
+<HEAD>
+<TITLE>Два манихейских текста из Турфанского оазиса -  Манихейские тексты - Гностицизм - Русская Апокрифическая Студия</TITLE>
+<meta name="Description" content="Два манихейских текста из Турфанского оазиса">
+<meta name="Keywords" content="манихеи Турфанский оазис">
+<LINK REL=STYLESHEET HREF="/src/styles/main.css?v=3de8bfb9" TYPE="text/css">
+
+
+
+
+
+<script>(function(){try{var v=parseFloat(localStorage.getItem("ixoye-text-size"));if(isFinite(v)&&v>=0.8&&v<=1.6)document.documentElement.style.setProperty("--text-scale",String(v));}catch(e){}})();</script>
+<script src="/src/scripts/offline-core.js?v=85a0ae59" defer></script>
+<script src="/src/scripts/nav.js?v=e9bc284c" defer></script>
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#E7EBCB">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/favicon.svg">
 <link rel="canonical" href="https://ixoye.space/gnostic/manich_2turf_texts.shtml">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Русская Апокрифическая Студия">
 <meta property="og:locale" content="ru_RU">
-<meta property="og:title" content="Два манихейских текста из Турфанского оазиса — в восстановлении — Русская Апокрифическая Студия">
-<meta property="og:description" content="Раннехристианские и апокрифические тексты на русском языке — Русская Апокрифическая Студия.">
+<meta property="og:title" content="Два манихейских текста из Турфанского оазиса - Манихейские тексты - Гностицизм - Русская Апокрифическая Студия">
+<meta property="og:description" content="Два манихейских текста из Турфанского оазиса">
 <meta property="og:url" content="https://ixoye.space/gnostic/manich_2turf_texts.shtml">
 <meta name="twitter:card" content="summary">
-<script src="/src/scripts/offline-core.js?v=85a0ae59" defer></script>
-<script src="/src/scripts/nav.js?v=3344cc75" defer></script>
-<script>(function(){try{var v=parseFloat(localStorage.getItem("ixoye-text-size"));if(isFinite(v)&&v>=0.8&&v<=1.6)document.documentElement.style.setProperty("--text-scale",String(v));}catch(e){}})();</script>
-<link rel="manifest" href="/manifest.webmanifest">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="theme-color" content="#E7EBCB">
 </head>
 
 
@@ -48,7 +53,14 @@
     </ul>
 
     <div class="nav-bar" role="group" aria-label="Навигация">
-      <button type="button" class="nav-ico nav-back" aria-label="Назад" title="Назад"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <details class="nav-drop nav-search">
+        <summary class="nav-ico" aria-label="Поиск" title="Поиск"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></summary>
+        <form class="nav-search-form" action="/poisk.html" method="get" role="search">
+          <input type="search" name="q" placeholder="Поиск по сайту…" aria-label="Поиск по сайту" enterkeyhint="search" autocomplete="off">
+        </form>
+      </details>
+
+      <button type="button" class="nav-ico nav-back" aria-label="На уровень выше" title="На уровень выше" data-up="/gnostic/index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
 
       <details class="nav-drop nav-menu">
         <summary class="nav-ico" aria-label="Разделы сайта" title="Разделы"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary>
@@ -75,48 +87,9 @@
         </ul>
       </details>
 
-      <select class="nav-text" aria-label="Текущий текст" title="Выбор текста">
-          <option value="/gnostic/manich_2turf_texts.shtml" selected>Два манихейских текста из Турфанского оазиса</option>
-          <option value="/gnostic/index.html">Гностицизм</option>
-          <option value="/gnostic/gnost_lit.html">Гностическая литература</option>
-          <option value="/gnostic/mand_lit.html">Мандейские тексты</option>
-          <option value="/gnostic/manich_lit.html">Манихейские тексты</option>
-          <option value="/gnostic/about_pistis.html">Немного о Пистис Софии</option>
-          <option value="/gnostic/about-ev-iuda.shtml">О Евангелии Иуды (Искариота)</option>
-          <option value="/gnostic/b_petr1.html">Деяние Петра</option>
-          <option value="/gnostic/beseda_iisus.html">Беседа Иисуса с учениками</option>
-          <option value="/gnostic/cb_text1.html">Текст без названия</option>
-          <option value="/gnostic/comment_pistis.html">Примечания к Пистис Софии</option>
-          <option value="/gnostic/ev_maria_gnost.html">Евангелие от Марии</option>
-          <option value="/gnostic/ev-iuda.shtml">Евангелие Иуды (Искариота)</option>
-          <option value="/gnostic/gnost_molitva2.html">Вторая гностическая молитва без названия</option>
-          <option value="/gnostic/kniga-ieu1.html">Первая Книга Иеу</option>
-          <option value="/gnostic/kniga-ieu2.html">Вторая Книга Иеу</option>
-          <option value="/gnostic/komments-ieu1.html">Примечания к Первой Книге Иеу</option>
-          <option value="/gnostic/komments-ieu2.html">Примечания ко Второй Книге Иеу</option>
-          <option value="/gnostic/mol_iosif.html">Молитва Иосифа</option>
-          <option value="/gnostic/oda_solomon_c.html">Оды Соломона (полный вариант)</option>
-          <option value="/gnostic/oda_solomon.html">Оды Соломона</option>
-          <option value="/gnostic/pistis_book1.html">Первая Книга ПИСТИС СОФИИ</option>
-          <option value="/gnostic/pistis_book2.html">Вторая Книга ПИСТИС СОФИИ</option>
-          <option value="/gnostic/pistis_book3.html">Третья Книга ПИСТИС СОФИИ</option>
-          <option value="/gnostic/pistis_book4.html">Четвертая Книга ПИСТИС СОФИИ</option>
-          <option value="/gnostic/pistis1.html">Пистис Софии - главы 1-38</option>
-          <option value="/gnostic/pistis2.html">Пистис Софии - главы 60-63</option>
-          <option value="/gnostic/pistis3.html">Пистис Софии - глава 100</option>
-          <option value="/gnostic/pistis4.html">Пистис Софии - главы 111-113</option>
-          <option value="/gnostic/pistis5.html">Пистис Софии - выдержки из глав 131-133</option>
-          <option value="/gnostic/put_d.html">Фрагмент о путешествии души</option>
-      </select>
+      <button type="button" class="nav-ico nav-forward" aria-label="Вперёд" title="Вперёд" data-next="/gnostic/manich_about.shtml"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
 
-      <details class="nav-drop nav-search">
-        <summary class="nav-ico" aria-label="Поиск" title="Поиск"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></summary>
-        <form class="nav-search-form" action="/poisk.html" method="get" role="search">
-          <input type="search" name="q" placeholder="Поиск по сайту…" aria-label="Поиск по сайту" enterkeyhint="search" autocomplete="off">
-        </form>
-      </details>
-
-      <button type="button" class="nav-ico nav-forward" aria-label="Вперёд" title="Вперёд"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+      <a class="nav-ico nav-fav" href="/fav.html" aria-label="Избранное" title="Избранное"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5C7 16.5 3.5 13.3 3.5 9.6 3.5 7 5.5 5 8 5c1.6 0 3.1.8 4 2.1C12.9 5.8 14.4 5 16 5c2.5 0 4.5 2 4.5 4.6 0 3.7-3.5 6.9-8.5 10.9z"/></svg></a>
     </div>
   </nav>
 </header>
@@ -125,10 +98,111 @@
   <article class="content-block">
     <h1>Два манихейских текста из Турфанского оазиса</h1>
 
-<p>Текст «Два манихейских текста из Турфанского оазиса» входил в раздел, но его файл был утерян при архивации и пока недоступен. Мы работаем над восстановлением. Приносим извинения за неудобства.</p>
+<p>
+
+<hr>
+<p><TT>Особый интерес представляют манихейские тексты из Турфанского оазиса.</TT>
+<BR><TT>Во время одной из экспедиций немецкого путешественника и исследователя
+А. фон Лекока (1860-1930) в Восточный Туркестан в развалинах Турфана был
+найден небольшой попорченный лист бумаги, который содержал два текста,
+написанных уйгурским письмом. Автором обоих произведений является Апрынчур-Тегин,
+как следует из самого текста. Первое произведение это - это манихейский
+гимн. Второе особенно замечательно тем, что является единственным сохранившемся
+древне-тюркским стихотворением&nbsp;&nbsp;&nbsp;&nbsp; на любовно-лирическую
+тему.</TT>
+<BR><TT>Оно написано на бумаге без выделения графической формы стиха, так
+же как были высечены на камнях орхонские и енисейские тексты и записана
+древне-тюркская "Гадательная книга". Стихотворение в языковом отношнении
+столь искусно, что допускает как бы разные врзможности разбивки текста.
+Поскольку в ритмическом плане оно не силлабическое (не равносложное), а
+относительно равносложное (строки имеют от 8 до 14 слогов), то главным
+материалом для выделения стихотворных строк становится строфическая аллитерация
+(т. е. совпадение звуков в началах стихотворных строк).</TT>
+<BR><TT>Согласно разбивке текста, стихотворение содержит три сохранившихся
+четверостишия и одно испорченное в начале. Ритмическая и звуковая организация
+стиха аналогична той, которая имеется в древне-тюркских сочинениях рунического
+письма, однако по сравнению с ними является более упорядоченной, особенно
+в области аллитерационной системы: последовательно проведена междустиховая
+аллитерация, охватывающая по две стихотворные строки, явно выражена междусловная
+аллитерация, имеются и рифмоиды.</TT>
+<BR><TT>Можно сказать что стихотворение написанное уйгурским письмом в
+Торфанском оазисе, сохраняет основные особенности поэзии, зафиксированной
+руническим письмом. Принесли ли уйгуры эту традицию поэтической речи из
+Монголии в Турфанский оазис, или она здесь развилась самостоятельно, сказать
+трудно. Но это и не так существенно, важен сам факт совпадения поэтических
+особенностей текстов, созданных в разное время, в разных тюркоязычных государствах.</TT>
+<BR><TT>Древнеуйгурское стихотворение Апрынчур-Тегина удивительно искреннее,
+даже простодушное. Упоминане о "светлых богах" и "могущественных ангелах"
+говорит о том что стихотворение написал манихей. Мотивы красоты возлюбленной,
+мотивы тоски от разлуки с ней и мечты о свидании, которые в дальнейшем
+станут традиционными в классической тюркской поэзии, разрабатывались уже
+в домусульманском мире и послужили тематической основой жанра любовной
+лирики. Выражение красоты возлюбленной с помощью эпитетов "прекраснобровая",
+"черноглазая", "благоухающая мускусом" станет в дальнейшем характерным
+для многих лирических жанров классической поэзии в Средней Азии..."&nbsp;
+(стр. 14-15).</TT>
+<BR><TT>От себя добавлю что манихейской литературе свойственна чрезвычайно
+высокая степень аллегоричности. Вполне очевидно что "Лирическое стихотворение"
+имеет духовный контекст. Речь идет о тоске Души-частицы Света плененной
+тенетами Материи, возможно по Пистис-Софии или какой-либо иной гностико-манихейской
+духовной субстанции из Высших Эонов Света. Под встречей с Возлюбленной
+подразумевается Освобождение Души через Прозрение. Под "Светлыми Богами"
+очевидно подразумеваются ипостаси Ахура-Мазды (тюрк. Гурмусты) а под "Всесильными
+ангелами" - "Силы" Светлых Эонов противостоящих Архонтам Материи.</TT>
+<BR><TT>Таким образом последующая поэзия мусульманского периода, возможно
+сама того и не подозревая, активно использовала манихейские эпитеты и образы.
+Более того, самое обличение духовной поэзии в лирические формы было унаследовано
+суфийской литературой, в каковой впрочем была уже отчасти утрачена исходная
+концептуальная целостность литературы манихейской.</TT>
+
+<p><B><span class="small">Цитата из предисловия к книге И. В. Стеблевой "Поэзия
+древних тюрков VI-XII&nbsp; веков" (М., Раритет, 1993)</span></B>
+<p><h3>Лирическое стихотворение</h3>
+
+<p>Больно: горюю - прекрасные брови жестокой моей вспоминаю.
+<BR>Больше горюю, когда единенья с любимой желаю.
+<BR>Бремя желаний меня заставляет с пути возвращаться,
+<BR>время торопит вернуться - с любимой снова обняться.
+
+<p>Выйти хочу чтоб обняться с возлюбленной деткой моею.
+<BR>Выйти, чтоб встретиться с крошкой я сил не имею.
+<BR>Рвусь я войти к моей маленькой чтобы обнять дорогую.
+<BR>Грустно! - войти к сладкопахнущей сил моих нет, не могу я.
+
+<p>Пусть приказали бы Светлые Боги чтоб мы повстречались.
+<BR>Пусть повелят чтоб с моей благонравною не разлучались
+<BR>Пусть бы всесильные Ангелы счастье земное мне дали -
+<BR>Пусть повелят чтобы мы с черноглазой в любви пребывали.
+<div class="text-center">* * *</div>
+&nbsp;
+
+
+<p><B>Во втором стихотворении Апрынчур-Тегина воспевается
+Посланник Света Мани (Бурхан).</B>
+
+<p>Щедрость Господня - она, говорят, самоцвет.
+<BR>Щедрость Господня - ее драгоценнее нет.
+<BR>Но драгоценней сапфиров мой Бог - ты, могучий герой.
+<BR>Но драгоценней рубинов - могучий герой мой, Бог мой.
+
+<p>Твердый алмаз, говорят, никогда не острят -
+<BR>твердый алмаз без заточки остер, говорят.
+<BR>Но ведь алмаза острее ты, мудрый могучий, Свет мой.
+<BR>Но ведь алмаза острее - мой свет животворный, слон мой.
+
+<p>Солнцеподобный, как Бог, мой боец, мой мудрец -
+<BR>солнца светлее, как Бог, мой мудрец, мой боец.
+<BR>Вечный, прекрасный, мой Бог Благородный мне дан -
+<BR>вечнопрекрасный и недостижимый Бурхан.
+
+<p>(перевод А. Преловского).
+
   </article>
 </main>
-
+<nav class="next-text" aria-label="Читать далее">
+  <a class="next-text-prev" href="/gnostic/mand_istor.shtml">← &quot;Начало мандейской истории&quot;</a>
+  <a class="next-text-next" href="/gnostic/manich_about.shtml">Далее: О маннихеях →</a>
+</nav>
 <footer>
   <p>© 2001-2026 · <a href="mailto:idixx@yandex.ru">Русская апокрифическая студия</a> · <a href="/about.html">О студии</a></p>
 </footer>

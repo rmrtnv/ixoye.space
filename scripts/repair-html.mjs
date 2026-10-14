@@ -24,7 +24,6 @@ const LOST_PAGES = {
   'nag-hammadi/35.html': { section: 'Библиотека Наг-Хаммади', href: '/nag-hammadi/index.html' },
   'nag-hammadi/ap-adam-2.html': { section: 'Библиотека Наг-Хаммади', href: '/nag-hammadi/index.html' },
   'nag-hammadi/archonts-2.html': { section: 'Библиотека Наг-Хаммади', href: '/nag-hammadi/index.html' },
-  'gnostic/img1.html': { section: 'Гностицизм', href: '/gnostic/index.html' },
   '2_sif.html': null, // stray duplicate of nag-hammadi/2_sif.html — delete
 };
 

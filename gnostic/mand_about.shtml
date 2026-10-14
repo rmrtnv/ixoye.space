@@ -1,29 +1,34 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>О мандеях — в восстановлении — Русская Апокрифическая Студия</title>
-<meta name="robots" content="noindex">
-<link rel="stylesheet" href="/src/styles/main.css?v=b13c63bd">
+<HTML>
+<HEAD>
+<TITLE>О мандеях - Гностицизм - Русская Апокрифическая Студия</TITLE>
+<meta name="Description" content="О мандеях">
+<meta name="Keywords" content="мандеи">
+<LINK REL=STYLESHEET HREF="/src/styles/main.css?v=3de8bfb9" TYPE="text/css">
+
+
+
+
+
+<script>(function(){try{var v=parseFloat(localStorage.getItem("ixoye-text-size"));if(isFinite(v)&&v>=0.8&&v<=1.6)document.documentElement.style.setProperty("--text-scale",String(v));}catch(e){}})();</script>
+<script src="/src/scripts/offline-core.js?v=85a0ae59" defer></script>
+<script src="/src/scripts/nav.js?v=e9bc284c" defer></script>
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#E7EBCB">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/favicon.svg">
 <link rel="canonical" href="https://ixoye.space/gnostic/mand_about.shtml">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Русская Апокрифическая Студия">
 <meta property="og:locale" content="ru_RU">
-<meta property="og:title" content="О мандеях — в восстановлении — Русская Апокрифическая Студия">
-<meta property="og:description" content="Раннехристианские и апокрифические тексты на русском языке — Русская Апокрифическая Студия.">
+<meta property="og:title" content="О мандеях - Гностицизм - Русская Апокрифическая Студия">
+<meta property="og:description" content="О мандеях">
 <meta property="og:url" content="https://ixoye.space/gnostic/mand_about.shtml">
 <meta name="twitter:card" content="summary">
-<script src="/src/scripts/offline-core.js?v=85a0ae59" defer></script>
-<script src="/src/scripts/nav.js?v=3344cc75" defer></script>
-<script>(function(){try{var v=parseFloat(localStorage.getItem("ixoye-text-size"));if(isFinite(v)&&v>=0.8&&v<=1.6)document.documentElement.style.setProperty("--text-scale",String(v));}catch(e){}})();</script>
-<link rel="manifest" href="/manifest.webmanifest">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="theme-color" content="#E7EBCB">
 </head>
 
 
@@ -48,7 +53,14 @@
     </ul>
 
     <div class="nav-bar" role="group" aria-label="Навигация">
-      <button type="button" class="nav-ico nav-back" aria-label="Назад" title="Назад"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <details class="nav-drop nav-search">
+        <summary class="nav-ico" aria-label="Поиск" title="Поиск"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></summary>
+        <form class="nav-search-form" action="/poisk.html" method="get" role="search">
+          <input type="search" name="q" placeholder="Поиск по сайту…" aria-label="Поиск по сайту" enterkeyhint="search" autocomplete="off">
+        </form>
+      </details>
+
+      <button type="button" class="nav-ico nav-back" aria-label="На уровень выше" title="На уровень выше" data-up="/gnostic/index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
 
       <details class="nav-drop nav-menu">
         <summary class="nav-ico" aria-label="Разделы сайта" title="Разделы"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary>
@@ -75,48 +87,9 @@
         </ul>
       </details>
 
-      <select class="nav-text" aria-label="Текущий текст" title="Выбор текста">
-          <option value="/gnostic/mand_about.shtml" selected>О мандеях</option>
-          <option value="/gnostic/index.html">Гностицизм</option>
-          <option value="/gnostic/gnost_lit.html">Гностическая литература</option>
-          <option value="/gnostic/mand_lit.html">Мандейские тексты</option>
-          <option value="/gnostic/manich_lit.html">Манихейские тексты</option>
-          <option value="/gnostic/about_pistis.html">Немного о Пистис Софии</option>
-          <option value="/gnostic/about-ev-iuda.shtml">О Евангелии Иуды (Искариота)</option>
-          <option value="/gnostic/b_petr1.html">Деяние Петра</option>
-          <option value="/gnostic/beseda_iisus.html">Беседа Иисуса с учениками</option>
-          <option value="/gnostic/cb_text1.html">Текст без названия</option>
-          <option value="/gnostic/comment_pistis.html">Примечания к Пистис Софии</option>
-          <option value="/gnostic/ev_maria_gnost.html">Евангелие от Марии</option>
-          <option value="/gnostic/ev-iuda.shtml">Евангелие Иуды (Искариота)</option>
-          <option value="/gnostic/gnost_molitva2.html">Вторая гностическая молитва без названия</option>
-          <option value="/gnostic/kniga-ieu1.html">Первая Книга Иеу</option>
-          <option value="/gnostic/kniga-ieu2.html">Вторая Книга Иеу</option>
-          <option value="/gnostic/komments-ieu1.html">Примечания к Первой Книге Иеу</option>
-          <option value="/gnostic/komments-ieu2.html">Примечания ко Второй Книге Иеу</option>
-          <option value="/gnostic/mol_iosif.html">Молитва Иосифа</option>
-          <option value="/gnostic/oda_solomon_c.html">Оды Соломона (полный вариант)</option>
-          <option value="/gnostic/oda_solomon.html">Оды Соломона</option>
-          <option value="/gnostic/pistis_book1.html">Первая Книга ПИСТИС СОФИИ</option>
-          <option value="/gnostic/pistis_book2.html">Вторая Книга ПИСТИС СОФИИ</option>
-          <option value="/gnostic/pistis_book3.html">Третья Книга ПИСТИС СОФИИ</option>
-          <option value="/gnostic/pistis_book4.html">Четвертая Книга ПИСТИС СОФИИ</option>
-          <option value="/gnostic/pistis1.html">Пистис Софии - главы 1-38</option>
-          <option value="/gnostic/pistis2.html">Пистис Софии - главы 60-63</option>
-          <option value="/gnostic/pistis3.html">Пистис Софии - глава 100</option>
-          <option value="/gnostic/pistis4.html">Пистис Софии - главы 111-113</option>
-          <option value="/gnostic/pistis5.html">Пистис Софии - выдержки из глав 131-133</option>
-          <option value="/gnostic/put_d.html">Фрагмент о путешествии души</option>
-      </select>
+      <button type="button" class="nav-ico nav-forward" aria-label="Вперёд" title="Вперёд" data-next="/gnostic/mand_fragments1.shtml"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
 
-      <details class="nav-drop nav-search">
-        <summary class="nav-ico" aria-label="Поиск" title="Поиск"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></summary>
-        <form class="nav-search-form" action="/poisk.html" method="get" role="search">
-          <input type="search" name="q" placeholder="Поиск по сайту…" aria-label="Поиск по сайту" enterkeyhint="search" autocomplete="off">
-        </form>
-      </details>
-
-      <button type="button" class="nav-ico nav-forward" aria-label="Вперёд" title="Вперёд"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+      <a class="nav-ico nav-fav" href="/fav.html" aria-label="Избранное" title="Избранное"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5C7 16.5 3.5 13.3 3.5 9.6 3.5 7 5.5 5 8 5c1.6 0 3.1.8 4 2.1C12.9 5.8 14.4 5 16 5c2.5 0 4.5 2 4.5 4.6 0 3.7-3.5 6.9-8.5 10.9z"/></svg></a>
     </div>
   </nav>
 </header>
@@ -125,10 +98,108 @@
   <article class="content-block">
     <h1>О мандеях</h1>
 
-<p>Текст «О мандеях» входил в раздел, но его файл был утерян при архивации и пока недоступен. Мы работаем над восстановлением. Приносим извинения за неудобства.</p>
+<p><h2>Мандеи</h2>
+
+<hr><B>Мандеи</B> - (происходит от арамейского "manda" - "знание", т. е. то
+же, что и "gnosis"; таким образом, слово "мандеи" означает "гностики")
+единственная сохранившаяся до наших дней гностическая секта. Её адепты,
+численностью ок. 15 000 человек, проживают на территории Ирака.
+
+<p>В ересиологических сочинениях мандеи не упоминаются - вероятно, вследствие
+того, что секта рано обособилась и, кроме того, на первых порах имела крайне
+мало общего с христианством. Ещё и в наши дни мусульмане считают мандеев
+звёздопоклонниками.
+
+<p>Первые сведения о ней восходят к 8 в. н.э. Более подробно Европа познакомилась
+с мандейством во 2-й пол. 19 в. В 1915 и 1925 были впервые опубликованы
+переводы мандейских писаний, а затем, в 50-60-х годах к ним прибавились
+новые публикации. Эти тексты написаны на одном из диалектов арамейского
+языка; рукописи не старше 16 в., но сами писания возникли, видимо, на много
+веков раньше (6-7 вв.). По учению мандеев, высшее Божество «Великая Жизнь»
+эманирует из себя небесные существа, или эоны (символом эманации является
+Иордан). Этими существами являлись библийские праотцы и пророки. Последним
+среди эонов был Иоанн, сын Захарии (Яхья бар Зкария). Иисуса Христа и Магомета
+мандеи считают лжепророками. Мандеи подобно ессеям Кумрана, практикуют
+регулярные священные омовения и ритуальные трапезы. По мнению многих ученых,
+религия мандеев могла возникнуть из слияния гностических сект Вавилонии
+с группами учеников Иоанна Крестителя, переселившихся в Двуречье из Иудеи
+(намек на такие группы усматривают в Деян 18:24-19:7). Бультман и Риценштейн
+пытались доказать, что в литературе мандеев содержится гностический дохристианский
+миф о Спасителе, повлиявший на богословие Евангелии от Иоанна. Однако их
+оппоненты (Лицман, Гогэль и др.) утверждали, что в эпоху возникновения
+христианства мандеи скорее всего не существовали. Дальнейшие публикации
+мандейских текстов подтвердили древнее, но не дохристианское происхождение
+мандеев.
+
+<p>Секта мандеев была "открыта" в середине XVII в. кармелитским миссионером
+Игнатием. Игнатий назвал приверженцев секты "учениками Иоанна". Сами мандеи
+никогда так себя не называли. Игнатий счёл сектантов христианами из-за
+практикуемого ими частого обряда крещения. Сами мандеи называют себя "sabba",
+т. е. "крестящиеся"; это самоназвание в Ираке смешивают с "сабеями" - "звёздопоклонниками".
+Это последнее обстоятельство даёт повод мусульманам признавать из монотеистами
+и не подвергать сектантов религиозным гонениям. Иногда мандеев называют
+"назореями" - сами мандеи так называют только лиц, отличающихся особенным
+благочестием.
+
+<p>Религиозная доктрина мандеев изложена в "Великой Книге" ("Sidra rabba"),
+называемой также "Сокровище" ("Ginza"). Книга состоит из двух частей, именуемых
+"левой" и "правой". "Правая" часть - "Jamina" - предназначена для живых,
+а "левая" - "Smala" - для мёртвых. "Великая Книга" представляет собой собрание
+текстов разных авторов. Древнейшие части излагают парсийское учение в мандейской
+интерпретации, наиболее поздние - учение о Царе Света в монотеистическом
+аспекте. Каждая книга имеет своего духа-покровителя, к которому практикуется
+молитвенное обращение. Эти гении сакральных текстов, по-видимому, родственны
+зороастрийским фраваши. Кроме <B>«Гинзы»</B> в канон мандеев входят:
+
+<p><B>«Книга знаков Зодиака»</B>
+<BR><B>«Тысяча двенадцать вопросов»</B>
+<BR><B>«Первый Макрокосмос» или «Великий Первый Мир»</B>
+<BR><B>«Первый Микрокосмос» или «Малый Первый Мир»</B>
+<BR><B>«Собрание Первой Жизни» или «Диван»</B>
+
+<p>«Канонический молитослов» или «Мандейские литургии» или «Каноническая
+молитвенная книга мандеев»
+<BR>Впрочем, собственно мандейских текстов, если вникнуть, вообще не существует,
+в том смысле, что у мандеев, точно как у зороастрийцев массы верующих не
+допускались к письменной версии писания. Их чаяния удовлетворяло текучее,
+даже аморфное, устное предание, отчасти подправленное краткой выборкой
+обязательных молитв.
+
+<p>Весьма запутанное учение мандеев сводится к концепции единого Божества,
+дифференцированного в ряде эонов. Человеческие души, имеющие божественную
+природу, пленены косной материей. Для их освобождения небесные эоны вселяются
+в избранных праведников, из которых наиболее почитаемы мандеями Ситиль
+(Сиф) и Яхья (Иоанн Креститель). Яхья установил обряд крещения как символ
+очищения душ в небесном Иордане.
+
+<p>Миротворение представляется следующим образом. Неподвижное Божество
+Абатур вечность за вечностью смотрел в бездну, наполненную илистыми водами.
+В конце концов его нечистое отражение ожило и стало Творцом мира. По другой
+версии, Демиургом стал сын Абатура Птахиль, который произвёл уплотнение
+в тёмных водах, бросив в них свои блистающие одежды.
+
+<p>Из-за крайней запутанности мандейского учения трудно установить, являлось
+ли оно изначально дуалистическим или монистическим. Большинство исследователей
+связывает возникновение секты с первоначальной проповедью Иоанна Крестителя.
+
+<p>Согласно преданию, предки мандеев некогда спустились на юг Двуречья
+с севера (скорее, из Палестины или Трансиордании). Как предполагает Л.А.
+Лелеков, "…затем на самом деле оказались где-то к северу от Антиохии и
+там попали под влияние известного гностика Менандра. Именно он навязал
+мандейцам доктрину сотериологического крещения. Потом они сместились на
+восток, в междуречье Евфрата и Тигра, в лоно древнейших цивилизаций, и
+там основательно приобщились к тысячелетнему наследию местных культур".
+Очень трудно, на наш взгляд, вычленить в современном мандейском учении
+следы влияния Менандра, ученика Симона Волхва. Что же касается местного
+религиозного фона, то он, безусловно, оказал существенное влияние на верования
+мандеев.
+
   </article>
 </main>
-
+<nav class="next-text" aria-label="Читать далее">
+  <a class="next-text-prev" href="/gnostic/komments-ieu2.html">← Примечания ко Второй Книге Иеу</a>
+  <a class="next-text-next" href="/gnostic/mand_fragments1.shtml">Далее: Фрагменты священных писаний мандеев →</a>
+</nav>
 <footer>
   <p>© 2001-2026 · <a href="mailto:idixx@yandex.ru">Русская апокрифическая студия</a> · <a href="/about.html">О студии</a></p>
 </footer>
