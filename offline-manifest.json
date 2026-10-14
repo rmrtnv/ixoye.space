@@ -1,12 +1,12 @@
 {
   "count": 404,
-  "totalBytes": 31570693,
+  "totalBytes": 31569335,
   "shell": {
     "label": "Оболочка сайта",
     "items": [
       {
         "u": "/",
-        "b": 9699
+        "b": 9675
       },
       {
         "u": "/offline.html",
@@ -26,7 +26,7 @@
       },
       {
         "u": "/src/scripts/nav.js",
-        "b": 27785
+        "b": 26733
       },
       {
         "u": "/src/scripts/offline-core.js",
@@ -38,10 +38,10 @@
       },
       {
         "u": "/offline-manifest.json",
-        "b": 91808
+        "b": 91812
       }
     ],
-    "bytes": 179003
+    "bytes": 177931
   },
   "search": {
     "id": "search",
@@ -65,12 +65,12 @@
       "id": "nag-hammadi",
       "label": "Библиотека Наг-Хаммади",
       "count": 53,
-      "bytes": 2601148,
+      "bytes": 2601108,
       "items": [
         {
           "u": "/nag-hammadi/",
           "t": "Библиотека Наг-Хаммади на русском языке",
-          "b": 13678
+          "b": 13639
         },
         {
           "u": "/nag-hammadi/2_sif-moma.html",
@@ -275,7 +275,7 @@
         {
           "u": "/nag-hammadi/proten.html",
           "t": "Троевидная Протенойя",
-          "b": 39968
+          "b": 39967
         },
         {
           "u": "/nag-hammadi/regin.html",
@@ -344,12 +344,12 @@
       "id": "apocrypha-new",
       "label": "Новозаветные апокрифы",
       "count": 134,
-      "bytes": 7332993,
+      "bytes": 7332952,
       "items": [
         {
           "u": "/apocrypha-new/",
           "t": "Новозаветные апокрифы",
-          "b": 25357
+          "b": 25317
         },
         {
           "u": "/apocrypha-new/12_patnic.html",
@@ -549,7 +549,7 @@
         {
           "u": "/apocrypha-new/edes_chronika.html",
           "t": "Эдесская хроника",
-          "b": 40651
+          "b": 40650
         },
         {
           "u": "/apocrypha-new/ev_matf2.html",
@@ -1023,12 +1023,12 @@
       "id": "apocrypha-old",
       "label": "Ветхозаветные апокрифы",
       "count": 35,
-      "bytes": 2452357,
+      "bytes": 2452317,
       "items": [
         {
           "u": "/apocrypha-old/",
           "t": "Ветхозаветные апокрифы",
-          "b": 10917
+          "b": 10878
         },
         {
           "u": "/apocrypha-old/adam_eva_lat.html",
@@ -1108,7 +1108,7 @@
         {
           "u": "/apocrypha-old/bilam.html",
           "t": "Пророчество Бильама сына Беора",
-          "b": 11739
+          "b": 11738
         },
         {
           "u": "/apocrypha-old/book_ahiahars.html",
@@ -1207,12 +1207,12 @@
       "id": "hermetic",
       "label": "Герметизм",
       "count": 28,
-      "bytes": 871593,
+      "bytes": 871557,
       "items": [
         {
           "u": "/hermetic/",
           "t": "Герметизм",
-          "b": 10228
+          "b": 10193
         },
         {
           "u": "/hermetic/asklepy.html",
@@ -1247,7 +1247,7 @@
         {
           "u": "/hermetic/germ_6.html",
           "t": "Фрагменты разные",
-          "b": 49516
+          "b": 49515
         },
         {
           "u": "/hermetic/germ1.html",
@@ -1356,12 +1356,12 @@
       "id": "gnostic",
       "label": "Гностицизм",
       "count": 53,
-      "bytes": 7286419,
+      "bytes": 7286382,
       "items": [
         {
           "u": "/gnostic/",
           "t": "Гностицизм",
-          "b": 7310
+          "b": 7274
         },
         {
           "u": "/gnostic/about_pistis.html",
@@ -1621,7 +1621,7 @@
         {
           "u": "/gnostic/put_d.html",
           "t": "Фрагмент о путешествии души",
-          "b": 9226
+          "b": 9225
         }
       ],
       "images": [
@@ -1923,12 +1923,12 @@
       "id": "kumran",
       "label": "Свитки Иудейской пустыни",
       "count": 55,
-      "bytes": 1534794,
+      "bytes": 1534764,
       "items": [
         {
           "u": "/kumran/",
           "t": "Свитки Иудейской пустыни",
-          "b": 14724
+          "b": 14695
         },
         {
           "u": "/kumran/2fragm.html",
@@ -2133,7 +2133,7 @@
         {
           "u": "/kumran/plameni.html",
           "t": "Языки пламени (1Q 29, 4Q 376)",
-          "b": 10469
+          "b": 10468
         },
         {
           "u": "/kumran/psalom_king_ionafan.html",
@@ -2207,12 +2207,12 @@
       "id": "study",
       "label": "Исследования",
       "count": 42,
-      "bytes": 3135989,
+      "bytes": 3135955,
       "items": [
         {
           "u": "/study/",
           "t": "Исследования",
-          "b": 15130
+          "b": 15097
         },
         {
           "u": "/study/about_sec_ev_mark.html",
@@ -2247,7 +2247,7 @@
         {
           "u": "/study/cerkovrimbog.html",
           "t": "Церковь Римская и Церковь Божья",
-          "b": 146433
+          "b": 146432
         },
         {
           "u": "/study/contraiegova.html",
@@ -2455,12 +2455,12 @@
     "id": "root",
     "label": "Служебные страницы",
     "count": 2,
-    "bytes": 80363,
+    "bytes": 80335,
     "items": [
       {
         "u": "/about.html",
         "t": "О студии",
-        "b": 43734
+        "b": 43706
       },
       {
         "u": "/animation.html",
